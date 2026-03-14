@@ -100,7 +100,7 @@ export default function ChapterScreen() {
               asChild
             >
               <Pressable
-                style={[styles.actionButton, isRead && styles.actionButtonMuted]}
+                style={StyleSheet.flatten([styles.actionButton, isRead && styles.actionButtonMuted])}
                 onPress={() => advanceEpisode(episode.id, episode.glossaryUnlockIds)}
               >
                 <Text style={styles.actionText}>{isRead ? "読了済み" : "読了にする"}</Text>
