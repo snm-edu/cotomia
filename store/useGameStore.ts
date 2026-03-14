@@ -1,7 +1,7 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { characterData } from "../lib/content";
+import { persistStorage } from "../lib/persistStorage";
 import {
   claimDailyLoginProgress,
   createInitialProgress,
@@ -48,9 +48,14 @@ export const useGameStore = create<GameStore>()(
       ...initialProgress,
       hydrated: false,
       hydrateProgress: async () => {
-        await (api as typeof api & { persist: { rehydrate: () => Promise<void> } }).persist
-          .rehydrate();
-        set({ hydrated: true });
+        try {
+          await (api as typeof api & { persist: { rehydrate: () => Promise<void> } }).persist
+            .rehydrate();
+        } catch (error) {
+          console.error("Failed to hydrate Cotomia progress", error);
+        } finally {
+          set({ hydrated: true });
+        }
       },
       advanceEpisode: (episodeId, glossaryIds = []) =>
         set((state) => advanceEpisodeProgress(state, episodeId, glossaryIds)),
@@ -82,7 +87,7 @@ export const useGameStore = create<GameStore>()(
     {
       name: STORAGE_KEY,
       version: 1,
-      storage: createJSONStorage(() => AsyncStorage),
+      storage: createJSONStorage(() => persistStorage),
       skipHydration: true,
       partialize: (state) => ({
         schemaVersion: state.schemaVersion,

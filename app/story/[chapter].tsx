@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
@@ -15,7 +15,6 @@ export function generateStaticParams() {
 
 export default function ChapterScreen() {
   const params = useLocalSearchParams<{ chapter?: string }>();
-  const router = useRouter();
   const chapterId = typeof params.chapter === "string" ? params.chapter : "";
   const chapter = chapterById[chapterId];
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -97,14 +96,12 @@ export default function ChapterScreen() {
                 const quiz = readingQuizById[quizId];
                 const solved = completedReadingQuizIds.includes(quizId);
                 return (
-                  <Pressable
-                    key={quizId}
-                    style={styles.quizButton}
-                    onPress={() => router.push(`/quiz/${quizId}`)}
-                  >
-                    <Text style={styles.quizButtonTitle}>{quiz.title}</Text>
-                    <Text style={styles.quizButtonMeta}>{solved ? "CLEAR" : "未挑戦"}</Text>
-                  </Pressable>
+                  <Link key={quizId} href={`/quiz/${quizId}`} asChild>
+                    <Pressable style={styles.quizButton}>
+                      <Text style={styles.quizButtonTitle}>{quiz.title}</Text>
+                      <Text style={styles.quizButtonMeta}>{solved ? "CLEAR" : "未挑戦"}</Text>
+                    </Pressable>
+                  </Link>
                 );
               })}
             </View>

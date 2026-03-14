@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
@@ -20,7 +20,6 @@ import { palette, radii } from "../lib/theme";
 import { useGameStore } from "../store/useGameStore";
 
 export default function HomeScreen() {
-  const router = useRouter();
   const [panelIndex, setPanelIndex] = useState(0);
   const {
     hydrated,
@@ -110,8 +109,8 @@ export default function HomeScreen() {
             <StatChip label="用語" value={`${unlockedGlossaryIds.length}/${glossaryData.length}`} />
           </View>
           <View style={styles.ctaRow}>
-            <HomeAction label="診療録" onPress={() => router.push("/story")} />
-            <HomeAction label="思考" onPress={() => router.push("/daily")} />
+            <HomeAction label="診療録" href="/story" />
+            <HomeAction label="思考" href="/daily" />
           </View>
         </SectionCard>
 
@@ -124,12 +123,11 @@ export default function HomeScreen() {
                 <Text style={styles.focusTitle}>{nextEpisode.title}</Text>
                 <Text style={styles.bodyText}>{nextEpisode.summary}</Text>
                 <Text style={styles.panelMeta}>{nextEpisode.sourceRef}</Text>
-                <Pressable
-                  style={styles.primaryButton}
-                  onPress={() => router.push(getChapterPathByEpisodeId(nextEpisode.id))}
-                >
-                  <Text style={styles.primaryButtonText}>続きから読む</Text>
-                </Pressable>
+                <Link href={getChapterPathByEpisodeId(nextEpisode.id)} asChild>
+                  <Pressable style={styles.primaryButton}>
+                    <Text style={styles.primaryButtonText}>続きから読む</Text>
+                  </Pressable>
+                </Link>
               </>
             ) : null}
 
@@ -139,30 +137,30 @@ export default function HomeScreen() {
                 <Text style={styles.bodyText}>
                   章一覧から好きな場面へ戻るか、デイリー思考と用語集で定着を進められます。
                 </Text>
-                <Pressable style={styles.primaryButton} onPress={() => router.push("/story")}>
-                  <Text style={styles.primaryButtonText}>章一覧へ</Text>
-                </Pressable>
+                <Link href="/story" asChild>
+                  <Pressable style={styles.primaryButton}>
+                    <Text style={styles.primaryButtonText}>章一覧へ</Text>
+                  </Pressable>
+                </Link>
               </>
             ) : null}
 
             {panelIndex === 1 ? (
               <>
                 {dailySelection.map((quiz) => (
-                  <Pressable
-                    key={quiz.id}
-                    style={styles.dailyCard}
-                    onPress={() => router.push(`/mini/${quiz.id}`)}
-                  >
-                    <View style={styles.dailyCardHeader}>
-                      <Text style={styles.dailyType}>{quiz.type}</Text>
-                      <Text style={styles.dailyDone}>
-                        {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "TODAY"}
-                      </Text>
-                    </View>
-                    <Text style={styles.dailyTitle}>{quiz.title}</Text>
-                  </Pressable>
+                  <Link key={quiz.id} href={`/mini/${quiz.id}`} asChild>
+                    <Pressable style={styles.dailyCard}>
+                      <View style={styles.dailyCardHeader}>
+                        <Text style={styles.dailyType}>{quiz.type}</Text>
+                        <Text style={styles.dailyDone}>
+                          {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "TODAY"}
+                        </Text>
+                      </View>
+                      <Text style={styles.dailyTitle}>{quiz.title}</Text>
+                    </Pressable>
+                  </Link>
                 ))}
-                <HomeAction label="3題まとめて開く" onPress={() => router.push("/daily")} />
+                <HomeAction label="3題まとめて開く" href="/daily" />
               </>
             ) : null}
 
@@ -199,9 +197,9 @@ export default function HomeScreen() {
                   です。
                 </Text>
                 <View style={styles.ctaRow}>
-                  <HomeAction label="キャラクター" onPress={() => router.push("/characters")} />
-                  <HomeAction label="用語集" onPress={() => router.push("/glossary")} />
-                  <HomeAction label="設定" onPress={() => router.push("/settings")} />
+                  <HomeAction label="キャラクター" href="/characters" />
+                  <HomeAction label="用語集" href="/glossary" />
+                  <HomeAction label="設定" href="/settings" />
                 </View>
               </>
             ) : null}
@@ -212,11 +210,13 @@ export default function HomeScreen() {
   );
 }
 
-function HomeAction({ label, onPress }: { label: string; onPress: () => void }) {
+function HomeAction({ label, href }: { label: string; href: string }) {
   return (
-    <Pressable style={styles.actionPill} onPress={onPress}>
-      <Text style={styles.actionPillText}>{label}</Text>
-    </Pressable>
+    <Link href={href} asChild>
+      <Pressable style={styles.actionPill}>
+        <Text style={styles.actionPillText}>{label}</Text>
+      </Pressable>
+    </Link>
   );
 }
 

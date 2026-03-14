@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
@@ -9,7 +9,6 @@ import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
 
 export default function StoryIndexScreen() {
-  const router = useRouter();
   const [chapterIndex, setChapterIndex] = useState(0);
   const readEpisodeIds = useGameStore((state) => state.readEpisodeIds);
   const chapter = chapters[chapterIndex];
@@ -62,12 +61,11 @@ export default function StoryIndexScreen() {
             ))}
           </View>
 
-          <Pressable
-            style={styles.button}
-            onPress={() => router.push(`/story/${chapter.id}`)}
-          >
-            <Text style={styles.buttonText}>この章を開く</Text>
-          </Pressable>
+          <Link href={`/story/${chapter.id}`} asChild>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>この章を開く</Text>
+            </Pressable>
+          </Link>
         </View>
       </SectionCard>
     </ScreenFrame>

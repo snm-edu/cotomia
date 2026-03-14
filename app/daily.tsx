@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
@@ -10,7 +10,6 @@ import { palette, radii } from "../lib/theme";
 import { useGameStore } from "../store/useGameStore";
 
 export default function DailyScreen() {
-  const router = useRouter();
   const [quizIndex, setQuizIndex] = useState(0);
   const completedLogicQuizIds = useGameStore((state) => state.completedLogicQuizIds);
   const todayKey = getLocalDateKey();
@@ -53,12 +52,11 @@ export default function DailyScreen() {
             </Text>
             <Text style={styles.metaText}>報酬 +{quiz.reward.affection ?? 0}</Text>
           </View>
-          <Pressable
-            style={styles.button}
-            onPress={() => router.push(`/mini/${quiz.id}`)}
-          >
-            <Text style={styles.buttonText}>挑戦する</Text>
-          </Pressable>
+          <Link href={`/mini/${quiz.id}`} asChild>
+            <Pressable style={styles.button}>
+              <Text style={styles.buttonText}>挑戦する</Text>
+            </Pressable>
+          </Link>
         </View>
       </SectionCard>
     </ScreenFrame>

@@ -1,3 +1,4 @@
+import "../lib/webPolyfills";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { palette } from "../lib/theme";
