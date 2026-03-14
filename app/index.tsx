@@ -126,16 +126,7 @@ export default function HomeScreen() {
                 <Text style={styles.panelMeta}>{nextEpisode.sourceRef}</Text>
                 <Pressable
                   style={styles.primaryButton}
-                  onPress={() =>
-                    router.push({
-                      pathname: "/story/[chapter]",
-                      params: {
-                        chapter:
-                          chapters.find((chapter) =>
-                            chapter.episodes.some((episode) => episode.id === nextEpisode.id),
-                          )?.id ?? "chapter-1",
-                      },
-                    })}
+                  onPress={() => router.push(getChapterPathByEpisodeId(nextEpisode.id))}
                 >
                   <Text style={styles.primaryButtonText}>続きから読む</Text>
                 </Pressable>
@@ -160,7 +151,7 @@ export default function HomeScreen() {
                   <Pressable
                     key={quiz.id}
                     style={styles.dailyCard}
-                    onPress={() => router.push({ pathname: "/mini/[id]", params: { id: quiz.id } })}
+                    onPress={() => router.push(`/mini/${quiz.id}`)}
                   >
                     <View style={styles.dailyCardHeader}>
                       <Text style={styles.dailyType}>{quiz.type}</Text>
@@ -353,3 +344,10 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
 });
+
+function getChapterPathByEpisodeId(episodeId: string) {
+  const chapterId =
+    chapters.find((chapter) => chapter.episodes.some((episode) => episode.id === episodeId))?.id ??
+    "chapter-1";
+  return `/story/${chapterId}`;
+}

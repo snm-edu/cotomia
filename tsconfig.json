@@ -8,5 +8,9 @@
     "types": [
       "node"
     ]
-  }
+  },
+  "exclude": [
+    "dist",
+    "node_modules"
+  ]
 }

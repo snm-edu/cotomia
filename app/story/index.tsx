@@ -64,8 +64,7 @@ export default function StoryIndexScreen() {
 
           <Pressable
             style={styles.button}
-            onPress={() =>
-              router.push({ pathname: "/story/[chapter]", params: { chapter: chapter.id } })}
+            onPress={() => router.push(`/story/${chapter.id}`)}
           >
             <Text style={styles.buttonText}>この章を開く</Text>
           </Pressable>

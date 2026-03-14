@@ -55,7 +55,7 @@ export default function DailyScreen() {
           </View>
           <Pressable
             style={styles.button}
-            onPress={() => router.push({ pathname: "/mini/[id]", params: { id: quiz.id } })}
+            onPress={() => router.push(`/mini/${quiz.id}`)}
           >
             <Text style={styles.buttonText}>挑戦する</Text>
           </Pressable>

@@ -100,8 +100,7 @@ export default function ChapterScreen() {
                   <Pressable
                     key={quizId}
                     style={styles.quizButton}
-                    onPress={() =>
-                      router.push({ pathname: "/quiz/[id]", params: { id: quizId } })}
+                    onPress={() => router.push(`/quiz/${quizId}`)}
                   >
                     <Text style={styles.quizButtonTitle}>{quiz.title}</Text>
                     <Text style={styles.quizButtonMeta}>{solved ? "CLEAR" : "未挑戦"}</Text>
