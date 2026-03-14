@@ -6,6 +6,7 @@ import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
 import { getDailyLogicSelection, getLocalDateKey } from "../lib/daily";
 import { logicQuizData } from "../lib/content";
+import { withBuildStamp } from "../lib/navigation";
 import { palette, radii } from "../lib/theme";
 import { useGameStore } from "../store/useGameStore";
 
@@ -52,10 +53,10 @@ export default function DailyScreen() {
             </Text>
             <Text style={styles.metaText}>報酬 +{quiz.reward.affection ?? 0}</Text>
           </View>
-          <Link href={`/mini/${quiz.id}`} asChild>
-            <Pressable style={styles.button}>
+          <Link href={withBuildStamp(`/mini/${quiz.id}`)}>
+            <View style={styles.button}>
               <Text style={styles.buttonText}>挑戦する</Text>
-            </Pressable>
+            </View>
           </Link>
         </View>
       </SectionCard>

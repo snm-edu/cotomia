@@ -16,6 +16,7 @@ import {
   logicQuizData,
 } from "../lib/content";
 import { getDailyLogicSelection, getLocalDateKey } from "../lib/daily";
+import { withBuildStamp } from "../lib/navigation";
 import { palette, radii } from "../lib/theme";
 import { useGameStore } from "../store/useGameStore";
 
@@ -123,10 +124,10 @@ export default function HomeScreen() {
                 <Text style={styles.focusTitle}>{nextEpisode.title}</Text>
                 <Text style={styles.bodyText}>{nextEpisode.summary}</Text>
                 <Text style={styles.panelMeta}>{nextEpisode.sourceRef}</Text>
-                <Link href={getChapterPathByEpisodeId(nextEpisode.id)} asChild>
-                  <Pressable style={styles.primaryButton}>
+                <Link href={getChapterPathByEpisodeId(nextEpisode.id)}>
+                  <View style={styles.primaryButton}>
                     <Text style={styles.primaryButtonText}>続きから読む</Text>
-                  </Pressable>
+                  </View>
                 </Link>
               </>
             ) : null}
@@ -137,10 +138,10 @@ export default function HomeScreen() {
                 <Text style={styles.bodyText}>
                   章一覧から好きな場面へ戻るか、デイリー思考と用語集で定着を進められます。
                 </Text>
-                <Link href="/story" asChild>
-                  <Pressable style={styles.primaryButton}>
+                <Link href={withBuildStamp("/story")}>
+                  <View style={styles.primaryButton}>
                     <Text style={styles.primaryButtonText}>章一覧へ</Text>
-                  </Pressable>
+                  </View>
                 </Link>
               </>
             ) : null}
@@ -148,8 +149,8 @@ export default function HomeScreen() {
             {panelIndex === 1 ? (
               <>
                 {dailySelection.map((quiz) => (
-                  <Link key={quiz.id} href={`/mini/${quiz.id}`} asChild>
-                    <Pressable style={styles.dailyCard}>
+                  <Link key={quiz.id} href={withBuildStamp(`/mini/${quiz.id}`)}>
+                    <View style={styles.dailyCard}>
                       <View style={styles.dailyCardHeader}>
                         <Text style={styles.dailyType}>{quiz.type}</Text>
                         <Text style={styles.dailyDone}>
@@ -157,7 +158,7 @@ export default function HomeScreen() {
                         </Text>
                       </View>
                       <Text style={styles.dailyTitle}>{quiz.title}</Text>
-                    </Pressable>
+                    </View>
                   </Link>
                 ))}
                 <HomeAction label="3題まとめて開く" href="/daily" />
@@ -212,10 +213,10 @@ export default function HomeScreen() {
 
 function HomeAction({ label, href }: { label: string; href: string }) {
   return (
-    <Link href={href} asChild>
-      <Pressable style={styles.actionPill}>
+    <Link href={withBuildStamp(href)}>
+      <View style={styles.actionPill}>
         <Text style={styles.actionPillText}>{label}</Text>
-      </Pressable>
+      </View>
     </Link>
   );
 }
@@ -349,5 +350,5 @@ function getChapterPathByEpisodeId(episodeId: string) {
   const chapterId =
     chapters.find((chapter) => chapter.episodes.some((episode) => episode.id === episodeId))?.id ??
     "chapter-1";
-  return `/story/${chapterId}`;
+  return withBuildStamp(`/story/${chapterId}`);
 }

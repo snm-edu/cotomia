@@ -6,6 +6,7 @@ import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
 import { StoryPlayer } from "../../components/StoryPlayer";
 import { chapterById, chapters, characterById, episodeById, readingQuizById } from "../../lib/content";
+import { withBuildStamp } from "../../lib/navigation";
 import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
 
@@ -130,11 +131,11 @@ export default function ChapterScreen() {
                 const quiz = readingQuizById[quizId];
                 const solved = completedReadingQuizIds.includes(quizId);
                 return (
-                  <Link key={quizId} href={`/quiz/${quizId}`} asChild>
-                    <Pressable style={styles.quizButton}>
+                  <Link key={quizId} href={withBuildStamp(`/quiz/${quizId}`)}>
+                    <View style={styles.quizButton}>
                       <Text style={styles.quizButtonTitle}>{quiz.title}</Text>
                       <Text style={styles.quizButtonMeta}>{solved ? "CLEAR" : "未挑戦"}</Text>
-                    </Pressable>
+                    </View>
                   </Link>
                 );
               })}
@@ -253,9 +254,11 @@ const styles = StyleSheet.create({
 });
 
 function buildChapterHref(chapterId: string, episodeIndex: number, lineIndex: number) {
-  return `/story/${chapterId}?episode=${episodeIndex}&line=${lineIndex}`;
+  return withBuildStamp(`/story/${chapterId}?episode=${episodeIndex}&line=${lineIndex}`);
 }
 
 function buildAdvanceHref(chapterId: string, nextEpisodeIndex: number, episodeId: string) {
-  return `/story/${chapterId}?episode=${nextEpisodeIndex}&line=0&advance=${episodeId}`;
+  return withBuildStamp(
+    `/story/${chapterId}?episode=${nextEpisodeIndex}&line=0&advance=${episodeId}`,
+  );
 }

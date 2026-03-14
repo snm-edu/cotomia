@@ -5,6 +5,7 @@ import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
 import { chapters, getChapterProgress } from "../../lib/content";
+import { withBuildStamp } from "../../lib/navigation";
 import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
 
@@ -61,10 +62,10 @@ export default function StoryIndexScreen() {
             ))}
           </View>
 
-          <Link href={`/story/${chapter.id}`} asChild>
-            <Pressable style={styles.button}>
+          <Link href={withBuildStamp(`/story/${chapter.id}`)}>
+            <View style={styles.button}>
               <Text style={styles.buttonText}>この章を開く</Text>
-            </Pressable>
+            </View>
           </Link>
         </View>
       </SectionCard>
