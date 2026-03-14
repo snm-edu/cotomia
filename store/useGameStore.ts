@@ -13,7 +13,7 @@ import {
 } from "../lib/progress";
 import type { GameProgressV1, Reward } from "../lib/types";
 
-const STORAGE_KEY = "asklepios-academy-progress";
+const STORAGE_KEY = "cotomia-progress";
 const characterIds = characterData.map((character) => character.id);
 
 type GameStore = GameProgressV1 & {

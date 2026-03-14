@@ -49,8 +49,8 @@ export default function HomeScreen() {
 
   return (
     <ScreenFrame
-      title="アスクレピオス学園"
-      subtitle="神話を読み、ことばを拾い、論理を解いて推しと世界を育てる。"
+      title="コトミア"
+      subtitle="ことばを見つめ、物語を読み、論理を解いて親しみながら進む。"
     >
       {contentIssues.length
         ? (
