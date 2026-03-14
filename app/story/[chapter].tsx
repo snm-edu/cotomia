@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Link, useLocalSearchParams } from "expo-router";
 import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
 import { StoryPlayer } from "../../components/StoryPlayer";
-import { chapterById, chapters, characterById, readingQuizById } from "../../lib/content";
+import { chapterById, chapters, characterById, episodeById, readingQuizById } from "../../lib/content";
 import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
 
@@ -14,25 +14,20 @@ export function generateStaticParams() {
 }
 
 export default function ChapterScreen() {
-  const params = useLocalSearchParams<{ chapter?: string }>();
+  const params = useLocalSearchParams<{
+    chapter?: string;
+    episode?: string;
+    line?: string;
+    advance?: string;
+  }>();
   const chapterId = typeof params.chapter === "string" ? params.chapter : "";
   const chapter = chapterById[chapterId];
-  const [currentIndex, setCurrentIndex] = useState(0);
 
   const readEpisodeIds = useGameStore((state) => state.readEpisodeIds);
   const completedReadingQuizIds = useGameStore((state) => state.completedReadingQuizIds);
   const advanceEpisode = useGameStore((state) => state.advanceEpisode);
   const unlockedGlossaryIds = useGameStore((state) => state.unlockedGlossaryIds);
-
-  useEffect(() => {
-    if (!chapter) {
-      return;
-    }
-    const firstUnread = chapter.episodes.findIndex(
-      (episode) => !readEpisodeIds.includes(episode.id),
-    );
-    setCurrentIndex(firstUnread >= 0 ? firstUnread : 0);
-  }, [chapter, readEpisodeIds]);
+  const pendingAdvanceId = typeof params.advance === "string" ? params.advance : null;
 
   if (!chapter) {
     return (
@@ -44,9 +39,35 @@ export default function ChapterScreen() {
     );
   }
 
+  const defaultEpisodeIndex = Math.max(
+    chapter.episodes.findIndex((episode) => !readEpisodeIds.includes(episode.id)),
+    0,
+  );
+  const requestedEpisodeIndex = Number.parseInt(
+    typeof params.episode === "string" ? params.episode : `${defaultEpisodeIndex}`,
+    10,
+  );
+  const currentIndex = Number.isFinite(requestedEpisodeIndex)
+    ? Math.min(Math.max(requestedEpisodeIndex, 0), chapter.episodes.length - 1)
+    : defaultEpisodeIndex;
   const episode = chapter.episodes[currentIndex];
+  const requestedLineIndex = Number.parseInt(typeof params.line === "string" ? params.line : "0", 10);
+  const currentLineIndex = Number.isFinite(requestedLineIndex)
+    ? Math.min(Math.max(requestedLineIndex, 0), episode.lines.length - 1)
+    : 0;
   const character = characterById[episode.featuredCharacterId];
   const isRead = readEpisodeIds.includes(episode.id);
+  const nextEpisodeIndex = Math.min(currentIndex + 1, chapter.episodes.length - 1);
+  const hasNextEpisode = currentIndex < chapter.episodes.length - 1;
+
+  useEffect(() => {
+    if (!pendingAdvanceId || readEpisodeIds.includes(pendingAdvanceId)) {
+      return;
+    }
+
+    const pendingEpisode = episodeById[pendingAdvanceId];
+    advanceEpisode(pendingAdvanceId, pendingEpisode?.glossaryUnlockIds ?? []);
+  }, [advanceEpisode, pendingAdvanceId, readEpisodeIds]);
 
   return (
     <ScreenFrame title={chapter.title} subtitle={chapter.subtitle}>
@@ -60,34 +81,53 @@ export default function ChapterScreen() {
               stateLabel: readEpisodeIds.includes(item.id) ? "read" : "new",
             }))}
             index={currentIndex}
-            onChange={setCurrentIndex}
+            onChange={() => {}}
+            getHref={(index) => buildChapterHref(chapter.id, index, 0)}
           />
-          <StoryPlayer episode={episode} accent={character?.accent ?? palette.violet} />
+          <StoryPlayer
+            episode={episode}
+            accent={character?.accent ?? palette.violet}
+            lineIndex={currentLineIndex}
+            onLineChange={() => {}}
+            getLineHref={(index) => buildChapterHref(chapter.id, currentIndex, index)}
+          />
         </SectionCard>
 
         <SectionCard title="操作" subtitle="読了とミッション、次話への導線" style={styles.actionCard}>
           <View style={styles.buttonRow}>
-            <Pressable
-              style={[styles.actionButton, isRead && styles.actionButtonMuted]}
-              onPress={() => advanceEpisode(episode.id, episode.glossaryUnlockIds)}
+            <Link
+              href={buildAdvanceHref(chapter.id, hasNextEpisode ? nextEpisodeIndex : currentIndex, episode.id)}
+              asChild
             >
-              <Text style={styles.actionText}>{isRead ? "読了済み" : "読了にする"}</Text>
-            </Pressable>
-            <Pressable
-              style={styles.ghostButton}
-              disabled={currentIndex === 0}
-              onPress={() => setCurrentIndex((value) => Math.max(0, value - 1))}
-            >
-              <Text style={styles.ghostText}>前話</Text>
-            </Pressable>
-            <Pressable
-              style={styles.ghostButton}
-              disabled={currentIndex === chapter.episodes.length - 1}
-              onPress={() =>
-                setCurrentIndex((value) => Math.min(chapter.episodes.length - 1, value + 1))}
-            >
-              <Text style={styles.ghostText}>次話</Text>
-            </Pressable>
+              <Pressable
+                style={[styles.actionButton, isRead && styles.actionButtonMuted]}
+                onPress={() => advanceEpisode(episode.id, episode.glossaryUnlockIds)}
+              >
+                <Text style={styles.actionText}>{isRead ? "読了済み" : "読了にする"}</Text>
+              </Pressable>
+            </Link>
+            {currentIndex > 0 ? (
+              <Link href={buildChapterHref(chapter.id, currentIndex - 1, 0)} asChild>
+                <Pressable style={styles.ghostButton}>
+                  <Text style={styles.ghostText}>前話</Text>
+                </Pressable>
+              </Link>
+            ) : (
+              <Pressable style={[styles.ghostButton, styles.ghostButtonDisabled]} disabled>
+                <Text style={styles.ghostText}>前話</Text>
+              </Pressable>
+            )}
+            {currentIndex < chapter.episodes.length - 1 ? (
+              <Link href={buildChapterHref(chapter.id, currentIndex + 1, 0)} asChild>
+                <Pressable style={styles.ghostButton}>
+                  <Text style={styles.ghostText}>次話</Text>
+                </Pressable>
+              </Link>
+            ) : (
+              <Pressable style={[styles.ghostButton, styles.ghostButtonDisabled]} disabled>
+                <Text style={styles.ghostText}>次話</Text>
+              </Pressable>
+            )}
           </View>
 
           {episode.quizIds.length ? (
@@ -164,6 +204,9 @@ const styles = StyleSheet.create({
     borderRadius: radii.md,
     backgroundColor: "rgba(255,255,255,0.05)",
   },
+  ghostButtonDisabled: {
+    opacity: 0.45,
+  },
   ghostText: {
     color: palette.text,
     fontWeight: "600",
@@ -214,3 +257,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
 });
+
+function buildChapterHref(chapterId: string, episodeIndex: number, lineIndex: number) {
+  return `/story/${chapterId}?episode=${episodeIndex}&line=${lineIndex}`;
+}
+
+function buildAdvanceHref(chapterId: string, nextEpisodeIndex: number, episodeId: string) {
+  return `/story/${chapterId}?episode=${nextEpisodeIndex}&line=0&advance=${episodeId}`;
+}

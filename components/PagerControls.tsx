@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import { Pressable, StyleSheet, Text, View, type StyleProp, type ViewStyle } from "react-native";
 import { palette, radii } from "../lib/theme";
 
@@ -13,6 +14,7 @@ type PagerControlsProps = {
   index: number;
   onChange: (index: number) => void;
   style?: StyleProp<ViewStyle>;
+  getHref?: (index: number) => string;
 };
 
 export function PagerControls({
@@ -20,6 +22,7 @@ export function PagerControls({
   index,
   onChange,
   style,
+  getHref,
 }: PagerControlsProps) {
   if (!items.length) {
     return null;
@@ -55,6 +58,7 @@ export function PagerControls({
           label="前"
           disabled={safeIndex === 0}
           onPress={() => onChange(safeIndex - 1)}
+          href={safeIndex === 0 || !getHref ? undefined : getHref(safeIndex - 1)}
         />
         <View style={styles.dotRow}>
           {visibleIndexes.map((visibleIndex, position) =>
@@ -63,20 +67,13 @@ export function PagerControls({
                 …
               </Text>
             ) : (
-              <Pressable
+              <PagerDot
                 key={items[visibleIndex].id}
-                style={[styles.dotButton, visibleIndex === safeIndex && styles.dotButtonActive]}
+                active={visibleIndex === safeIndex}
+                label={String(visibleIndex + 1)}
                 onPress={() => onChange(visibleIndex)}
-              >
-                <Text
-                  style={[
-                    styles.dotText,
-                    visibleIndex === safeIndex && styles.dotTextActive,
-                  ]}
-                >
-                  {visibleIndex + 1}
-                </Text>
-              </Pressable>
+                href={getHref ? getHref(visibleIndex) : undefined}
+              />
             ),
           )}
         </View>
@@ -84,6 +81,7 @@ export function PagerControls({
           label="次"
           disabled={safeIndex === items.length - 1}
           onPress={() => onChange(safeIndex + 1)}
+          href={safeIndex === items.length - 1 || !getHref ? undefined : getHref(safeIndex + 1)}
         />
       </View>
     </View>
@@ -94,11 +92,23 @@ function PagerButton({
   label,
   disabled,
   onPress,
+  href,
 }: {
   label: string;
   disabled: boolean;
   onPress: () => void;
+  href?: string;
 }) {
+  if (href && !disabled) {
+    return (
+      <Link href={href} asChild>
+        <Pressable style={styles.pageButton}>
+          <Text style={styles.pageButtonText}>{label}</Text>
+        </Pressable>
+      </Link>
+    );
+  }
+
   return (
     <Pressable
       disabled={disabled}
@@ -110,6 +120,37 @@ function PagerButton({
       </Text>
     </Pressable>
   );
+}
+
+function PagerDot({
+  active,
+  label,
+  onPress,
+  href,
+}: {
+  active: boolean;
+  label: string;
+  onPress: () => void;
+  href?: string;
+}) {
+  const content = (
+    <Pressable
+      style={StyleSheet.flatten([styles.dotButton, active && styles.dotButtonActive])}
+      onPress={href ? undefined : onPress}
+    >
+      <Text style={[styles.dotText, active && styles.dotTextActive]}>{label}</Text>
+    </Pressable>
+  );
+
+  if (href) {
+    return (
+      <Link href={href} asChild>
+        {content}
+      </Link>
+    );
+  }
+
+  return content;
 }
 
 function getVisibleIndexes(length: number, currentIndex: number): number[] {

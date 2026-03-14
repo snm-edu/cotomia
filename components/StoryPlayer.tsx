@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { PagerControls } from "./PagerControls";
 import { palette, radii } from "../lib/theme";
@@ -7,16 +6,20 @@ import type { StoryEpisode } from "../lib/types";
 type StoryPlayerProps = {
   episode: StoryEpisode;
   accent: string;
+  lineIndex?: number;
+  onLineChange?: (index: number) => void;
+  getLineHref?: (index: number) => string;
 };
 
-export function StoryPlayer({ episode, accent }: StoryPlayerProps) {
-  const [lineIndex, setLineIndex] = useState(0);
-
-  useEffect(() => {
-    setLineIndex(0);
-  }, [episode.id]);
-
-  const currentLine = episode.lines[lineIndex];
+export function StoryPlayer({
+  episode,
+  accent,
+  lineIndex,
+  onLineChange,
+  getLineHref,
+}: StoryPlayerProps) {
+  const safeLineIndex = Math.min(Math.max(lineIndex ?? 0, 0), episode.lines.length - 1);
+  const currentLine = episode.lines[safeLineIndex];
 
   return (
     <View style={styles.container}>
@@ -34,8 +37,9 @@ export function StoryPlayer({ episode, accent }: StoryPlayerProps) {
             label: line.speaker,
             meta: `セリフ ${index + 1}`,
           }))}
-          index={lineIndex}
-          onChange={setLineIndex}
+          index={safeLineIndex}
+          onChange={(index) => onLineChange?.(index)}
+          getHref={getLineHref}
         />
         <View
           style={[
