@@ -1,0 +1,295 @@
+[
+  {
+    "id": "dq-001",
+    "title": "文章断片の正しい順番",
+    "type": "order_sort",
+    "prompt": "A〜D の断片を、意味がもっとも通る順に並べてください。",
+    "sourceRef": "pre_shikou.pdf#問1 / pre_shikou_kaitou.pdf#問1",
+    "hint": "『この』のような指示語や『そして』の前後関係に注目する。",
+    "explanation": "Cで感覚の具体例を提示し、BとAで問いを重ね、最後にDでその謎の鍵を述べる流れになる。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 5
+    },
+    "clues": [
+      "D の『この究極の謎』は、前の疑問を受ける。",
+      "A の『そして』は、B に続く問いの追加になっている。"
+    ],
+    "items": [
+      {
+        "id": "A",
+        "label": "A",
+        "text": "そして、すべてを感じる存在としての私とは何ものか？"
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "text": "物質である脳が、心の中に、そうしたユニークな感覚を生み出すのはなぜか？"
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "text": "太陽の輝き、朝のコーヒーの香り、小鳥のさえずり…私たちの意識は鮮やかな質感に満ちている。"
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "text": "人類に残されたこの究極の謎を解きほぐす鍵は、他者との関係性の中で変化する脳の働きにある。"
+      }
+    ],
+    "answerOrder": ["C", "B", "A", "D"]
+  },
+  {
+    "id": "dq-002",
+    "title": "半分だけ本当",
+    "type": "truth_logic",
+    "prompt": "4人の発言が『半分は本当、半分はウソ』なら、確実にいえるものを選んでください。",
+    "sourceRef": "pre_shikou.pdf#問2 / pre_shikou_kaitou.pdf#問2",
+    "hint": "一人の前半をウソと仮定し、表にすると絞りやすい。",
+    "explanation": "A の前半をウソとすると、他の発言と矛盾なく全員の半分真偽を満たせるため、割ったのは A に確定する。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 5
+    },
+    "clues": [
+      "A『私は割っていない。Dも割っていない。』",
+      "B『私は割っていない。Cが割った。』",
+      "C『私は割っていない。AもDも割っていない。』",
+      "D『Aは割っていない。Cも割っていない。』"
+    ],
+    "choices": [
+      "割ったのは A である。",
+      "割ったのは B である。",
+      "割ったのは C である。",
+      "割ったのは D である。",
+      "A も B も割っていない。"
+    ],
+    "answerIndex": 0
+  },
+  {
+    "id": "dq-003",
+    "title": "円卓の席順",
+    "type": "seat_puzzle",
+    "prompt": "A〜F が円卓に等間隔で座る。条件から確実にいえるものを選んでください。",
+    "sourceRef": "pre_shikou.pdf#問3 / pre_shikou_kaitou.pdf#問3",
+    "hint": "F と B を先に正面で固定し、A の隣に C を置く。",
+    "explanation": "F と B が正面、F が D の隣、A の隣に C という条件を当てはめると、D の隣は必ず E と F になる。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 5
+    },
+    "clues": [
+      "F は D の隣で、B の正面に座っている。",
+      "A の隣に C が座っている。"
+    ],
+    "choices": [
+      "A は D の正面に座っている。",
+      "B の隣には C と E が座っている。",
+      "C の一人おいて隣には B が座っている。",
+      "D の隣には E と F が座っている。",
+      "E が C の正面に座っている。"
+    ],
+    "answerIndex": 3
+  },
+  {
+    "id": "dq-004",
+    "title": "リーグ戦の勝敗",
+    "type": "truth_logic",
+    "prompt": "A〜E のリーグ戦結果について、確実にいえるものを選んでください。",
+    "sourceRef": "pre_shikou.pdf#問7 / pre_shikou_kaitou.pdf#問7",
+    "hint": "総当たり戦なので対戦表を作り、E の条件から埋める。",
+    "explanation": "E は C にだけ勝つので、C は E に負ける。それでも C が 3勝するには A・B・D に勝つ必要があり、A は残る B 戦にも勝つ。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 6
+    },
+    "clues": [
+      "A は 3 勝した。",
+      "C は 3 勝した。",
+      "D は 1 勝した。",
+      "E は C のみに勝った。"
+    ],
+    "choices": [
+      "A は B に勝った。",
+      "B は C に勝った。",
+      "C は A に負けた。",
+      "D は B に勝った。",
+      "B は 1 勝 3 敗だった。"
+    ],
+    "answerIndex": 0
+  },
+  {
+    "id": "dq-005",
+    "title": "勤務表の推理",
+    "type": "truth_logic",
+    "prompt": "A〜C の勤務条件から、確実にいえるものを選んでください。",
+    "sourceRef": "pre_shikou.pdf#問11 / pre_shikou_kaitou.pdf#問11",
+    "hint": "6日間の出勤表を作り、『連続で休めない』条件を先に入れる。",
+    "explanation": "A の金土出勤、B の月水木出勤、C の水曜出勤を埋めると、金曜に休むのは B に確定する。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 6
+    },
+    "clues": [
+      "月曜日から土曜日まで毎日 2 人出勤、1 人休み。",
+      "休みは連続して取れない。",
+      "3 人とも 6 日のうち 4 日勤務する。",
+      "A は金曜日・土曜日、B は月曜日・水曜日・木曜日、C は水曜日に出勤する。"
+    ],
+    "choices": [
+      "月曜日に休むのは C である。",
+      "火曜日に休むのは A である。",
+      "木曜日に休むのは B である。",
+      "金曜日に休むのは B である。",
+      "土曜日に休むのは A である。"
+    ],
+    "answerIndex": 3
+  },
+  {
+    "id": "dq-006",
+    "title": "男女が並ばない席",
+    "type": "seat_puzzle",
+    "prompt": "男女3人ずつが図のテーブルに座る。条件から確実にいえるものを選んでください。",
+    "sourceRef": "pre_shikou.pdf#問14 / pre_shikou_kaitou.pdf#問14",
+    "hint": "E嬢とF嬢が向かい合う条件から、まず端に置けるかを考える。",
+    "explanation": "E嬢とF嬢は端に置かれ、隣は男性になる。B氏は真ん中ではないため、A氏とC氏が正面関係で固定される。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 6
+    },
+    "clues": [
+      "女性は並んで座らない。",
+      "A氏の隣は D嬢である。",
+      "E嬢の向かいは F嬢である。",
+      "B氏は真ん中ではない。"
+    ],
+    "choices": [
+      "A氏は C氏の正面にいる。",
+      "B氏は E嬢の隣にいる。",
+      "C氏は E嬢の隣にいる。",
+      "D嬢は C氏の正面にいる。",
+      "E嬢は C氏の隣にいる。"
+    ],
+    "answerIndex": 0
+  },
+  {
+    "id": "dq-007",
+    "title": "寮の部屋割り",
+    "type": "seat_puzzle",
+    "prompt": "2階建ての寮に A〜F が住む。条件から確実にいえるものを選んでください。",
+    "sourceRef": "pre_shikou.pdf#問15 / pre_shikou_kaitou.pdf#問15",
+    "hint": "A と E が2階、D と B が1階に来ることを先に固める。",
+    "explanation": "図式化すると空欄には C か F のどちらかしか入らず、C と F の両方が端の部屋になる。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 6
+    },
+    "clues": [
+      "A の隣には E が住んでいる。",
+      "E の下の部屋は D である。",
+      "B の隣の上は E が住んでいる。"
+    ],
+    "choices": [
+      "C と B は隣り合っている。",
+      "E も F も端の部屋である。",
+      "C も F も端の部屋である。",
+      "A は 202 号室である。",
+      "B は D と F に挟まれている。"
+    ],
+    "answerIndex": 2
+  },
+  {
+    "id": "dq-008",
+    "title": "到着が早い順番",
+    "type": "order_sort",
+    "prompt": "A〜D の4人を、待ち合わせ場所に到着した順に並べてください。",
+    "sourceRef": "pre_shikou.pdf#問17 / pre_shikou_kaitou.pdf#問17",
+    "hint": "C が定刻より 1 分遅れ、D はそこから 5 分遅い。数直線で置くと一気に決まる。",
+    "explanation": "C は定刻より 1 分遅れ、D はその 5 分後、A は D より 3 分早い。B は C より 7 分早いので、順番は B→C→A→D になる。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 5
+    },
+    "clues": [
+      "A は D より 3 分早かった。",
+      "B は C より 7 分早く来た。",
+      "C は定刻より 1 分遅れた。",
+      "D は C より 5 分遅れた。"
+    ],
+    "items": [
+      {
+        "id": "A",
+        "label": "A",
+        "text": "A 氏"
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "text": "B 氏"
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "text": "C 氏"
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "text": "D 氏"
+      }
+    ],
+    "answerOrder": ["B", "C", "A", "D"]
+  },
+  {
+    "id": "dq-009",
+    "title": "マラソンの最終順位",
+    "type": "order_sort",
+    "prompt": "A〜D のゴール順を、1位から並べてください。",
+    "sourceRef": "pre_shikou.pdf#問19 / pre_shikou_kaitou.pdf#問19",
+    "hint": "300m前の首位は B。A は 2 人に抜かれ、C は 1 人抜き1 人に抜かれている。",
+    "explanation": "A は 300m 前では 2 位、C は 4 位ではない。条件を満たす順位変動を追うと、最終順は D→B→C→A に定まる。",
+    "reward": {
+      "affection": 3,
+      "seeds": 1,
+      "coins": 5
+    },
+    "clues": [
+      "300m 前の首位は B。",
+      "同じ人に抜かれてから抜き返すことはなかった。",
+      "抜かれも抜きもしなかった人はいない。",
+      "A は 2 人に抜かれ、1 人も追い抜かなかった。",
+      "C は 1 人に追い抜かれ、1 人追い抜いた。"
+    ],
+    "items": [
+      {
+        "id": "A",
+        "label": "A",
+        "text": "A 氏"
+      },
+      {
+        "id": "B",
+        "label": "B",
+        "text": "B 氏"
+      },
+      {
+        "id": "C",
+        "label": "C",
+        "text": "C 氏"
+      },
+      {
+        "id": "D",
+        "label": "D",
+        "text": "D 氏"
+      }
+    ],
+    "answerOrder": ["D", "B", "C", "A"]
+  }
+]

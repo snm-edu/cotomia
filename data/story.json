@@ -1,0 +1,408 @@
+{
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "title": "誓いと医神",
+      "subtitle": "ヒポクラテスの誓いから医の象徴へ",
+      "summary": "医の倫理と、アスクレピオスが医学の象徴として残った理由を追う。",
+      "sourceRef": "pre_dokkai2.pdf#P0-P1",
+      "featuredCharacterId": "selene",
+      "episodes": [
+        {
+          "id": "ep-001",
+          "title": "誓いの入口",
+          "summary": "医の学びは知識より先に姿勢から始まる。",
+          "sourceRef": "pre_dokkai2.pdf#P0",
+          "featuredCharacterId": "selene",
+          "glossaryUnlockIds": ["hippocrates", "oath"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "セレネ",
+              "text": "診療録の最初は、名医ヒポクラテスの誓いから始まるよ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "患者の利益になる方法を選び、有害な方法は避ける。秘密も守る。それが医の道の基礎として語られる。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "本文は、医療を目指す者が『何をするか』だけでなく『どう向き合うか』を問うている。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-002",
+          "title": "神々と人の境界",
+          "summary": "ギリシア神話では、神と人を分ける決定的な差は死の有無にある。",
+          "sourceRef": "pre_dokkai2.pdf#P1",
+          "featuredCharacterId": "nox",
+          "glossaryUnlockIds": ["asklepios"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "ノクス",
+              "text": "ギリシアの神々は全知全能ではない。役割を持ち、人間のように感情も揺れる。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "それでも神々は死なず、人間は必ず死ぬ。この一点が両者を分けていた。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "リア",
+              "text": "片方が神、片方が人の半神なら、そのあいだに立つこともあるんだね。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-003",
+          "title": "杖に巻く蛇",
+          "summary": "アスクレピオスは、今も医療の象徴として残る。",
+          "sourceRef": "pre_dokkai2.pdf#P1",
+          "featuredCharacterId": "selene",
+          "glossaryUnlockIds": ["staff"],
+          "quizIds": ["rq-001"],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "アスクレピオスは多くの民を救い、何人もの人を蘇らせたことで医学の神とされた。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "一本の杖に蛇が巻きつく意匠は『アスクレピオスの杖』として、今も医療のしるしに使われるよ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "象徴が残るのは、技術だけでなく、人を救う姿勢が記憶されたからだ。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-004",
+          "title": "誓いにある中心",
+          "summary": "本文は『生に奉仕する医術』を静かに置いていく。",
+          "sourceRef": "pre_dokkai2.pdf#P0-P1",
+          "featuredCharacterId": "chiron",
+          "glossaryUnlockIds": [],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "カイロン先輩",
+              "text": "害を避け、利益を選ぶ。その一文だけでも、医術の向かう先は見えてくる。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "誓いは、ただ治療するだけでなく、患者の秘密や尊厳にも触れている。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "リア",
+              "text": "正解を急ぐ前に、『何のための医療か』を忘れないでってことなんだ。",
+              "tone": "guide"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter-2",
+      "title": "太陽神アポロン",
+      "subtitle": "誕生、音楽、恋の矢",
+      "summary": "アスクレピオスの父アポロンの背景と、彼をめぐる神話的な挿話を読む。",
+      "sourceRef": "pre_dokkai2.pdf#P2-P4",
+      "featuredCharacterId": "ria",
+      "episodes": [
+        {
+          "id": "ep-005",
+          "title": "光を浴びない島",
+          "summary": "レトはデロス島で、太陽神アポロンと月神アルテミスを産む。",
+          "sourceRef": "pre_dokkai2.pdf#P2",
+          "featuredCharacterId": "ria",
+          "glossaryUnlockIds": ["apollo", "delos"],
+          "quizIds": ["rq-002"],
+          "lines": [
+            {
+              "speaker": "リア",
+              "text": "アポロンの母レトは、ヘラの嫉妬で『太陽の光を浴びた場所では産めない』と呪われちゃう。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "ゼウスは海を漂っていたデロス島を引き上げ、レトの出産の場とした。そこで双子のアポロンとアルテミスが生まれる。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "アポロンは美しさだけでなく、音楽、予言、医術まで司る多芸な神として描かれるよ。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-006",
+          "title": "ロバの耳の王",
+          "summary": "音楽の審判をめぐる怒りと、秘密が広がる寓話。",
+          "sourceRef": "pre_dokkai2.pdf#P3",
+          "featuredCharacterId": "nox",
+          "glossaryUnlockIds": ["midas"],
+          "quizIds": ["rq-003"],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "アポロンは竪琴、パンは葦笛で競い、ミダス王だけがパンの勝ちだと言い張った。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "怒ったアポロンは、音を聞き分けられない王の耳をロバの耳へ変えてしまう。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "秘密は床屋の叫びから葦へと移り、国じゅうへ広がった。だがミダス王が寛容さを示すと、耳は元へ戻る。",
+              "tone": "narration"
+            }
+          ]
+        },
+        {
+          "id": "ep-007",
+          "title": "月桂樹の冠",
+          "summary": "キューピッドの矢は、恋と拒絶を同時に走らせる。",
+          "sourceRef": "pre_dokkai2.pdf#P4",
+          "featuredCharacterId": "ria",
+          "glossaryUnlockIds": ["laurel"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "リア",
+              "text": "キューピッドは、恋に落ちる黄金の矢と、嫌悪を呼ぶ鉛の矢で神々をからかった。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "アポロンはダプネに恋焦がれるが、ダプネは彼を拒み、追いつめられた末に月桂樹へ姿を変える。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "アポロンはその木を聖樹とし、月桂樹の冠を頭に載せるようになった。",
+              "tone": "guide"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter-3",
+      "title": "白いカラスと誕生",
+      "subtitle": "コロニス、嫉妬、そして黒い報せ",
+      "summary": "アスクレピオスの母コロニスと、白いカラスが黒く変わるまでの経緯を追う。",
+      "sourceRef": "pre_dokkai2.pdf#P5",
+      "featuredCharacterId": "nox",
+      "episodes": [
+        {
+          "id": "ep-008",
+          "title": "白い羽の伝令",
+          "summary": "コロニスはアポロンと恋に落ち、白いカラスが二人の間を行き来する。",
+          "sourceRef": "pre_dokkai2.pdf#P5",
+          "featuredCharacterId": "ria",
+          "glossaryUnlockIds": ["coronis"],
+          "quizIds": ["rq-004"],
+          "lines": [
+            {
+              "speaker": "リア",
+              "text": "コロニスは『カラスの乙女』という名を持つ、美しい王女として描かれるよ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "アポロンは彼女と恋に落ちるが、忙しさと嫉妬から、一羽の白いカラスを監視役として残した。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "その頃のカラスは真っ白で、人の言葉まで自在に話せたという設定が効いている。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-009",
+          "title": "黒く染まる報告",
+          "summary": "カラスの報告は、嫉妬したアポロンの怒りを燃え上がらせる。",
+          "sourceRef": "pre_dokkai2.pdf#P5",
+          "featuredCharacterId": "nox",
+          "glossaryUnlockIds": [],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "イスキュスと踊るコロニスを見たカラスは、慌ててアポロンへ報告した。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "だが怒りの矛先は、報告した側のカラスにも向く。羽は黒くされ、声もしゃがれてしまう。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "リア",
+              "text": "近くにコップ座があっても、水へ届かないっていう罰までついてくるんだよね。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-010",
+          "title": "母の最後の願い",
+          "summary": "コロニスは子を助けてほしいと願い、アスクレピオスは胎内から取り出される。",
+          "sourceRef": "pre_dokkai2.pdf#P5",
+          "featuredCharacterId": "chiron",
+          "glossaryUnlockIds": ["caesarean"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "アルテミスの矢に倒れたコロニスは、死の間際に『お腹の子供だけは助けてください』と訴えた。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "アポロンは自らの軽率さを悔い、胎内から子を取り出す。教材ではこれを帝王切開の起源として説明している。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "『アスクレピオス』は『常に穏やかな』という意味の名として与えられる。",
+              "tone": "guide"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter-4",
+      "title": "ケイロンの教え",
+      "subtitle": "薬草、往診、そして生に奉仕する医術",
+      "summary": "ケイロンによる医学教育と、延命ではなく生き方に仕える医術の考え方を読む。",
+      "sourceRef": "pre_dokkai2.pdf#P6-P7",
+      "featuredCharacterId": "chiron",
+      "episodes": [
+        {
+          "id": "ep-011",
+          "title": "診療のそばで学ぶ",
+          "summary": "ケイロンは実際の診療を通して、薬草と手当てを一つずつ教える。",
+          "sourceRef": "pre_dokkai2.pdf#P7",
+          "featuredCharacterId": "chiron",
+          "glossaryUnlockIds": ["chiron"],
+          "quizIds": ["rq-005"],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "ケイロンは胃痛、扁桃腺、歯の手入れまで、診療の現場にアスクレピオスを立ち会わせて教えた。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "病を見るだけじゃない。『気の毒だ』と痛みを想像する言葉まで含めて、医術の授業なんだ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "薬草の名前や使い方だけでなく、日頃の健康を守る知識も伝えているのが特徴だよ。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-012",
+          "title": "ヘルミオネの床辺",
+          "summary": "弱った老女のもとで、アスクレピオスは薬を作ろうとする。",
+          "sourceRef": "pre_dokkai2.pdf#P7",
+          "featuredCharacterId": "selene",
+          "glossaryUnlockIds": ["hermione"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "老いで床に伏せたヘルミオネのもとへ、ケイロンとアスクレピオスは往診に向かった。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "アスクレピオスは脈を見て、少しでも命をつなぐために強めの薬を調合しようとする。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "でもケイロンは、見立ては正しいと言いながら『処方するつもりはない』と止めるんだ。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-013",
+          "title": "生に奉仕する術",
+          "summary": "延命がその人にとって善いとは限らない、とケイロンは言う。",
+          "sourceRef": "pre_dokkai2.pdf#P7",
+          "featuredCharacterId": "chiron",
+          "glossaryUnlockIds": ["life_service"],
+          "quizIds": ["rq-006"],
+          "lines": [
+            {
+              "speaker": "カイロン先輩",
+              "text": "万人に効く薬ではなく、その治療が有効と思える者にのみ施す。それが伝えたい医術だ、とケイロンは語る。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "ヘルミオネは今日が家族との別れの日だと悟り、それをよしとしていた。数日の延命は、むしろ苦痛を増すだけだとケイロンは見る。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "医術は生に奉仕する術であって、生死そのものを決める術ではない。ここが教材の中心だ。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-014",
+          "title": "旅立ちの戒め",
+          "summary": "医術を錬金術にしてはならないという言葉とともに、アスクレピオスは旅立つ。",
+          "sourceRef": "pre_dokkai2.pdf#P7",
+          "featuredCharacterId": "chiron",
+          "glossaryUnlockIds": [],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "成長したアスクレピオスが南へ向かうとき、ケイロンは医師である前に人間たちの教師になれと告げる。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "医術は病に打ち勝とうとする生を援助するもの。不老不死を目指す錬金術にしてはならない、と繰り返す。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "ここでの警告が、のちのアスクレピオスの運命を予告しているように読める。",
+              "tone": "guide"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

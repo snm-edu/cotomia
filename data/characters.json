@@ -1,0 +1,38 @@
+[
+  {
+    "id": "selene",
+    "name": "セレネ",
+    "role": "読解ナビ",
+    "bio": "静かな口調で診療録をひもとく優等生。要点整理と要約の導線を作る。",
+    "motif": "月光と白銀",
+    "accent": "#c9d7ff",
+    "sourceRef": "codex_game_handoff_asklepios.md#11"
+  },
+  {
+    "id": "ria",
+    "name": "リア",
+    "role": "初心者サポート",
+    "bio": "初見で引っかかりやすい箇所を明るく言い換えるムードメーカー。",
+    "motif": "春と花",
+    "accent": "#f4b6cb",
+    "sourceRef": "codex_game_handoff_asklepios.md#11"
+  },
+  {
+    "id": "nox",
+    "name": "ノクス",
+    "role": "推理案内役",
+    "bio": "論理パズルの条件整理を担当する、夜色の観察者。",
+    "motif": "星と黒い羽",
+    "accent": "#8fa9ff",
+    "sourceRef": "codex_game_handoff_asklepios.md#11"
+  },
+  {
+    "id": "chiron",
+    "name": "カイロン先輩",
+    "role": "医の価値観ガイド",
+    "bio": "知識を行為の意味につなげる先輩。医療観に触れる場面で前に出る。",
+    "motif": "薬草と弓",
+    "accent": "#9ad3aa",
+    "sourceRef": "codex_game_handoff_asklepios.md#11"
+  }
+]

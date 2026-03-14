@@ -1,0 +1,93 @@
+[
+  {
+    "id": "hippocrates",
+    "term": "ヒポクラテス",
+    "reading": "ひぽくらてす",
+    "description": "古代ギリシアの医師。迷信や呪術から医学を切り離し、医の倫理を語った人物として扱われる。",
+    "sourceRef": "pre_dokkai2.pdf#P0"
+  },
+  {
+    "id": "oath",
+    "term": "ヒポクラテスの誓い",
+    "reading": "ひぽくらてすのちかい",
+    "description": "患者の利益を優先し、有害な手段を避け、秘密を守るという医の基本姿勢を示す誓い。",
+    "sourceRef": "pre_dokkai2.pdf#P0-P1"
+  },
+  {
+    "id": "asklepios",
+    "term": "アスクレピオス",
+    "reading": "あすくれぴおす",
+    "description": "ギリシア神話の医神。多くの人を救い、医療の象徴として語り継がれる半神。",
+    "sourceRef": "pre_dokkai2.pdf#P1"
+  },
+  {
+    "id": "staff",
+    "term": "アスクレピオスの杖",
+    "reading": "あすくれぴおすのつえ",
+    "description": "一本の杖に蛇が巻きつく医療のシンボル。教材では救急医療の象徴にも触れている。",
+    "sourceRef": "pre_dokkai2.pdf#P1"
+  },
+  {
+    "id": "apollo",
+    "term": "アポロン",
+    "reading": "あぽろん",
+    "description": "太陽神であり、音楽・予言・医術などを司る多芸な神。アスクレピオスの父。",
+    "sourceRef": "pre_dokkai2.pdf#P2-P4"
+  },
+  {
+    "id": "delos",
+    "term": "デロス島",
+    "reading": "でろすとう",
+    "description": "海底を漂っていた島。レトがアポロンとアルテミスを生んだ場所として本文に登場する。",
+    "sourceRef": "pre_dokkai2.pdf#P2"
+  },
+  {
+    "id": "midas",
+    "term": "ミダス王",
+    "reading": "みだすおう",
+    "description": "パンを支持してアポロンを怒らせ、ロバの耳に変えられた王。後に寛容さを示す。",
+    "sourceRef": "pre_dokkai2.pdf#P3"
+  },
+  {
+    "id": "laurel",
+    "term": "月桂樹",
+    "reading": "げっけいじゅ",
+    "description": "ダプネが姿を変えた木。アポロンの聖樹となり、冠の由来として語られる。",
+    "sourceRef": "pre_dokkai2.pdf#P4"
+  },
+  {
+    "id": "coronis",
+    "term": "コロニス",
+    "reading": "ころにす",
+    "description": "アスクレピオスの母。『カラスの乙女』という意味を持ち、白いカラスの挿話とともに描かれる。",
+    "sourceRef": "pre_dokkai2.pdf#P5"
+  },
+  {
+    "id": "caesarean",
+    "term": "帝王切開",
+    "reading": "ていおうせっかい",
+    "description": "教材では、コロニスの胎内からアスクレピオスが取り出された場面と結びつけて説明される語。",
+    "sourceRef": "pre_dokkai2.pdf#P5 / pre_dokkai_kaitou.pdf#Step2-問9"
+  },
+  {
+    "id": "chiron",
+    "term": "ケイロン",
+    "reading": "けいろん",
+    "description": "ケンタウロス族随一の賢者。薬草に詳しく、アスクレピオスへ医学と生き方の両方を教える。",
+    "sourceRef": "pre_dokkai2.pdf#P6-P7"
+  },
+  {
+    "id": "hermione",
+    "term": "ヘルミオネ",
+    "reading": "へるみおね",
+    "description": "老いで床に伏せた女性。延命よりも本人の生き方に即した医療を考える場面で語られる。",
+    "sourceRef": "pre_dokkai2.pdf#P7"
+  },
+  {
+    "id": "life_service",
+    "term": "生に奉仕する医術",
+    "reading": "せいにほうしするいじゅつ",
+    "description": "医術は生を作り出すのではなく、その人の生き方に仕えるべきだというケイロンの核心的な教え。",
+    "sourceRef": "pre_dokkai2.pdf#P7"
+  }
+]
