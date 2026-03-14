@@ -61,6 +61,7 @@ export function LogicQuizRenderer({
       title={quiz.title}
       subtitle={`${quiz.sourceRef} / 型: ${quiz.type}`}
       tone="highlight"
+      style={styles.card}
     >
       <Text style={styles.prompt}>{quiz.prompt}</Text>
 
@@ -145,6 +146,10 @@ export function LogicQuizRenderer({
 }
 
 const styles = StyleSheet.create({
+  card: {
+    flex: 1,
+    minHeight: 0,
+  },
   prompt: {
     color: palette.text,
     fontSize: 15,
@@ -162,6 +167,8 @@ const styles = StyleSheet.create({
     lineHeight: 19,
   },
   stack: {
+    flex: 1,
+    minHeight: 0,
     gap: 10,
   },
   preview: {

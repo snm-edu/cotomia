@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { palette, radii } from "../lib/theme";
 import type { ReadingQuiz } from "../lib/types";
 import { SectionCard } from "./SectionCard";
+import { PagerControls } from "./PagerControls";
 
 type ReadingQuizRendererProps = {
   quiz: ReadingQuiz;
@@ -18,6 +19,7 @@ export function ReadingQuizRenderer({
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [contextAnswers, setContextAnswers] = useState<Record<string, string>>({});
   const [summaryOrder, setSummaryOrder] = useState<string[]>([]);
+  const [contextIndex, setContextIndex] = useState(0);
   const [feedback, setFeedback] = useState<"idle" | "correct" | "wrong">(
     completed ? "correct" : "idle",
   );
@@ -82,6 +84,7 @@ export function ReadingQuizRenderer({
       title={quiz.title}
       subtitle={`${quiz.sourceRef} / 報酬: 好感度 +${quiz.reward.affection ?? 0}`}
       tone="highlight"
+      style={styles.card}
     >
       <Text style={styles.prompt}>{quiz.prompt}</Text>
 
@@ -114,26 +117,36 @@ export function ReadingQuizRenderer({
       {quiz.type === "context_insert"
         ? (
           <View style={styles.stack}>
-            {quiz.blanks.map((blank) => (
-              <View key={blank.id} style={styles.blankCard}>
-                <Text style={styles.blankText}>{blank.excerpt}</Text>
-                <View style={styles.optionWrap}>
-                  {quiz.options.map((option) => {
-                    const active = contextAnswers[blank.id] === option;
-                    return (
-                      <Pressable
-                        key={`${blank.id}-${option}`}
-                        style={[styles.token, active && styles.tokenActive]}
-                        onPress={() =>
-                          setContextAnswers((current) => ({ ...current, [blank.id]: option }))}
-                      >
-                        <Text style={styles.tokenText}>{option}</Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
+            <PagerControls
+              items={quiz.blanks.map((blank, index) => ({
+                id: blank.id,
+                label: `空欄 ${index + 1}`,
+                meta: contextAnswers[blank.id] ?? "未選択",
+              }))}
+              index={contextIndex}
+              onChange={setContextIndex}
+            />
+            <View style={styles.blankCard}>
+              <Text style={styles.blankText}>{quiz.blanks[contextIndex].excerpt}</Text>
+              <View style={styles.optionWrap}>
+                {quiz.options.map((option) => {
+                  const active = contextAnswers[quiz.blanks[contextIndex].id] === option;
+                  return (
+                    <Pressable
+                      key={`${quiz.blanks[contextIndex].id}-${option}`}
+                      style={[styles.token, active && styles.tokenActive]}
+                      onPress={() =>
+                        setContextAnswers((current) => ({
+                          ...current,
+                          [quiz.blanks[contextIndex].id]: option,
+                        }))}
+                    >
+                      <Text style={styles.tokenText}>{option}</Text>
+                    </Pressable>
+                  );
+                })}
               </View>
-            ))}
+            </View>
             <Pressable style={styles.actionButton} onPress={checkContextInsert}>
               <Text style={styles.actionText}>接続詞を確認する</Text>
             </Pressable>
@@ -230,12 +243,18 @@ function ResultPanel({
 }
 
 const styles = StyleSheet.create({
+  card: {
+    flex: 1,
+    minHeight: 0,
+  },
   prompt: {
     color: palette.text,
     fontSize: 15,
     lineHeight: 23,
   },
   stack: {
+    flex: 1,
+    minHeight: 0,
     gap: 12,
   },
   choiceCard: {
@@ -270,15 +289,17 @@ const styles = StyleSheet.create({
     lineHeight: 18,
   },
   blankCard: {
+    flex: 1,
     gap: 10,
     padding: 12,
     borderRadius: radii.md,
     backgroundColor: "rgba(255,255,255,0.035)",
+    justifyContent: "center",
   },
   blankText: {
     color: palette.text,
     fontSize: 14,
-    lineHeight: 22,
+    lineHeight: 21,
   },
   optionWrap: {
     flexDirection: "row",
@@ -334,6 +355,7 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: radii.md,
     backgroundColor: "rgba(255,255,255,0.035)",
+    minHeight: 78,
     gap: 6,
   },
   summaryPreviewLabel: {

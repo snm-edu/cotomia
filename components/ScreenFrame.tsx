@@ -1,12 +1,12 @@
 import { PropsWithChildren } from "react";
-import { ScrollView, StyleSheet, Text, View, type ViewStyle } from "react-native";
+import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { palette } from "../lib/theme";
 
 type ScreenFrameProps = PropsWithChildren<{
   title: string;
   subtitle?: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
 }>;
 
 export function ScreenFrame({
@@ -19,13 +19,13 @@ export function ScreenFrame({
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.backgroundOrbOne} />
       <View style={styles.backgroundOrbTwo} />
-      <ScrollView contentContainerStyle={[styles.content, style]}>
+      <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.title}>{title}</Text>
           {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
         </View>
-        {children}
-      </ScrollView>
+        <View style={[styles.stage, style]}>{children}</View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -36,25 +36,30 @@ const styles = StyleSheet.create({
     backgroundColor: palette.night,
   },
   content: {
+    flex: 1,
     paddingHorizontal: 18,
-    paddingBottom: 40,
-    gap: 16,
+    paddingBottom: 14,
+    gap: 12,
   },
   header: {
-    paddingTop: 10,
-    gap: 8,
+    paddingTop: 8,
+    gap: 6,
   },
   title: {
     color: palette.text,
-    fontSize: 30,
+    fontSize: 28,
     fontWeight: "800",
     letterSpacing: 0.4,
   },
   subtitle: {
     color: palette.muted,
-    fontSize: 14,
-    lineHeight: 22,
+    fontSize: 13,
+    lineHeight: 20,
     maxWidth: 560,
+  },
+  stage: {
+    flex: 1,
+    minHeight: 0,
   },
   backgroundOrbOne: {
     position: "absolute",

@@ -17,14 +17,14 @@ export function StatChip({ label, value }: StatChipProps) {
 
 const styles = StyleSheet.create({
   chip: {
-    minWidth: 94,
-    paddingVertical: 10,
-    paddingHorizontal: 12,
+    minWidth: 78,
+    paddingVertical: 8,
+    paddingHorizontal: 10,
     borderRadius: radii.md,
     backgroundColor: "rgba(255,255,255,0.06)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
-    gap: 4,
+    gap: 3,
   },
   label: {
     color: palette.muted,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   value: {
     color: palette.text,
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: "700",
   },
 });

@@ -11,18 +11,12 @@ export default function SettingsScreen() {
 
   return (
     <ScreenFrame title="設定" subtitle="MVP 用の保存情報と検証状態を表示します。">
-      <SectionCard title="保存情報">
+      <SectionCard title="保存情報" subtitle="進行保存とコンテンツ検証" style={styles.card}>
         <Text style={styles.body}>スキーマ: GameProgressV{STORAGE_SCHEMA_VERSION}</Text>
         <Text style={styles.body}>保存方式: Zustand persist + AsyncStorage</Text>
-      </SectionCard>
-
-      <SectionCard title="コンテンツ検証">
         <Text style={styles.body}>
-          {contentIssues.length ? `${contentIssues.length} 件の問題があります。` : "問題は見つかっていません。"}
+          {contentIssues.length ? `${contentIssues.length} 件の問題があります。` : "コンテンツ検証は正常です。"}
         </Text>
-      </SectionCard>
-
-      <SectionCard title="進行リセット" subtitle="デバッグ向け。既読・好感度・所持報酬を初期化します。">
         <Pressable
           style={styles.resetButton}
           onPress={() =>
@@ -39,6 +33,10 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
+  card: {
+    flex: 1,
+    justifyContent: "center",
+  },
   body: {
     color: palette.text,
     lineHeight: 22,

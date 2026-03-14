@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
 import { StoryPlayer } from "../../components/StoryPlayer";
@@ -50,53 +51,47 @@ export default function ChapterScreen() {
 
   return (
     <ScreenFrame title={chapter.title} subtitle={chapter.subtitle}>
-      <SectionCard title="章内ナビ" subtitle={`${currentIndex + 1}/${chapter.episodes.length}`}>
-        <View style={styles.episodeTabs}>
-          {chapter.episodes.map((item, index) => {
-            const active = index === currentIndex;
-            const complete = readEpisodeIds.includes(item.id);
-            return (
-              <Pressable
-                key={item.id}
-                style={[styles.episodeTab, active && styles.episodeTabActive]}
-                onPress={() => setCurrentIndex(index)}
-              >
-                <Text style={styles.episodeTabTitle}>{item.title}</Text>
-                <Text style={styles.episodeTabMeta}>{complete ? "読了" : "未読"}</Text>
-              </Pressable>
-            );
-          })}
-        </View>
-      </SectionCard>
+      <View style={styles.screen}>
+        <SectionCard tone="highlight" style={styles.storyCard}>
+          <PagerControls
+            items={chapter.episodes.map((item) => ({
+              id: item.id,
+              label: item.title,
+              meta: item.summary,
+              stateLabel: readEpisodeIds.includes(item.id) ? "read" : "new",
+            }))}
+            index={currentIndex}
+            onChange={setCurrentIndex}
+          />
+          <StoryPlayer episode={episode} accent={character?.accent ?? palette.violet} />
+        </SectionCard>
 
-      <StoryPlayer episode={episode} accent={character?.accent ?? palette.violet} />
+        <SectionCard title="操作" subtitle="読了とミッション、次話への導線" style={styles.actionCard}>
+          <View style={styles.buttonRow}>
+            <Pressable
+              style={[styles.actionButton, isRead && styles.actionButtonMuted]}
+              onPress={() => advanceEpisode(episode.id, episode.glossaryUnlockIds)}
+            >
+              <Text style={styles.actionText}>{isRead ? "読了済み" : "読了にする"}</Text>
+            </Pressable>
+            <Pressable
+              style={styles.ghostButton}
+              disabled={currentIndex === 0}
+              onPress={() => setCurrentIndex((value) => Math.max(0, value - 1))}
+            >
+              <Text style={styles.ghostText}>前話</Text>
+            </Pressable>
+            <Pressable
+              style={styles.ghostButton}
+              disabled={currentIndex === chapter.episodes.length - 1}
+              onPress={() =>
+                setCurrentIndex((value) => Math.min(chapter.episodes.length - 1, value + 1))}
+            >
+              <Text style={styles.ghostText}>次話</Text>
+            </Pressable>
+          </View>
 
-      <SectionCard title="操作" subtitle="読了後にミッションへ進む導線">
-        <View style={styles.buttonRow}>
-          <Pressable
-            style={[styles.actionButton, isRead && styles.actionButtonMuted]}
-            onPress={() => advanceEpisode(episode.id, episode.glossaryUnlockIds)}
-          >
-            <Text style={styles.actionText}>{isRead ? "読了済み" : "読了にする"}</Text>
-          </Pressable>
-          <Pressable
-            style={styles.ghostButton}
-            disabled={currentIndex === 0}
-            onPress={() => setCurrentIndex((value) => Math.max(0, value - 1))}
-          >
-            <Text style={styles.ghostText}>前へ</Text>
-          </Pressable>
-          <Pressable
-            style={styles.ghostButton}
-            disabled={currentIndex === chapter.episodes.length - 1}
-            onPress={() =>
-              setCurrentIndex((value) => Math.min(chapter.episodes.length - 1, value + 1))}
-          >
-            <Text style={styles.ghostText}>次へ</Text>
-          </Pressable>
-        </View>
-        {episode.quizIds.length
-          ? (
+          {episode.quizIds.length ? (
             <View style={styles.quizList}>
               {episode.quizIds.map((quizId) => {
                 const quiz = readingQuizById[quizId];
@@ -114,58 +109,40 @@ export default function ChapterScreen() {
                 );
               })}
             </View>
-          )
-          : (
-            <Text style={styles.metaText}>このエピソードには読解ミッションはありません。</Text>
+          ) : (
+            <Text style={styles.metaText}>この話には読解ミッションはありません。</Text>
           )}
-      </SectionCard>
 
-      {episode.glossaryUnlockIds.length
-        ? (
-          <SectionCard title="解放される用語">
+          {episode.glossaryUnlockIds.length ? (
             <View style={styles.tokenRow}>
               {episode.glossaryUnlockIds.map((glossaryId) => {
                 const unlocked = unlockedGlossaryIds.includes(glossaryId);
                 return (
-                  <View
-                    key={glossaryId}
-                    style={[styles.token, unlocked && styles.tokenUnlocked]}
-                  >
+                  <View key={glossaryId} style={[styles.token, unlocked && styles.tokenUnlocked]}>
                     <Text style={styles.tokenText}>{glossaryId}</Text>
                   </View>
                 );
               })}
             </View>
-          </SectionCard>
-        )
-        : null}
+          ) : null}
+        </SectionCard>
+      </View>
     </ScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
-  episodeTabs: {
-    gap: 8,
+  screen: {
+    flex: 1,
+    minHeight: 0,
+    gap: 12,
   },
-  episodeTab: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.04)",
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)",
-    gap: 4,
+  storyCard: {
+    flex: 1,
+    minHeight: 0,
   },
-  episodeTabActive: {
-    borderColor: "rgba(242,198,109,0.55)",
-    backgroundColor: "rgba(242,198,109,0.12)",
-  },
-  episodeTabTitle: {
-    color: palette.text,
-    fontWeight: "700",
-  },
-  episodeTabMeta: {
-    color: palette.muted,
-    fontSize: 12,
+  actionCard: {
+    gap: 10,
   },
   buttonRow: {
     flexDirection: "row",
@@ -225,6 +202,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
+    paddingTop: 2,
   },
   token: {
     paddingVertical: 8,

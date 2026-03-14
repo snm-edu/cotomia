@@ -1,11 +1,11 @@
 import { PropsWithChildren } from "react";
-import { StyleSheet, Text, View, type ViewStyle } from "react-native";
+import { StyleSheet, Text, View, type StyleProp, type ViewStyle } from "react-native";
 import { palette, radii } from "../lib/theme";
 
 type SectionCardProps = PropsWithChildren<{
   title?: string;
   subtitle?: string;
-  style?: ViewStyle;
+  style?: StyleProp<ViewStyle>;
   tone?: "default" | "highlight" | "warning";
 }>;
 
@@ -28,13 +28,13 @@ export function SectionCard({
 const styles = StyleSheet.create({
   card: {
     borderRadius: radii.xl,
-    padding: 18,
+    padding: 14,
     gap: 10,
     borderWidth: 1,
   },
   title: {
     color: palette.text,
-    fontSize: 18,
+    fontSize: 17,
     fontWeight: "700",
     letterSpacing: 0.4,
   },

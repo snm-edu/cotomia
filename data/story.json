@@ -403,6 +403,182 @@
           ]
         }
       ]
+    },
+    {
+      "id": "chapter-5",
+      "title": "神殿病院と蘇生",
+      "subtitle": "アスクレピエイオン、蛇の葉、メドゥーサの血",
+      "summary": "アスクレピオスが病院の原型を築き、死者を蘇らせる力へ近づいていく過程を読む。",
+      "sourceRef": "pre_dokkai2.pdf#P8-P10",
+      "featuredCharacterId": "selene",
+      "episodes": [
+        {
+          "id": "ep-015",
+          "title": "病院のはじまり",
+          "summary": "アスクレピエイオンは、信仰と治療が同時に行われる最初期の病院として描かれる。",
+          "sourceRef": "pre_dokkai2.pdf#P8",
+          "featuredCharacterId": "selene",
+          "glossaryUnlockIds": ["asklepieion", "hygeia"],
+          "quizIds": ["rq-007"],
+          "lines": [
+            {
+              "speaker": "セレネ",
+              "text": "エピダウロスでアスクレピオスが築いたアスクレピエイオンは、待合室と宿泊施設を備えた治療の聖域なんだ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "人々は順番を待ちながら宿泊し、秘儀の部屋で眠り、治療を受ける。そこは信仰と医療が同時に行われる場所だった。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "リア",
+              "text": "世界最初の病院と呼ばれる理由が、建物の役割からすっと分かる章だね。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-016",
+          "title": "蛇がくれた葉",
+          "summary": "患者を救えず追い詰められたとき、かつて助けた蛇が蘇生の葉を運んでくる。",
+          "sourceRef": "pre_dokkai2.pdf#P8",
+          "featuredCharacterId": "selene",
+          "glossaryUnlockIds": [],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "弟子が薬を取り違え、患者はショック死してしまう。アスクレピオスは蘇生を試みながら祈り続けた。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "そのとき、以前に治療した蛇が植物の葉をくわえて現れ、患者の口へ入れると息を吹き返したと伝えられるよ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "医術の象徴である蛇が、ここでは蘇生そのものの媒介として働くんだ。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-017",
+          "title": "メドゥーサの血",
+          "summary": "アテネは右の血を蘇生の秘薬、左の血を猛毒としてアスクレピオスへ授ける。",
+          "sourceRef": "pre_dokkai2.pdf#P9",
+          "featuredCharacterId": "nox",
+          "glossaryUnlockIds": ["medusa"],
+          "quizIds": ["rq-008"],
+          "lines": [
+            {
+              "speaker": "ノクス",
+              "text": "メドゥーサの首から滴る血は二種類に分けられ、右は蘇生の秘薬、左は即死の猛毒として集められた。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "診療録",
+              "text": "アテネはこの秘薬をアスクレピオスへ授け、彼は死者をも生き返らせる力を手に入れる。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "リア",
+              "text": "同じ『血』でも、向きが違うだけで救いにも破滅にもなる対比が強烈だね。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-018",
+          "title": "ヒッポリュトスの帰還",
+          "summary": "理不尽に死んだ若者ヒッポリュトスは、アスクレピオスによって冥界から引き戻される。",
+          "sourceRef": "pre_dokkai2.pdf#P10",
+          "featuredCharacterId": "nox",
+          "glossaryUnlockIds": ["hippolytus"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "継母の讒言で死に追いやられたヒッポリュトスを哀れんだアルテミスは、甥アスクレピオスに蘇生を頼んだ。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "蘇った彼は、世の嫉妬を避けるため名前も姿も変えて遠くで余生を送ることになる。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "蘇生は『戻せば終わり』じゃない。その後の人生ごと背負う出来事だと分かるね。",
+              "tone": "guide"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "chapter-6",
+      "title": "雷と星座",
+      "subtitle": "死の秩序、ゼウスの裁き、そして師の最期",
+      "summary": "蘇生の力が神々の秩序を揺らし、アスクレピオスとケイロンがそれぞれの終幕を迎える。",
+      "sourceRef": "pre_dokkai2.pdf#P11-P12",
+      "featuredCharacterId": "chiron",
+      "episodes": [
+        {
+          "id": "ep-019",
+          "title": "ゼウスの雷",
+          "summary": "六人を蘇らせた医神に対し、ゼウスは世界の秩序を守るため雷を落とす。",
+          "sourceRef": "pre_dokkai2.pdf#P11",
+          "featuredCharacterId": "nox",
+          "glossaryUnlockIds": [],
+          "quizIds": ["rq-009"],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "死者が冥界へ届かなくなったことに怒ったハデスは、ゼウスへ訴えた。秩序を守るため、アスクレピオスには死刑が下される。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "ノクス",
+              "text": "大神の雷は、薬箱ごとアスクレピオスを消し去った。不死の神でさえ、世界の法の前では例外ではなかったんだ。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "リア",
+              "text": "医術が生を助けるほど、逆に『生死を越えていいのか』という線引きも厳しく問われるんだね。",
+              "tone": "guide"
+            }
+          ]
+        },
+        {
+          "id": "ep-020",
+          "title": "ケイロンは星になる",
+          "summary": "不死ゆえに苦しみ続けたケイロンは死へ導かれ、のちに星座として弟子を見守る。",
+          "sourceRef": "pre_dokkai2.pdf#P12",
+          "featuredCharacterId": "chiron",
+          "glossaryUnlockIds": ["ophiuchus"],
+          "quizIds": [],
+          "lines": [
+            {
+              "speaker": "診療録",
+              "text": "ヘラクレスの毒矢が膝に刺さったケイロンは、不死のために痛みから逃れられず、死より辛い苦しみを負う。",
+              "tone": "narration"
+            },
+            {
+              "speaker": "カイロン先輩",
+              "text": "最後には不死性を譲ることで罰から解放され、死へ導かれる。そしてその後、射手座として蛇遣い座を見守ると語られる。",
+              "tone": "guide"
+            },
+            {
+              "speaker": "セレネ",
+              "text": "師と弟子の物語が、地上の治療から夜空の星座へつながって閉じるのが印象的だよ。",
+              "tone": "guide"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

@@ -89,5 +89,40 @@
     "reading": "せいにほうしするいじゅつ",
     "description": "医術は生を作り出すのではなく、その人の生き方に仕えるべきだというケイロンの核心的な教え。",
     "sourceRef": "pre_dokkai2.pdf#P7"
+  },
+  {
+    "id": "asklepieion",
+    "term": "アスクレピエイオン",
+    "reading": "あすくれぴえいおん",
+    "description": "エピダウロスに築かれた治療の聖域。待合室と宿泊施設を備え、世界最初の病院と説明される。",
+    "sourceRef": "pre_dokkai2.pdf#P8"
+  },
+  {
+    "id": "hygeia",
+    "term": "ヒュゲイア",
+    "reading": "ひゅげいあ",
+    "description": "健康を司る女神。アスクレピオスの子として、治療活動を支える存在に数えられる。",
+    "sourceRef": "pre_dokkai2.pdf#P8"
+  },
+  {
+    "id": "medusa",
+    "term": "メドゥーサ",
+    "reading": "めどぅーさ",
+    "description": "見る者を石に変える怪物。右の血は蘇生の秘薬、左の血は猛毒として語られる。",
+    "sourceRef": "pre_dokkai2.pdf#P9"
+  },
+  {
+    "id": "hippolytus",
+    "term": "ヒッポリュトス",
+    "reading": "ひっぽりゅとす",
+    "description": "理不尽に命を落としたのち、アスクレピオスにより蘇生された若者。",
+    "sourceRef": "pre_dokkai2.pdf#P10"
+  },
+  {
+    "id": "ophiuchus",
+    "term": "蛇遣い座",
+    "reading": "へびつかいざ",
+    "description": "アスクレピオスの星座。教材の結びでは、射手座となったケイロンがいつも見守る星として語られる。",
+    "sourceRef": "pre_dokkai2.pdf#P12"
   }
 ]
