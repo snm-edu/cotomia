@@ -95,38 +95,32 @@ export default function ChapterScreen() {
 
         <SectionCard title="操作" subtitle="読了とミッション、次話への導線" style={styles.actionCard}>
           <View style={styles.buttonRow}>
-            <Link
-              href={buildAdvanceHref(chapter.id, hasNextEpisode ? nextEpisodeIndex : currentIndex, episode.id)}
-              asChild
-            >
-              <Pressable
-                style={StyleSheet.flatten([styles.actionButton, isRead && styles.actionButtonMuted])}
-                onPress={() => advanceEpisode(episode.id, episode.glossaryUnlockIds)}
-              >
+            <Link href={buildAdvanceHref(chapter.id, hasNextEpisode ? nextEpisodeIndex : currentIndex, episode.id)}>
+              <View style={StyleSheet.flatten([styles.actionButton, isRead && styles.actionButtonMuted])}>
                 <Text style={styles.actionText}>{isRead ? "読了済み" : "読了にする"}</Text>
-              </Pressable>
+              </View>
             </Link>
             {currentIndex > 0 ? (
-              <Link href={buildChapterHref(chapter.id, currentIndex - 1, 0)} asChild>
-                <Pressable style={styles.ghostButton}>
+              <Link href={buildChapterHref(chapter.id, currentIndex - 1, 0)}>
+                <View style={styles.ghostButton}>
                   <Text style={styles.ghostText}>前話</Text>
-                </Pressable>
+                </View>
               </Link>
             ) : (
-              <Pressable style={[styles.ghostButton, styles.ghostButtonDisabled]} disabled>
+              <View style={[styles.ghostButton, styles.ghostButtonDisabled]}>
                 <Text style={styles.ghostText}>前話</Text>
-              </Pressable>
+              </View>
             )}
             {currentIndex < chapter.episodes.length - 1 ? (
-              <Link href={buildChapterHref(chapter.id, currentIndex + 1, 0)} asChild>
-                <Pressable style={styles.ghostButton}>
+              <Link href={buildChapterHref(chapter.id, currentIndex + 1, 0)}>
+                <View style={styles.ghostButton}>
                   <Text style={styles.ghostText}>次話</Text>
-                </Pressable>
+                </View>
               </Link>
             ) : (
-              <Pressable style={[styles.ghostButton, styles.ghostButtonDisabled]} disabled>
+              <View style={[styles.ghostButton, styles.ghostButtonDisabled]}>
                 <Text style={styles.ghostText}>次話</Text>
-              </Pressable>
+              </View>
             )}
           </View>
 

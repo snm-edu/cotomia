@@ -101,10 +101,10 @@ function PagerButton({
 }) {
   if (href && !disabled) {
     return (
-      <Link href={href} asChild>
-        <Pressable style={styles.pageButton}>
+      <Link href={href}>
+        <View style={styles.pageButton}>
           <Text style={styles.pageButtonText}>{label}</Text>
-        </Pressable>
+        </View>
       </Link>
     );
   }
@@ -144,8 +144,10 @@ function PagerDot({
 
   if (href) {
     return (
-      <Link href={href} asChild>
-        {content}
+      <Link href={href}>
+        <View style={StyleSheet.flatten([styles.dotButton, active && styles.dotButtonActive])}>
+          <Text style={[styles.dotText, active && styles.dotTextActive]}>{label}</Text>
+        </View>
       </Link>
     );
   }
