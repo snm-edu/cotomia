@@ -7,7 +7,7 @@ import { palette, radii } from "../lib/theme";
 export default function NotFoundScreen() {
   return (
     <ScreenFrame
-      title="診療録が見つかりません"
+      title="ページが見つかりません"
       subtitle="ページが存在しないか、まだ実装されていない導線にアクセスしました。"
     >
       <SectionCard>

@@ -15,6 +15,7 @@ import {
   glossaryData,
   logicQuizData,
 } from "../lib/content";
+import { caseboardModes } from "../lib/caseboard";
 import { getDailyLogicSelection, getLocalDateKey } from "../lib/daily";
 import { withBuildStamp } from "../lib/navigation";
 import { palette, radii } from "../lib/theme";
@@ -97,6 +98,24 @@ export default function HomeScreen() {
             ))}
           </SectionCard>
         ) : null}
+
+        <SectionCard
+          title="CASEBOARD smartphone demo"
+          subtitle="読解とは切り離した、思考力だけの試作導線です。Case Grid / Case Layout / Rule Forge を直接確認できます。"
+        >
+          <Text style={styles.bodyText}>
+            捜査ボード感のある導線で、論理消去・配置推理・規則発見の3タイプをスマホから触れるデモです。
+          </Text>
+          <View style={styles.statsRow}>
+            <StatChip label="Mode" value={caseboardModes.length} />
+            <StatChip label="Case" value={logicQuizData.length} />
+            <StatChip label="Clear" value={completedLogicQuizIds.length} />
+          </View>
+          <View style={styles.ctaRow}>
+            <HomeAction label="CASEBOARD" href="/caseboard" />
+            <HomeAction label="今日の3ケース" href="/daily" />
+          </View>
+        </SectionCard>
 
         <SectionCard
           title="今日の放課後ループ"

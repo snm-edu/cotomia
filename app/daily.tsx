@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
+import { getCaseboardModeMeta } from "../lib/caseboard";
 import { getDailyLogicSelection, getLocalDateKey } from "../lib/daily";
 import { logicQuizData } from "../lib/content";
 import { withBuildStamp } from "../lib/navigation";
@@ -19,19 +20,19 @@ export default function DailyScreen() {
 
   return (
     <ScreenFrame
-      title="デイリー思考"
-      subtitle={`${todayKey} の出題。並べ替え・真偽推理・配置推理を 1 問ずつ。`}
+      title="今日の CASEBOARD"
+      subtitle={`${todayKey} の出題。Case Grid / Case Layout / Rule Forge を 1 問ずつ。`}
     >
       <SectionCard
         title={quiz.title}
-        subtitle={`${quiz.type} / ${quiz.sourceRef}`}
+        subtitle={`${getCaseboardModeMeta(quiz).label} / ${quiz.sourceRef}`}
         style={styles.card}
       >
         <PagerControls
           items={selection.map((item) => ({
             id: item.id,
             label: item.title,
-            meta: item.type,
+            meta: getCaseboardModeMeta(item).label,
             stateLabel: completedLogicQuizIds.includes(item.id) ? "clear" : "today",
           }))}
           index={quizIndex}
@@ -55,7 +56,7 @@ export default function DailyScreen() {
           </View>
           <Link href={withBuildStamp(`/mini/${quiz.id}`)}>
             <View style={styles.button}>
-              <Text style={styles.buttonText}>挑戦する</Text>
+              <Text style={styles.buttonText}>ケースを開く</Text>
             </View>
           </Link>
         </View>

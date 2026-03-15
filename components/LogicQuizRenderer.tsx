@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { getCaseboardModeMeta } from "../lib/caseboard";
 import { palette, radii } from "../lib/theme";
 import type { LogicQuiz } from "../lib/types";
 import { SectionCard } from "./SectionCard";
@@ -22,6 +23,7 @@ export function LogicQuizRenderer({
   );
 
   const solved = completed || feedback === "correct";
+  const mode = getCaseboardModeMeta(quiz);
 
   const itemsById = useMemo(() => {
     if (quiz.type !== "order_sort") {
@@ -59,7 +61,7 @@ export function LogicQuizRenderer({
   return (
     <SectionCard
       title={quiz.title}
-      subtitle={`${quiz.sourceRef} / 型: ${quiz.type}`}
+      subtitle={`${mode.label} / ${quiz.sourceRef}`}
       tone="highlight"
       style={styles.card}
     >
@@ -130,12 +132,16 @@ export function LogicQuizRenderer({
         )}
 
       <Pressable style={styles.actionButton} onPress={checkAnswer}>
-        <Text style={styles.actionText}>判定する</Text>
+        <Text style={styles.actionText}>ケースを確定</Text>
       </Pressable>
 
       <View style={feedback === "correct" ? styles.resultSuccess : styles.resultNeutral}>
         <Text style={styles.resultLabel}>
-          {feedback === "correct" ? "思考ミニゲーム達成" : feedback === "wrong" ? "ヒントを見直そう" : "ヒント"}
+          {feedback === "correct"
+            ? "CASE SOLVED"
+            : feedback === "wrong"
+              ? "矛盾を見直す"
+              : "捜査ヒント"}
         </Text>
         <Text style={styles.resultText}>
           {feedback === "correct" ? quiz.explanation : quiz.hint}
