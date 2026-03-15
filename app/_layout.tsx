@@ -17,7 +17,7 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="index" options={{ title: "ホーム", headerShown: false }} />
-        <Stack.Screen name="caseboard/index" options={{ title: "CASEBOARD demo" }} />
+        <Stack.Screen name="caseboard/index" options={{ title: "CASEBOARD 問題一覧" }} />
         <Stack.Screen name="caseboard/[id]" options={{ title: "CASEBOARD" }} />
         <Stack.Screen name="story/index" options={{ title: "診療録一覧" }} />
         <Stack.Screen name="story/[chapter]" options={{ title: "ストーリー" }} />

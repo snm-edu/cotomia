@@ -1,8 +1,6 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { validateCaseboardCases } from "../lib/caseboardValidation.ts";
 import { validateContentBundle } from "../lib/contentValidation.ts";
-import type { CaseboardCase } from "../lib/caseboardTypes.ts";
 import type { Character, GlossaryEntry, LogicQuiz, ReadingQuiz, StoryData } from "../lib/types.ts";
 
 function readJson<T>(path: string): T {
@@ -17,10 +15,7 @@ const content = {
   glossary: readJson<GlossaryEntry[]>("data/glossary.json"),
 };
 
-const issues = [
-  ...validateContentBundle(content),
-  ...validateCaseboardCases(readJson<CaseboardCase[]>("data/caseboardCases.json")),
-];
+const issues = validateContentBundle(content);
 
 if (issues.length) {
   console.error("Content validation failed:");

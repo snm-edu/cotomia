@@ -1,32 +1,32 @@
 import { Link, useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
-import { CaseboardCaseRenderer } from "../../components/caseboard/CaseboardCaseRenderer";
+import { LogicQuizRenderer } from "../../components/LogicQuizRenderer";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
 import { getCaseboardModeMeta } from "../../lib/caseboard";
-import { caseboardCaseById, caseboardCaseData } from "../../lib/caseboardContent";
+import { logicQuizById, logicQuizData } from "../../lib/content";
 import { withBuildStamp } from "../../lib/navigation";
 import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
 
 export function generateStaticParams() {
-  return caseboardCaseData.map((puzzle) => ({ id: puzzle.id }));
+  return logicQuizData.map((quiz) => ({ id: quiz.id }));
 }
 
 export default function CaseboardQuizScreen() {
   const params = useLocalSearchParams<{ id?: string }>();
   const quizId = typeof params.id === "string" ? params.id : "";
-  const quiz = caseboardCaseById[quizId];
+  const quiz = logicQuizById[quizId];
   const completedLogicQuizIds = useGameStore((state) => state.completedLogicQuizIds);
   const submitLogicQuiz = useGameStore((state) => state.submitLogicQuiz);
 
   if (!quiz) {
     return (
-      <ScreenFrame title="CASEBOARD" subtitle="ケースが見つかりません。">
+      <ScreenFrame title="CASEBOARD" subtitle="問題が見つかりません。">
         <SectionCard>
           <Link href={withBuildStamp("/caseboard")}>
             <View style={styles.linkButton}>
-              <Text style={styles.linkButtonText}>CASEBOARD 一覧へ戻る</Text>
+              <Text style={styles.linkButtonText}>問題一覧へ戻る</Text>
             </View>
           </Link>
         </SectionCard>
@@ -34,30 +34,32 @@ export default function CaseboardQuizScreen() {
     );
   }
 
-  const mode = getCaseboardModeMeta(quiz.mode);
+  const mode = getCaseboardModeMeta(quiz);
 
   return (
     <ScreenFrame
-      title="CASEBOARD"
-      subtitle={`${mode.label} / ${quiz.prompt}`}
+      title={quiz.title}
+      subtitle={`${mode.label} / 添付PDFの原問変換`}
       style={styles.screen}
     >
-      <SectionCard
-        title={quiz.title}
-        subtitle={`${quiz.sourceRef} / ${completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "NEW"}`}
-      >
-        <Text style={styles.summaryText}>{quiz.goalText}</Text>
+      <SectionCard subtitle={quiz.sourceRef}>
+        <Text style={styles.summaryText}>{quiz.prompt}</Text>
         <View style={styles.linkRow}>
           <Link href={withBuildStamp("/caseboard")}>
             <View style={styles.linkButton}>
-              <Text style={styles.linkButtonText}>一覧へ戻る</Text>
+              <Text style={styles.linkButtonText}>問題一覧へ戻る</Text>
+            </View>
+          </Link>
+          <Link href={withBuildStamp("/daily")}>
+            <View style={styles.linkButton}>
+              <Text style={styles.linkButtonText}>今日の3題へ</Text>
             </View>
           </Link>
         </View>
       </SectionCard>
 
-      <CaseboardCaseRenderer
-        puzzle={quiz}
+      <LogicQuizRenderer
+        quiz={quiz}
         completed={completedLogicQuizIds.includes(quiz.id)}
         onSolved={() => submitLogicQuiz(quiz.id, quiz.reward)}
       />

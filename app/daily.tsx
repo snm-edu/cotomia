@@ -54,7 +54,7 @@ export default function DailyScreen() {
             </Text>
             <Text style={styles.metaText}>報酬 +{quiz.reward.affection ?? 0}</Text>
           </View>
-          <Link href={withBuildStamp(`/mini/${quiz.id}`)}>
+          <Link href={withBuildStamp(`/caseboard/${quiz.id}`)}>
             <View style={styles.button}>
               <Text style={styles.buttonText}>ケースを開く</Text>
             </View>

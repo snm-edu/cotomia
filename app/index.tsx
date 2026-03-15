@@ -1,41 +1,24 @@
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
+import { StyleSheet, Text, View } from "react-native";
 import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
 import { StatChip } from "../components/StatChip";
-import { caseboardCaseData, getNextUnclearedCaseboardCase } from "../lib/caseboardContent";
 import {
-  characterById,
-  chapters,
-  contentIssues,
-  episodes,
-  getChapterProgress,
-  getNextUnreadEpisode,
-  glossaryData,
-  logicQuizData,
-} from "../lib/content";
-import { caseboardModes } from "../lib/caseboard";
+  caseboardModes,
+  getCaseboardCasesByMode,
+  getCaseboardModeMeta,
+} from "../lib/caseboard";
+import { contentIssues, logicQuizData } from "../lib/content";
 import { getDailyLogicSelection, getLocalDateKey } from "../lib/daily";
 import { withBuildStamp } from "../lib/navigation";
 import { palette, radii } from "../lib/theme";
 import { useGameStore } from "../store/useGameStore";
 
 export default function HomeScreen() {
-  const [panelIndex, setPanelIndex] = useState(0);
-  const {
-    hydrated,
-    hydrateProgress,
-    claimDailyLogin,
-    readEpisodeIds,
-    completedReadingQuizIds,
-    completedLogicQuizIds,
-    unlockedGlossaryIds,
-    characterAffection,
-    coins,
-    seeds,
-  } = useGameStore();
+  const [modeIndex, setModeIndex] = useState(0);
+  const { hydrated, hydrateProgress, claimDailyLogin, completedLogicQuizIds } = useGameStore();
 
   useEffect(() => {
     hydrateProgress();
@@ -48,47 +31,22 @@ export default function HomeScreen() {
     }
   }, [claimDailyLogin, hydrated, todayKey]);
 
-  const nextEpisode = getNextUnreadEpisode(readEpisodeIds) ?? episodes[0] ?? null;
+  const nextQuiz = logicQuizData.find((quiz) => !completedLogicQuizIds.includes(quiz.id)) ?? logicQuizData[0];
   const dailySelection = getDailyLogicSelection(logicQuizData, todayKey);
-  const totalAffection = Object.values(characterAffection).reduce((sum, value) => sum + value, 0);
-  const nextCaseboardCase = getNextUnclearedCaseboardCase(completedLogicQuizIds) ?? caseboardCaseData[0];
-  const topCharacters = Object.entries(characterAffection)
-    .sort((left, right) => right[1] - left[1])
-    .slice(0, 2)
-    .map(([id, value]) => ({ id, value }));
-
-  const homePanels = useMemo(
-    () => [
-      {
-        id: "next",
-        label: "次の物語",
-        meta: nextEpisode?.title ?? "全話読了",
-        stateLabel: nextEpisode ? "story" : "done",
-      },
-      {
-        id: "daily",
-        label: "今日の思考",
-        meta: `${dailySelection.length} 題`,
-        stateLabel: "logic",
-      },
-      {
-        id: "progress",
-        label: "進行状況",
-        meta: `${readEpisodeIds.length}/${episodes.length} 話既読`,
-      },
-      {
-        id: "archive",
-        label: "図鑑と設定",
-        meta: `${unlockedGlossaryIds.length}/${glossaryData.length}`,
-      },
-    ],
-    [dailySelection.length, nextEpisode, readEpisodeIds.length, unlockedGlossaryIds.length],
+  const modeGroups = useMemo(
+    () =>
+      caseboardModes.map((mode) => ({
+        ...mode,
+        quizzes: getCaseboardCasesByMode(mode.id),
+      })),
+    [],
   );
+  const currentMode = modeGroups[modeIndex];
 
   return (
     <ScreenFrame
-      title="コトミア"
-      subtitle="ことばを見つめ、物語を読み、論理を解いて親しみながら進む。"
+      title="CASEBOARD"
+      subtitle="添付の pre_shikou.pdf / pre_shikou_kaitou.pdf 由来の思考力問題だけを収録したスマホデモ。"
     >
       <View style={styles.screen}>
         {contentIssues.length ? (
@@ -102,132 +60,57 @@ export default function HomeScreen() {
         ) : null}
 
         <SectionCard
-          title="CASEBOARD smartphone demo"
-          subtitle="読解とは切り離した、思考力だけの試作導線です。Case Grid / Case Layout / Rule Forge を直接確認できます。"
-        >
-          <Text style={styles.bodyText}>
-            捜査ボード感のある導線で、論理消去・配置推理・規則発見の3タイプをスマホから触れるデモです。
-          </Text>
-          <View style={styles.statsRow}>
-            <StatChip label="Mode" value={caseboardModes.length} />
-            <StatChip label="Case" value={caseboardCaseData.length} />
-            <StatChip
-              label="Clear"
-              value={caseboardCaseData.filter((puzzle) => completedLogicQuizIds.includes(puzzle.id)).length}
-            />
-          </View>
-          <View style={styles.ctaRow}>
-            <HomeAction label="CASEBOARD" href="/caseboard" />
-            <HomeAction label="続きから" href={`/caseboard/${nextCaseboardCase.id}`} />
-          </View>
-        </SectionCard>
-
-        <SectionCard
-          title="今日の放課後ループ"
-          subtitle={hydrated ? `ログイン日: ${todayKey}` : "保存データを読み込み中"}
+          title="添付PDFの問題だけ"
+          subtitle="読解、ストーリー、独自ケースは前面に出さず、思考力問題の原問変換だけを見せます。"
           tone="highlight"
         >
           <View style={styles.statsRow}>
-            <StatChip label="好感度" value={totalAffection} />
-            <StatChip label="星しずく" value={coins} />
-            <StatChip label="種" value={seeds} />
-            <StatChip label="用語" value={`${unlockedGlossaryIds.length}/${glossaryData.length}`} />
+            <StatChip label="Total" value={logicQuizData.length} />
+            <StatChip
+              label="Clear"
+              value={logicQuizData.filter((quiz) => completedLogicQuizIds.includes(quiz.id)).length}
+            />
+            <StatChip label="Daily" value={dailySelection.length} />
           </View>
+          <Text style={styles.bodyText}>
+            次に開く問題: {nextQuiz.title} / {getCaseboardModeMeta(nextQuiz).label}
+          </Text>
           <View style={styles.ctaRow}>
-            <HomeAction label="診療録" href="/story" />
-            <HomeAction label="思考" href="/daily" />
+            <HomeAction label="続きから" href={`/caseboard/${nextQuiz.id}`} />
+            <HomeAction label="問題一覧" href="/caseboard" />
+            <HomeAction label="今日の3題" href="/daily" />
           </View>
         </SectionCard>
 
-        <SectionCard style={styles.panelCard}>
-          <PagerControls items={homePanels} index={panelIndex} onChange={setPanelIndex} />
+        <SectionCard style={styles.flexCard}>
+          <PagerControls
+            items={modeGroups.map((mode) => ({
+              id: mode.id,
+              label: mode.label,
+              meta: `${mode.quizzes.length} 問`,
+              stateLabel: mode.eyebrow,
+            }))}
+            index={modeIndex}
+            onChange={setModeIndex}
+          />
 
-          <View style={styles.panelBody}>
-            {panelIndex === 0 && nextEpisode ? (
-              <>
-                <Text style={styles.focusTitle}>{nextEpisode.title}</Text>
-                <Text style={styles.bodyText}>{nextEpisode.summary}</Text>
-                <Text style={styles.panelMeta}>{nextEpisode.sourceRef}</Text>
-                <Link href={getChapterPathByEpisodeId(nextEpisode.id)}>
-                  <View style={styles.primaryButton}>
-                    <Text style={styles.primaryButtonText}>続きから読む</Text>
-                  </View>
-                </Link>
-              </>
-            ) : null}
-
-            {panelIndex === 0 && !nextEpisode ? (
-              <>
-                <Text style={styles.focusTitle}>いまは全話読了済みです</Text>
-                <Text style={styles.bodyText}>
-                  章一覧から好きな場面へ戻るか、デイリー思考と用語集で定着を進められます。
-                </Text>
-                <Link href={withBuildStamp("/story")}>
-                  <View style={styles.primaryButton}>
-                    <Text style={styles.primaryButtonText}>章一覧へ</Text>
-                  </View>
-                </Link>
-              </>
-            ) : null}
-
-            {panelIndex === 1 ? (
-              <>
-                {dailySelection.map((quiz) => (
-                  <Link key={quiz.id} href={withBuildStamp(`/mini/${quiz.id}`)}>
-                    <View style={styles.dailyCard}>
-                      <View style={styles.dailyCardHeader}>
-                        <Text style={styles.dailyType}>{quiz.type}</Text>
-                        <Text style={styles.dailyDone}>
-                          {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "TODAY"}
-                        </Text>
-                      </View>
-                      <Text style={styles.dailyTitle}>{quiz.title}</Text>
-                    </View>
-                  </Link>
-                ))}
-                <HomeAction label="3題まとめて開く" href="/daily" />
-              </>
-            ) : null}
-
-            {panelIndex === 2 ? (
-              <>
-                {chapters.map((chapter) => (
-                  <View key={chapter.id} style={styles.progressBlock}>
-                    <View style={styles.progressHeader}>
-                      <Text style={styles.progressTitle}>{chapter.title}</Text>
-                      <Text style={styles.progressValue}>
-                        {Math.round(getChapterProgress(chapter.id, readEpisodeIds) * 100)}%
-                      </Text>
-                    </View>
-                    <Text style={styles.progressMeta}>
-                      {chapter.episodes.filter((episode) => readEpisodeIds.includes(episode.id)).length}
-                      /{chapter.episodes.length} 話 ・ 読解 {chapter.episodes
-                        .flatMap((episode) => episode.quizIds)
-                        .filter((quizId) => completedReadingQuizIds.includes(quizId)).length} クリア
+          <View style={styles.deckBody}>
+            <Text style={styles.focusTitle}>{currentMode.label}</Text>
+            <Text style={styles.bodyText}>{currentMode.description}</Text>
+            {currentMode.quizzes.map((quiz) => (
+              <Link key={quiz.id} href={withBuildStamp(`/caseboard/${quiz.id}`)}>
+                <View style={styles.quizCard}>
+                  <View style={styles.quizHeader}>
+                    <Text style={styles.quizTitle}>{quiz.title}</Text>
+                    <Text style={styles.quizState}>
+                      {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "PDF"}
                     </Text>
                   </View>
-                ))}
-              </>
-            ) : null}
-
-            {panelIndex === 3 ? (
-              <>
-                <Text style={styles.focusTitle}>図鑑の解放状況</Text>
-                <Text style={styles.bodyText}>
-                  用語は {unlockedGlossaryIds.length} 語。好感度上位は
-                  {topCharacters
-                    .map((character) =>
-                      ` ${characterById[character.id]?.name ?? character.id}:${character.value}`)
-                    .join(" / ")}
-                  です。
-                </Text>
-                <View style={styles.ctaRow}>
-                  <HomeAction label="キャラクター" href="/characters" />
-                  <HomeAction label="用語集" href="/glossary" />
-                  <HomeAction label="設定" href="/settings" />
+                  <Text style={styles.quizPrompt}>{quiz.prompt}</Text>
+                  <Text style={styles.quizMeta}>{quiz.sourceRef}</Text>
                 </View>
-              </>
-            ) : null}
+              </Link>
+            ))}
           </View>
         </SectionCard>
       </View>
@@ -266,11 +149,11 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     gap: 8,
   },
-  panelCard: {
+  flexCard: {
     flex: 1,
     minHeight: 0,
   },
-  panelBody: {
+  deckBody: {
     flex: 1,
     minHeight: 0,
     gap: 10,
@@ -299,23 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 22,
   },
-  panelMeta: {
-    color: palette.muted,
-    fontSize: 12,
-  },
-  primaryButton: {
-    alignSelf: "flex-start",
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: radii.md,
-    backgroundColor: palette.gold,
-  },
-  primaryButtonText: {
-    color: palette.night,
-    fontSize: 14,
-    fontWeight: "700",
-  },
-  dailyCard: {
+  quizCard: {
     padding: 12,
     borderRadius: radii.lg,
     backgroundColor: "rgba(255,255,255,0.04)",
@@ -323,56 +190,30 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.08)",
     gap: 6,
   },
-  dailyCardHeader: {
+  quizHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
+    gap: 12,
   },
-  dailyType: {
-    color: palette.gold,
-    fontSize: 12,
-    fontWeight: "700",
-    letterSpacing: 0.6,
-  },
-  dailyDone: {
-    color: palette.muted,
-    fontSize: 12,
-  },
-  dailyTitle: {
+  quizTitle: {
+    flex: 1,
     color: palette.text,
     fontSize: 15,
     fontWeight: "700",
   },
-  progressBlock: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.035)",
-    gap: 4,
-  },
-  progressHeader: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  progressTitle: {
-    color: palette.text,
-    fontSize: 15,
-    fontWeight: "700",
-  },
-  progressValue: {
+  quizState: {
     color: palette.gold,
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.7,
+  },
+  quizPrompt: {
+    color: palette.text,
     fontSize: 14,
-    fontWeight: "700",
+    lineHeight: 20,
   },
-  progressMeta: {
+  quizMeta: {
     color: palette.muted,
-    fontSize: 13,
-    lineHeight: 18,
+    fontSize: 12,
   },
 });
-
-function getChapterPathByEpisodeId(episodeId: string) {
-  const chapterId =
-    chapters.find((chapter) => chapter.episodes.some((episode) => episode.id === episodeId))?.id ??
-    "chapter-1";
-  return withBuildStamp(`/story/${chapterId}`);
-}
