@@ -1,4 +1,4 @@
-const BUILD_STAMP = "20260315-caseboard-2";
+const BUILD_STAMP = "20260315-caseboard-3";
 
 export function withBuildStamp(path: string) {
   const separator = path.includes("?") ? "&" : "?";

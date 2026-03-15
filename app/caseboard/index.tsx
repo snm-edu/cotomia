@@ -10,6 +10,7 @@ import {
   caseboardCaseData,
   getNextUnclearedCaseboardCase,
 } from "../../lib/caseboardContent";
+import { logicQuizData } from "../../lib/content";
 import { withBuildStamp } from "../../lib/navigation";
 import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
@@ -21,6 +22,15 @@ export default function CaseboardIndexScreen() {
       caseboardModes.map((mode) => ({
         ...mode,
         quizzes: caseboardCaseData.filter((puzzle) => puzzle.mode === mode.id),
+        sourceQuizzes: logicQuizData.filter((quiz) => {
+          if (mode.id === "case_grid") {
+            return quiz.type === "truth_logic";
+          }
+          if (mode.id === "case_layout") {
+            return quiz.type === "seat_puzzle";
+          }
+          return quiz.type === "order_sort";
+        }),
       })),
     [],
   );
@@ -118,6 +128,29 @@ export default function CaseboardIndexScreen() {
                 </Link>
               </View>
             </View>
+
+            <View style={styles.previewCard}>
+              <Text style={styles.previewEyebrow}>PDF CASES</Text>
+              <Text style={styles.previewTitle}>添付PDFの実問題</Text>
+              <Text style={styles.previewText}>
+                {currentMode.label} として先に触れる原問変換版です。勤務表、リーグ戦、寮の部屋割りなどはここから入れます。
+              </Text>
+              <View style={styles.sourceList}>
+                {currentMode.sourceQuizzes.map((quiz) => (
+                  <Link key={quiz.id} href={withBuildStamp(`/mini/${quiz.id}`)}>
+                    <View style={styles.sourceCard}>
+                      <View style={styles.sourceCardHeader}>
+                        <Text style={styles.sourceCardTitle}>{quiz.title}</Text>
+                        <Text style={styles.sourceCardState}>
+                          {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "PDF"}
+                        </Text>
+                      </View>
+                      <Text style={styles.sourceCardText}>{quiz.prompt}</Text>
+                    </View>
+                  </Link>
+                ))}
+              </View>
+            </View>
           </View>
         </SectionCard>
       </View>
@@ -187,6 +220,39 @@ const styles = StyleSheet.create({
     color: palette.muted,
     fontSize: 13,
     lineHeight: 18,
+  },
+  sourceList: {
+    gap: 8,
+  },
+  sourceCard: {
+    padding: 12,
+    borderRadius: radii.md,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+    gap: 6,
+  },
+  sourceCardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  sourceCardTitle: {
+    flex: 1,
+    color: palette.text,
+    fontSize: 14,
+    fontWeight: "700",
+  },
+  sourceCardState: {
+    color: palette.gold,
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.7,
+  },
+  sourceCardText: {
+    color: palette.muted,
+    fontSize: 13,
+    lineHeight: 19,
   },
   linkRow: {
     flexDirection: "row",
