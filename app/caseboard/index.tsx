@@ -5,12 +5,11 @@ import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
 import { StatChip } from "../../components/StatChip";
-import { logicQuizData } from "../../lib/content";
+import { caseboardModes } from "../../lib/caseboard";
 import {
-  caseboardModes,
-  getCaseboardCasesByMode,
-  getCaseboardModeMeta,
-} from "../../lib/caseboard";
+  caseboardCaseData,
+  getNextUnclearedCaseboardCase,
+} from "../../lib/caseboardContent";
 import { withBuildStamp } from "../../lib/navigation";
 import { palette, radii } from "../../lib/theme";
 import { useGameStore } from "../../store/useGameStore";
@@ -21,7 +20,7 @@ export default function CaseboardIndexScreen() {
     () =>
       caseboardModes.map((mode) => ({
         ...mode,
-        quizzes: getCaseboardCasesByMode(mode.id),
+        quizzes: caseboardCaseData.filter((puzzle) => puzzle.mode === mode.id),
       })),
     [],
   );
@@ -35,6 +34,7 @@ export default function CaseboardIndexScreen() {
   const currentMode = modeGroups[modeIndex];
   const currentCaseIndex = caseIndexes[currentMode.id] ?? 0;
   const currentQuiz = currentMode.quizzes[currentCaseIndex];
+  const nextCase = getNextUnclearedCaseboardCase(completedLogicQuizIds) ?? caseboardCaseData[0];
 
   return (
     <ScreenFrame
@@ -48,18 +48,21 @@ export default function CaseboardIndexScreen() {
         >
           <View style={styles.statsRow}>
             <StatChip label="Mode" value={modeGroups.length} />
-            <StatChip label="Case" value={logicQuizData.length} />
-            <StatChip label="Clear" value={completedLogicQuizIds.length} />
+            <StatChip label="Case" value={caseboardCaseData.length} />
+            <StatChip
+              label="Clear"
+              value={caseboardCaseData.filter((puzzle) => completedLogicQuizIds.includes(puzzle.id)).length}
+            />
           </View>
           <View style={styles.linkRow}>
+            <Link href={withBuildStamp(`/caseboard/${nextCase.id}`)}>
+              <View style={styles.primaryButton}>
+                <Text style={styles.primaryButtonText}>続きから再開</Text>
+              </View>
+            </Link>
             <Link href={withBuildStamp("/")}>
               <View style={styles.secondaryButton}>
                 <Text style={styles.secondaryButtonText}>コトミアへ戻る</Text>
-              </View>
-            </Link>
-            <Link href={withBuildStamp("/daily")}>
-              <View style={styles.secondaryButton}>
-                <Text style={styles.secondaryButtonText}>今日の3ケース</Text>
               </View>
             </Link>
           </View>
@@ -85,7 +88,7 @@ export default function CaseboardIndexScreen() {
               items={currentMode.quizzes.map((quiz) => ({
                 id: quiz.id,
                 label: quiz.title,
-                meta: getCaseboardModeMeta(quiz).shortLabel,
+                meta: `${quiz.estimatedMinutes} min`,
                 stateLabel: completedLogicQuizIds.includes(quiz.id) ? "clear" : "new",
               }))}
               index={currentCaseIndex}
@@ -99,11 +102,11 @@ export default function CaseboardIndexScreen() {
             <View style={styles.previewCard}>
               <Text style={styles.previewEyebrow}>{currentMode.eyebrow}</Text>
               <Text style={styles.previewTitle}>{currentQuiz.title}</Text>
-              <Text style={styles.previewText}>{currentQuiz.prompt}</Text>
+              <Text style={styles.previewText}>{currentQuiz.missionText}</Text>
               <View style={styles.clueBlock}>
-                {currentQuiz.clues.slice(0, 2).map((clue) => (
-                  <Text key={clue} style={styles.clueText}>
-                    ・{clue}
+                {currentQuiz.clueCards.slice(0, 2).map((clue) => (
+                  <Text key={clue.id} style={styles.clueText}>
+                    ・{clue.text}
                   </Text>
                 ))}
               </View>
@@ -111,11 +114,6 @@ export default function CaseboardIndexScreen() {
                 <Link href={withBuildStamp(`/caseboard/${currentQuiz.id}`)}>
                   <View style={styles.primaryButton}>
                     <Text style={styles.primaryButtonText}>ケースを開く</Text>
-                  </View>
-                </Link>
-                <Link href={withBuildStamp(`/mini/${currentQuiz.id}`)}>
-                  <View style={styles.secondaryButton}>
-                    <Text style={styles.secondaryButtonText}>既存画面で開く</Text>
                   </View>
                 </Link>
               </View>

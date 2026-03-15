@@ -5,6 +5,7 @@ import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
 import { StatChip } from "../components/StatChip";
+import { caseboardCaseData, getNextUnclearedCaseboardCase } from "../lib/caseboardContent";
 import {
   characterById,
   chapters,
@@ -50,6 +51,7 @@ export default function HomeScreen() {
   const nextEpisode = getNextUnreadEpisode(readEpisodeIds) ?? episodes[0] ?? null;
   const dailySelection = getDailyLogicSelection(logicQuizData, todayKey);
   const totalAffection = Object.values(characterAffection).reduce((sum, value) => sum + value, 0);
+  const nextCaseboardCase = getNextUnclearedCaseboardCase(completedLogicQuizIds) ?? caseboardCaseData[0];
   const topCharacters = Object.entries(characterAffection)
     .sort((left, right) => right[1] - left[1])
     .slice(0, 2)
@@ -108,12 +110,15 @@ export default function HomeScreen() {
           </Text>
           <View style={styles.statsRow}>
             <StatChip label="Mode" value={caseboardModes.length} />
-            <StatChip label="Case" value={logicQuizData.length} />
-            <StatChip label="Clear" value={completedLogicQuizIds.length} />
+            <StatChip label="Case" value={caseboardCaseData.length} />
+            <StatChip
+              label="Clear"
+              value={caseboardCaseData.filter((puzzle) => completedLogicQuizIds.includes(puzzle.id)).length}
+            />
           </View>
           <View style={styles.ctaRow}>
             <HomeAction label="CASEBOARD" href="/caseboard" />
-            <HomeAction label="今日の3ケース" href="/daily" />
+            <HomeAction label="続きから" href={`/caseboard/${nextCaseboardCase.id}`} />
           </View>
         </SectionCard>
 
