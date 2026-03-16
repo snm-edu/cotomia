@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { PagerControls } from "../../components/PagerControls";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
@@ -34,9 +34,13 @@ export default function CaseboardIndexScreen() {
   return (
     <ScreenFrame
       title="CASEBOARD 問題一覧"
-      subtitle="添付の思考力問題だけを、Case Grid / Case Layout / Rule Forge の3分類で並べた一覧です。"
+      subtitle="添付の思考力問題だけを、Case Grid / Case Layout / Rule Forge の3分類で見やすく並べた一覧です。"
     >
-      <View style={styles.screen}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={styles.screenContent}
+        showsVerticalScrollIndicator={false}
+      >
         <SectionCard title="収録範囲" subtitle="pre_shikou.pdf 由来の問題のみを掲載。">
           <View style={styles.statsRow}>
             <StatChip label="Total" value={logicQuizData.length} />
@@ -54,13 +58,17 @@ export default function CaseboardIndexScreen() {
             </Link>
             <Link href={withBuildStamp(`/caseboard/${nextQuiz.id}`)}>
               <View style={styles.primaryButton}>
-                <Text style={styles.primaryButtonText}>この分類の続き</Text>
+                <Text style={styles.primaryButtonText}>この分類の続きへ</Text>
               </View>
             </Link>
           </View>
         </SectionCard>
 
-        <SectionCard style={styles.flexCard} tone="highlight">
+        <SectionCard
+          title="モード別の出題"
+          subtitle="気分に合わせて、消し込み・配置・規則の3種類から選べます。"
+          tone="highlight"
+        >
           <PagerControls
             items={modeGroups.map((mode) => ({
               id: mode.id,
@@ -73,7 +81,12 @@ export default function CaseboardIndexScreen() {
           />
 
           <View style={styles.modeBody}>
-            <Text style={styles.modeTitle}>{currentMode.label}</Text>
+            <View style={styles.modeHeading}>
+              <Text style={styles.modeTitle}>{currentMode.label}</Text>
+              <View style={styles.modePill}>
+                <Text style={styles.modePillText}>{currentMode.eyebrow}</Text>
+              </View>
+            </View>
             <Text style={styles.modeText}>{currentMode.description}</Text>
 
             {currentMode.quizzes.map((quiz) => (
@@ -94,7 +107,7 @@ export default function CaseboardIndexScreen() {
             ))}
           </View>
         </SectionCard>
-      </View>
+      </ScrollView>
     </ScreenFrame>
   );
 }
@@ -102,23 +115,40 @@ export default function CaseboardIndexScreen() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    minHeight: 0,
-    gap: 12,
+  },
+  screenContent: {
+    gap: 14,
+    paddingBottom: 28,
   },
   statsRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 8,
-  },
-  flexCard: {
-    flex: 1,
-    minHeight: 0,
+    gap: 10,
   },
   modeBody: {
-    flex: 1,
-    minHeight: 0,
+    gap: 12,
+  },
+  modeHeading: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
     gap: 10,
-    justifyContent: "center",
+  },
+  modePill: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    backgroundColor: "rgba(255, 199, 168, 0.16)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 210, 122, 0.2)",
+  },
+  modePillText: {
+    color: palette.peach,
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   modeTitle: {
     color: palette.text,
@@ -127,70 +157,75 @@ const styles = StyleSheet.create({
   },
   modeText: {
     color: palette.text,
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
+    lineHeight: 24,
   },
   quizCard: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    padding: 14,
+    borderRadius: radii.lg,
+    backgroundColor: "rgba(255,255,255,0.05)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
-    gap: 6,
+    gap: 8,
   },
   quizHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
     gap: 12,
   },
   quizTitle: {
     flex: 1,
+    minWidth: 180,
     color: palette.text,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "700",
+    lineHeight: 22,
   },
   quizState: {
-    color: palette.gold,
+    color: palette.peach,
     fontSize: 11,
     fontWeight: "700",
-    letterSpacing: 0.7,
+    letterSpacing: 0.9,
   },
   quizPrompt: {
     color: palette.text,
-    fontSize: 13,
-    lineHeight: 19,
+    fontSize: 14,
+    lineHeight: 22,
   },
   quizMeta: {
     color: palette.muted,
     fontSize: 12,
+    lineHeight: 18,
   },
   linkRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
+    gap: 10,
   },
   primaryButton: {
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: radii.md,
-    backgroundColor: palette.gold,
+    borderRadius: radii.lg,
+    backgroundColor: palette.peach,
+    alignItems: "center",
   },
   primaryButtonText: {
     color: palette.night,
-    fontSize: 14,
-    fontWeight: "700",
+    fontSize: 15,
+    fontWeight: "800",
   },
   secondaryButton: {
-    paddingVertical: 12,
+    paddingVertical: 14,
     paddingHorizontal: 16,
-    borderRadius: radii.md,
+    borderRadius: radii.lg,
     backgroundColor: "rgba(255,255,255,0.06)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
+    alignItems: "center",
   },
   secondaryButtonText: {
     color: palette.text,
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: "700",
   },
 });

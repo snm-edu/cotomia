@@ -28,34 +28,34 @@ export function SectionCard({
 const styles = StyleSheet.create({
   card: {
     borderRadius: radii.xl,
-    padding: 14,
-    gap: 10,
+    padding: 18,
+    gap: 12,
     borderWidth: 1,
   },
   title: {
     color: palette.text,
-    fontSize: 17,
+    fontSize: 19,
     fontWeight: "700",
-    letterSpacing: 0.4,
+    letterSpacing: 0.2,
   },
   subtitle: {
     color: palette.muted,
-    fontSize: 13,
-    lineHeight: 19,
+    fontSize: 14,
+    lineHeight: 22,
   },
 });
 
 const toneStyles = StyleSheet.create({
   default: {
     backgroundColor: palette.panel,
-    borderColor: "rgba(223, 233, 255, 0.08)",
+    borderColor: "rgba(255, 255, 255, 0.08)",
   },
   highlight: {
-    backgroundColor: "#152c4f",
-    borderColor: "rgba(201, 215, 255, 0.25)",
+    backgroundColor: palette.panelRose,
+    borderColor: "rgba(255, 199, 168, 0.24)",
   },
   warning: {
-    backgroundColor: "#30241d",
-    borderColor: "rgba(255, 207, 145, 0.28)",
+    backgroundColor: "#352517",
+    borderColor: "rgba(255, 217, 163, 0.35)",
   },
 });

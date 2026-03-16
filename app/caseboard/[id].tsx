@@ -1,5 +1,5 @@
 import { Link, useLocalSearchParams } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { LogicQuizRenderer } from "../../components/LogicQuizRenderer";
 import { ScreenFrame } from "../../components/ScreenFrame";
 import { SectionCard } from "../../components/SectionCard";
@@ -25,8 +25,8 @@ export default function CaseboardQuizScreen() {
       <ScreenFrame title="CASEBOARD" subtitle="問題が見つかりません。">
         <SectionCard>
           <Link href={withBuildStamp("/caseboard")}>
-            <View style={styles.linkButton}>
-              <Text style={styles.linkButtonText}>問題一覧へ戻る</Text>
+            <View style={styles.secondaryButton}>
+              <Text style={styles.secondaryButtonText}>問題一覧へ戻る</Text>
             </View>
           </Link>
         </SectionCard>
@@ -40,57 +40,66 @@ export default function CaseboardQuizScreen() {
     <ScreenFrame
       title={quiz.title}
       subtitle={`${mode.label} / 添付PDFの原問変換`}
-      style={styles.screen}
     >
-      <SectionCard subtitle={quiz.sourceRef}>
-        <Text style={styles.summaryText}>{quiz.prompt}</Text>
-        <View style={styles.linkRow}>
-          <Link href={withBuildStamp("/caseboard")}>
-            <View style={styles.linkButton}>
-              <Text style={styles.linkButtonText}>問題一覧へ戻る</Text>
-            </View>
-          </Link>
-          <Link href={withBuildStamp("/daily")}>
-            <View style={styles.linkButton}>
-              <Text style={styles.linkButtonText}>今日の3題へ</Text>
-            </View>
-          </Link>
-        </View>
-      </SectionCard>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={styles.screenContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <SectionCard title="ケース概要" subtitle={quiz.sourceRef}>
+          <Text style={styles.summaryText}>{quiz.prompt}</Text>
+          <View style={styles.linkRow}>
+            <Link href={withBuildStamp("/caseboard")}>
+              <View style={styles.secondaryButton}>
+                <Text style={styles.secondaryButtonText}>問題一覧へ戻る</Text>
+              </View>
+            </Link>
+            <Link href={withBuildStamp("/daily")}>
+              <View style={styles.secondaryButton}>
+                <Text style={styles.secondaryButtonText}>今日の3題へ</Text>
+              </View>
+            </Link>
+          </View>
+        </SectionCard>
 
-      <LogicQuizRenderer
-        quiz={quiz}
-        completed={completedLogicQuizIds.includes(quiz.id)}
-        onSolved={() => submitLogicQuiz(quiz.id, quiz.reward)}
-      />
+        <LogicQuizRenderer
+          quiz={quiz}
+          completed={completedLogicQuizIds.includes(quiz.id)}
+          onSolved={() => submitLogicQuiz(quiz.id, quiz.reward)}
+        />
+      </ScrollView>
     </ScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
   screen: {
-    gap: 12,
+    flex: 1,
+  },
+  screenContent: {
+    gap: 14,
+    paddingBottom: 28,
   },
   summaryText: {
     color: palette.text,
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
+    lineHeight: 24,
   },
   linkRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
+    gap: 10,
   },
-  linkButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: radii.md,
+  secondaryButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: radii.lg,
     backgroundColor: "rgba(255,255,255,0.06)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
+    alignItems: "center",
   },
-  linkButtonText: {
+  secondaryButtonText: {
     color: palette.text,
+    fontSize: 15,
     fontWeight: "700",
   },
 });

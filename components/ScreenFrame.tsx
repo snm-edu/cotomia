@@ -19,8 +19,12 @@ export function ScreenFrame({
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.backgroundOrbOne} />
       <View style={styles.backgroundOrbTwo} />
+      <View style={styles.backgroundOrbThree} />
       <View style={styles.content}>
         <View style={styles.header}>
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>Mobile Demo</Text>
+          </View>
           <Text style={styles.title}>{title}</Text>
           {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
         </View>
@@ -38,45 +42,69 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 18,
-    paddingBottom: 14,
-    gap: 12,
+    paddingBottom: 18,
+    gap: 16,
   },
   header: {
-    paddingTop: 8,
-    gap: 6,
+    paddingTop: 10,
+    gap: 10,
+  },
+  badge: {
+    alignSelf: "flex-start",
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    backgroundColor: "rgba(255, 199, 168, 0.16)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 210, 122, 0.28)",
+  },
+  badgeText: {
+    color: palette.peach,
+    fontSize: 11,
+    fontWeight: "700",
+    letterSpacing: 0.9,
+    textTransform: "uppercase",
   },
   title: {
     color: palette.text,
-    fontSize: 28,
+    fontSize: 31,
     fontWeight: "800",
-    letterSpacing: 0.4,
+    letterSpacing: 0.3,
   },
   subtitle: {
     color: palette.muted,
-    fontSize: 13,
-    lineHeight: 20,
+    fontSize: 15,
+    lineHeight: 23,
     maxWidth: 560,
   },
   stage: {
     flex: 1,
-    minHeight: 0,
   },
   backgroundOrbOne: {
     position: "absolute",
-    top: -40,
-    right: -10,
-    width: 190,
-    height: 190,
+    top: -30,
+    right: -20,
+    width: 210,
+    height: 210,
     borderRadius: 999,
-    backgroundColor: "rgba(143,169,255,0.18)",
+    backgroundColor: "rgba(255, 180, 207, 0.17)",
   },
   backgroundOrbTwo: {
     position: "absolute",
-    top: 180,
+    top: 220,
     left: -50,
-    width: 150,
-    height: 150,
+    width: 170,
+    height: 170,
     borderRadius: 999,
-    backgroundColor: "rgba(243,178,199,0.12)",
+    backgroundColor: "rgba(146, 228, 210, 0.13)",
+  },
+  backgroundOrbThree: {
+    position: "absolute",
+    top: 120,
+    right: 36,
+    width: 92,
+    height: 92,
+    borderRadius: 999,
+    backgroundColor: "rgba(181, 182, 255, 0.14)",
   },
 });

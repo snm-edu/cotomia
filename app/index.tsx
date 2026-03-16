@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
 import { SectionCard } from "../components/SectionCard";
@@ -46,9 +46,13 @@ export default function HomeScreen() {
   return (
     <ScreenFrame
       title="CASEBOARD"
-      subtitle="添付の pre_shikou.pdf / pre_shikou_kaitou.pdf 由来の思考力問題だけを収録したスマホデモ。"
+      subtitle="添付の pre_shikou.pdf / pre_shikou_kaitou.pdf 由来の思考力問題だけを、見やすいスマホUIで遊ぶデモです。"
     >
-      <View style={styles.screen}>
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={styles.screenContent}
+        showsVerticalScrollIndicator={false}
+      >
         {contentIssues.length ? (
           <SectionCard title="コンテンツ検証エラー" subtitle="dev 用の安全表示です。" tone="warning">
             {contentIssues.slice(0, 2).map((issue) => (
@@ -60,10 +64,13 @@ export default function HomeScreen() {
         ) : null}
 
         <SectionCard
-          title="添付PDFの問題だけ"
-          subtitle="読解、ストーリー、独自ケースは前面に出さず、思考力問題の原問変換だけを見せます。"
+          title="思考パズルだけを遊ぶ"
+          subtitle="読解やストーリーは見せず、原問の条件整理に集中できる形へ寄せています。"
           tone="highlight"
         >
+          <View style={styles.heroRibbon}>
+            <Text style={styles.heroRibbonText}>かわいく、でも整理しやすく。</Text>
+          </View>
           <View style={styles.statsRow}>
             <StatChip label="Total" value={logicQuizData.length} />
             <StatChip
@@ -76,13 +83,13 @@ export default function HomeScreen() {
             次に開く問題: {nextQuiz.title} / {getCaseboardModeMeta(nextQuiz).label}
           </Text>
           <View style={styles.ctaRow}>
-            <HomeAction label="続きから" href={`/caseboard/${nextQuiz.id}`} />
-            <HomeAction label="問題一覧" href="/caseboard" />
-            <HomeAction label="今日の3題" href="/daily" />
+            <HomeAction label="続きから遊ぶ" href={`/caseboard/${nextQuiz.id}`} tone="primary" />
+            <HomeAction label="問題一覧を見る" href="/caseboard" tone="secondary" />
+            <HomeAction label="今日の3題へ" href="/daily" tone="secondary" />
           </View>
         </SectionCard>
 
-        <SectionCard style={styles.flexCard}>
+        <SectionCard title="分類から選ぶ" subtitle="3モードの中から、今日進めたい種類を選びます。">
           <PagerControls
             items={modeGroups.map((mode) => ({
               id: mode.id,
@@ -95,7 +102,12 @@ export default function HomeScreen() {
           />
 
           <View style={styles.deckBody}>
-            <Text style={styles.focusTitle}>{currentMode.label}</Text>
+            <View style={styles.modeHeading}>
+              <Text style={styles.focusTitle}>{currentMode.label}</Text>
+              <View style={styles.modeBadge}>
+                <Text style={styles.modeBadgeText}>{currentMode.eyebrow}</Text>
+              </View>
+            </View>
             <Text style={styles.bodyText}>{currentMode.description}</Text>
             {currentMode.quizzes.map((quiz) => (
               <Link key={quiz.id} href={withBuildStamp(`/caseboard/${quiz.id}`)}>
@@ -113,16 +125,31 @@ export default function HomeScreen() {
             ))}
           </View>
         </SectionCard>
-      </View>
+      </ScrollView>
     </ScreenFrame>
   );
 }
 
-function HomeAction({ label, href }: { label: string; href: string }) {
+function HomeAction({
+  label,
+  href,
+  tone,
+}: {
+  label: string;
+  href: string;
+  tone: "primary" | "secondary";
+}) {
   return (
     <Link href={withBuildStamp(href)}>
-      <View style={styles.actionPill}>
-        <Text style={styles.actionPillText}>{label}</Text>
+      <View style={[styles.actionPill, tone === "primary" ? styles.actionPrimary : styles.actionSecondary]}>
+        <Text
+          style={[
+            styles.actionPillText,
+            tone === "primary" ? styles.actionPrimaryText : styles.actionSecondaryText,
+          ]}
+        >
+          {label}
+        </Text>
       </View>
     </Link>
   );
@@ -131,89 +158,133 @@ function HomeAction({ label, href }: { label: string; href: string }) {
 const styles = StyleSheet.create({
   warningText: {
     color: palette.warning,
-    fontSize: 13,
-    lineHeight: 20,
+    fontSize: 14,
+    lineHeight: 21,
   },
   screen: {
     flex: 1,
-    minHeight: 0,
-    gap: 12,
+  },
+  screenContent: {
+    gap: 14,
+    paddingBottom: 28,
   },
   statsRow: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 8,
+    gap: 10,
   },
   ctaRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 8,
+    gap: 10,
   },
-  flexCard: {
-    flex: 1,
-    minHeight: 0,
+  heroRibbon: {
+    alignSelf: "flex-start",
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    backgroundColor: "rgba(255, 180, 207, 0.16)",
+  },
+  heroRibbonText: {
+    color: palette.rose,
+    fontSize: 12,
+    fontWeight: "700",
   },
   deckBody: {
-    flex: 1,
-    minHeight: 0,
-    gap: 10,
-    justifyContent: "center",
+    gap: 12,
   },
   actionPill: {
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.06)",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: radii.lg,
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)",
+    alignItems: "center",
   },
   actionPillText: {
+    fontSize: 15,
+    fontWeight: "800",
+  },
+  actionPrimary: {
+    backgroundColor: palette.peach,
+    borderColor: "rgba(255, 210, 122, 0.22)",
+  },
+  actionSecondary: {
+    backgroundColor: "rgba(255,255,255,0.06)",
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  actionPrimaryText: {
+    color: palette.night,
+  },
+  actionSecondaryText: {
     color: palette.text,
-    fontSize: 13,
+  },
+  modeHeading: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+  },
+  modeBadge: {
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+    borderRadius: 999,
+    backgroundColor: "rgba(146, 228, 210, 0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(146, 228, 210, 0.24)",
+  },
+  modeBadgeText: {
+    color: palette.mint,
+    fontSize: 11,
     fontWeight: "700",
+    letterSpacing: 0.7,
+    textTransform: "uppercase",
   },
   focusTitle: {
     color: palette.text,
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "800",
   },
   bodyText: {
     color: palette.text,
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   quizCard: {
-    padding: 12,
+    padding: 14,
     borderRadius: radii.lg,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    backgroundColor: "rgba(255,255,255,0.05)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
-    gap: 6,
+    gap: 8,
   },
   quizHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "flex-start",
+    flexWrap: "wrap",
     gap: 12,
   },
   quizTitle: {
     flex: 1,
     color: palette.text,
-    fontSize: 15,
+    minWidth: 180,
+    fontSize: 16,
     fontWeight: "700",
+    lineHeight: 23,
   },
   quizState: {
-    color: palette.gold,
+    color: palette.peach,
     fontSize: 11,
     fontWeight: "700",
-    letterSpacing: 0.7,
+    letterSpacing: 0.9,
   },
   quizPrompt: {
     color: palette.text,
     fontSize: 14,
-    lineHeight: 20,
+    lineHeight: 22,
   },
   quizMeta: {
     color: palette.muted,
     fontSize: 12,
+    lineHeight: 18,
   },
 });

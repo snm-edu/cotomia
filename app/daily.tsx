@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { Link } from "expo-router";
 import { PagerControls } from "../components/PagerControls";
 import { ScreenFrame } from "../components/ScreenFrame";
@@ -23,92 +23,117 @@ export default function DailyScreen() {
       title="今日の CASEBOARD"
       subtitle={`${todayKey} の出題。Case Grid / Case Layout / Rule Forge を 1 問ずつ。`}
     >
-      <SectionCard
-        title={quiz.title}
-        subtitle={`${getCaseboardModeMeta(quiz).label} / ${quiz.sourceRef}`}
-        style={styles.card}
+      <ScrollView
+        style={styles.screen}
+        contentContainerStyle={styles.screenContent}
+        showsVerticalScrollIndicator={false}
       >
-        <PagerControls
-          items={selection.map((item) => ({
-            id: item.id,
-            label: item.title,
-            meta: getCaseboardModeMeta(item).label,
-            stateLabel: completedLogicQuizIds.includes(item.id) ? "clear" : "today",
-          }))}
-          index={quizIndex}
-          onChange={setQuizIndex}
-        />
+        <SectionCard
+          title={quiz.title}
+          subtitle={`${getCaseboardModeMeta(quiz).label} / ${quiz.sourceRef}`}
+        >
+          <PagerControls
+            items={selection.map((item) => ({
+              id: item.id,
+              label: item.title,
+              meta: getCaseboardModeMeta(item).label,
+              stateLabel: completedLogicQuizIds.includes(item.id) ? "clear" : "today",
+            }))}
+            index={quizIndex}
+            onChange={setQuizIndex}
+          />
 
-        <View style={styles.body}>
-          <Text style={styles.prompt}>{quiz.prompt}</Text>
-          <View style={styles.clueBlock}>
-            {quiz.clues.map((clue) => (
-              <Text key={clue} style={styles.clueText}>
-                ・{clue}
-              </Text>
-            ))}
-          </View>
-          <View style={styles.metaRow}>
-            <Text style={styles.metaText}>
-              {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "未挑戦"}
-            </Text>
-            <Text style={styles.metaText}>報酬 +{quiz.reward.affection ?? 0}</Text>
-          </View>
-          <Link href={withBuildStamp(`/caseboard/${quiz.id}`)}>
-            <View style={styles.button}>
-              <Text style={styles.buttonText}>ケースを開く</Text>
+          <View style={styles.body}>
+            <Text style={styles.prompt}>{quiz.prompt}</Text>
+            <View style={styles.clueBlock}>
+              <Text style={styles.blockTitle}>今日の条件</Text>
+              {quiz.clues.map((clue) => (
+                <Text key={clue} style={styles.clueText}>
+                  ・{clue}
+                </Text>
+              ))}
             </View>
-          </Link>
-        </View>
-      </SectionCard>
+            <View style={styles.metaRow}>
+              <View style={styles.metaPill}>
+                <Text style={styles.metaText}>
+                  {completedLogicQuizIds.includes(quiz.id) ? "CLEAR" : "未挑戦"}
+                </Text>
+              </View>
+              <View style={styles.metaPill}>
+                <Text style={styles.metaText}>報酬 +{quiz.reward.affection ?? 0}</Text>
+              </View>
+            </View>
+            <Link href={withBuildStamp(`/caseboard/${quiz.id}`)}>
+              <View style={styles.button}>
+                <Text style={styles.buttonText}>ケースを開く</Text>
+              </View>
+            </Link>
+          </View>
+        </SectionCard>
+      </ScrollView>
     </ScreenFrame>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
+  screen: {
     flex: 1,
-    minHeight: 0,
+  },
+  screenContent: {
+    paddingBottom: 28,
   },
   body: {
-    flex: 1,
-    minHeight: 0,
-    justifyContent: "center",
-    gap: 12,
+    gap: 14,
   },
   prompt: {
     color: palette.text,
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 24,
   },
   clueBlock: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.04)",
-    gap: 6,
+    padding: 14,
+    borderRadius: radii.lg,
+    backgroundColor: "rgba(255,255,255,0.05)",
+    gap: 8,
+  },
+  blockTitle: {
+    color: palette.peach,
+    fontSize: 12,
+    fontWeight: "700",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   clueText: {
-    color: palette.muted,
-    fontSize: 13,
-    lineHeight: 19,
+    color: palette.text,
+    fontSize: 14,
+    lineHeight: 22,
   },
   metaRow: {
     flexDirection: "row",
-    gap: 16,
+    flexWrap: "wrap",
+    gap: 10,
+  },
+  metaPill: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 999,
+    backgroundColor: "rgba(255,255,255,0.06)",
   },
   metaText: {
     color: palette.muted,
     fontSize: 13,
   },
   button: {
-    alignSelf: "flex-start",
-    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 15,
     paddingHorizontal: 16,
-    borderRadius: radii.md,
-    backgroundColor: palette.mint,
+    borderRadius: radii.lg,
+    backgroundColor: palette.peach,
   },
   buttonText: {
     color: palette.night,
-    fontWeight: "700",
+    fontSize: 15,
+    fontWeight: "800",
   },
 });

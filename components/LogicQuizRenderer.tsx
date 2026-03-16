@@ -63,15 +63,16 @@ export function LogicQuizRenderer({
       title={quiz.title}
       subtitle={`${mode.label} / ${quiz.sourceRef}`}
       tone="highlight"
-      style={styles.card}
     >
       <Text style={styles.prompt}>{quiz.prompt}</Text>
 
       <View style={styles.clueBlock}>
-        {quiz.clues.map((clue) => (
-          <Text key={clue} style={styles.clueText}>
-            ・{clue}
-          </Text>
+        <Text style={styles.blockTitle}>条件カード</Text>
+        {quiz.clues.map((clue, index) => (
+          <View key={clue} style={styles.clueCard}>
+            <Text style={styles.clueIndex}>{index + 1}</Text>
+            <Text style={styles.clueText}>{clue}</Text>
+          </View>
         ))}
       </View>
 
@@ -86,6 +87,7 @@ export function LogicQuizRenderer({
                   : "まだ選ばれていません"}
               </Text>
             </View>
+            <Text style={styles.blockTitle}>並べるカード</Text>
             {quiz.items.map((item) => {
               const used = order.includes(item.id);
               return (
@@ -115,6 +117,7 @@ export function LogicQuizRenderer({
         )
         : (
           <View style={styles.stack}>
+            <Text style={styles.blockTitle}>候補をひとつ選ぶ</Text>
             {quiz.choices.map((choice, index) => {
               const active = choiceIndex === index;
               return (
@@ -123,8 +126,15 @@ export function LogicQuizRenderer({
                   style={[styles.choiceCard, active && styles.choiceCardActive]}
                   onPress={() => setChoiceIndex(index)}
                 >
-                  <Text style={styles.choiceBullet}>{String.fromCharCode(97 + index)}.</Text>
-                  <Text style={styles.choiceText}>{choice}</Text>
+                  <View style={[styles.choiceBadge, active && styles.choiceBadgeActive]}>
+                    <Text style={[styles.choiceBadgeText, active && styles.choiceBadgeTextActive]}>
+                      {String.fromCharCode(65 + index)}
+                    </Text>
+                  </View>
+                  <View style={styles.choiceContent}>
+                    <Text style={styles.choiceText}>{choice}</Text>
+                    <Text style={styles.choiceMeta}>{active ? "選択中" : "タップで選ぶ"}</Text>
+                  </View>
                 </Pressable>
               );
             })}
@@ -152,140 +162,198 @@ export function LogicQuizRenderer({
 }
 
 const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    minHeight: 0,
-  },
   prompt: {
     color: palette.text,
-    fontSize: 15,
-    lineHeight: 23,
+    fontSize: 16,
+    lineHeight: 26,
   },
   clueBlock: {
+    padding: 14,
+    borderRadius: radii.lg,
+    backgroundColor: "rgba(255,255,255,0.05)",
+    gap: 10,
+  },
+  blockTitle: {
+    color: palette.peach,
+    fontSize: 12,
+    fontWeight: "700",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
+  },
+  clueCard: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    gap: 10,
     padding: 12,
     borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.035)",
-    gap: 6,
+    backgroundColor: "rgba(17, 23, 38, 0.22)",
+  },
+  clueIndex: {
+    width: 26,
+    height: 26,
+    borderRadius: 999,
+    textAlign: "center",
+    textAlignVertical: "center",
+    overflow: "hidden",
+    color: palette.night,
+    backgroundColor: palette.peach,
+    fontSize: 13,
+    fontWeight: "800",
+    lineHeight: 26,
   },
   clueText: {
-    color: palette.muted,
-    fontSize: 13,
-    lineHeight: 19,
+    flex: 1,
+    color: palette.text,
+    fontSize: 14,
+    lineHeight: 22,
   },
   stack: {
-    flex: 1,
-    minHeight: 0,
     gap: 10,
   },
   preview: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.04)",
-    gap: 4,
+    padding: 14,
+    borderRadius: radii.lg,
+    backgroundColor: "rgba(146, 228, 210, 0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(146, 228, 210, 0.24)",
+    gap: 6,
   },
   previewLabel: {
     color: palette.muted,
     fontSize: 12,
+    letterSpacing: 0.6,
   },
   previewText: {
     color: palette.text,
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: "700",
+    lineHeight: 24,
   },
   orderCard: {
-    padding: 14,
+    padding: 16,
     borderRadius: radii.lg,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    backgroundColor: "rgba(255,255,255,0.05)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
-    gap: 6,
+    gap: 8,
   },
   orderCardUsed: {
-    opacity: 0.4,
+    opacity: 0.45,
   },
   orderLabel: {
     color: palette.gold,
     fontSize: 12,
     fontWeight: "700",
-    letterSpacing: 0.6,
+    letterSpacing: 0.8,
   },
   orderText: {
     color: palette.text,
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
+    lineHeight: 23,
   },
   choiceCard: {
     flexDirection: "row",
     gap: 12,
-    padding: 14,
+    padding: 15,
     borderRadius: radii.lg,
-    backgroundColor: "rgba(255,255,255,0.04)",
+    backgroundColor: "rgba(255,255,255,0.05)",
     borderWidth: 1,
     borderColor: "rgba(255,255,255,0.08)",
+    alignItems: "center",
   },
   choiceCardActive: {
-    backgroundColor: "rgba(143,169,255,0.14)",
-    borderColor: "rgba(143,169,255,0.5)",
+    backgroundColor: "rgba(255, 180, 207, 0.12)",
+    borderColor: "rgba(255, 180, 207, 0.44)",
   },
-  choiceBullet: {
+  choiceBadge: {
+    width: 34,
+    height: 34,
+    borderRadius: 999,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(255, 210, 122, 0.12)",
+    borderWidth: 1,
+    borderColor: "rgba(255, 210, 122, 0.26)",
+  },
+  choiceBadgeActive: {
+    backgroundColor: "rgba(255, 180, 207, 0.2)",
+    borderColor: "rgba(255, 180, 207, 0.4)",
+  },
+  choiceBadgeText: {
     color: palette.gold,
-    width: 18,
-    fontWeight: "700",
+    fontSize: 13,
+    fontWeight: "800",
+  },
+  choiceBadgeTextActive: {
+    color: palette.rose,
+  },
+  choiceContent: {
+    flex: 1,
+    gap: 4,
   },
   choiceText: {
     flex: 1,
     color: palette.text,
-    fontSize: 14,
-    lineHeight: 21,
+    fontSize: 15,
+    lineHeight: 23,
+  },
+  choiceMeta: {
+    color: palette.muted,
+    fontSize: 12,
   },
   buttonRow: {
     flexDirection: "row",
+    flexWrap: "wrap",
     gap: 8,
   },
   ghostButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-    borderRadius: radii.sm,
-    backgroundColor: "rgba(255,255,255,0.05)",
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: radii.md,
+    backgroundColor: "rgba(255,255,255,0.06)",
   },
   ghostText: {
     color: palette.text,
     fontSize: 13,
+    fontWeight: "600",
   },
   actionButton: {
-    alignSelf: "flex-start",
-    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 15,
     paddingHorizontal: 18,
-    borderRadius: radii.md,
-    backgroundColor: palette.mint,
+    borderRadius: radii.lg,
+    backgroundColor: palette.peach,
   },
   actionText: {
     color: palette.night,
-    fontSize: 14,
-    fontWeight: "700",
+    fontSize: 15,
+    fontWeight: "800",
   },
   resultNeutral: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(255,255,255,0.04)",
-    gap: 6,
+    padding: 14,
+    borderRadius: radii.lg,
+    backgroundColor: "rgba(255,255,255,0.05)",
+    gap: 8,
   },
   resultSuccess: {
-    padding: 12,
-    borderRadius: radii.md,
-    backgroundColor: "rgba(129,214,197,0.12)",
+    padding: 14,
+    borderRadius: radii.lg,
+    backgroundColor: "rgba(146, 228, 210, 0.12)",
     borderWidth: 1,
-    borderColor: "rgba(129,214,197,0.5)",
-    gap: 6,
+    borderColor: "rgba(146, 228, 210, 0.5)",
+    gap: 8,
   },
   resultLabel: {
-    color: palette.text,
-    fontSize: 13,
+    color: palette.peach,
+    fontSize: 12,
     fontWeight: "700",
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
   },
   resultText: {
     color: palette.text,
-    fontSize: 13,
-    lineHeight: 20,
+    fontSize: 14,
+    lineHeight: 22,
   },
 });

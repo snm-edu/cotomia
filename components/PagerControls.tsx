@@ -36,14 +36,8 @@ export function PagerControls({
     <View style={[styles.container, style]}>
       <View style={styles.headerRow}>
         <View style={styles.headerText}>
-          <Text style={styles.label} numberOfLines={1}>
-            {current.label}
-          </Text>
-          {current.meta ? (
-            <Text style={styles.meta} numberOfLines={1}>
-              {current.meta}
-            </Text>
-          ) : null}
+          <Text style={styles.label}>{current.label}</Text>
+          {current.meta ? <Text style={styles.meta}>{current.meta}</Text> : null}
         </View>
         <View style={styles.counterWrap}>
           {current.stateLabel ? <Text style={styles.stateLabel}>{current.stateLabel}</Text> : null}
@@ -186,62 +180,69 @@ function getVisibleIndexes(length: number, currentIndex: number): number[] {
 
 const styles = StyleSheet.create({
   container: {
-    gap: 10,
+    gap: 12,
   },
   headerRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "space-between",
     gap: 12,
+    flexWrap: "wrap",
   },
   headerText: {
     flex: 1,
-    gap: 2,
+    minWidth: 180,
+    gap: 4,
   },
   label: {
     color: palette.text,
-    fontSize: 14,
+    fontSize: 17,
     fontWeight: "700",
+    lineHeight: 24,
   },
   meta: {
     color: palette.muted,
-    fontSize: 12,
+    fontSize: 13,
+    lineHeight: 20,
   },
   counterWrap: {
-    alignItems: "flex-end",
-    gap: 4,
+    alignItems: "flex-start",
+    gap: 5,
+    paddingTop: 2,
   },
   stateLabel: {
-    color: palette.gold,
+    color: palette.peach,
     fontSize: 11,
     fontWeight: "700",
-    letterSpacing: 0.6,
+    letterSpacing: 0.9,
     textTransform: "uppercase",
   },
   counter: {
     color: palette.muted,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "600",
   },
   controlRow: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 10,
   },
   pageButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: radii.sm,
-    backgroundColor: "rgba(255,255,255,0.06)",
+    minWidth: 56,
+    paddingVertical: 11,
+    paddingHorizontal: 14,
+    borderRadius: radii.md,
+    backgroundColor: "rgba(255, 255, 255, 0.08)",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)",
+    borderColor: "rgba(255, 255, 255, 0.1)",
+    alignItems: "center",
   },
   pageButtonDisabled: {
     opacity: 0.45,
   },
   pageButtonText: {
     color: palette.text,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: "700",
   },
   pageButtonTextDisabled: {
@@ -252,35 +253,35 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 6,
+    gap: 8,
     flexWrap: "wrap",
   },
   dotButton: {
-    minWidth: 24,
-    height: 24,
+    minWidth: 34,
+    height: 34,
     borderRadius: 999,
-    paddingHorizontal: 7,
+    paddingHorizontal: 10,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(255,255,255,0.05)",
+    backgroundColor: "rgba(255, 255, 255, 0.06)",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.08)",
+    borderColor: "rgba(255, 255, 255, 0.08)",
   },
   dotButtonActive: {
-    backgroundColor: "rgba(242,198,109,0.16)",
-    borderColor: "rgba(242,198,109,0.45)",
+    backgroundColor: "rgba(255, 180, 207, 0.16)",
+    borderColor: "rgba(255, 180, 207, 0.48)",
   },
   dotText: {
-    color: palette.muted,
-    fontSize: 11,
+    color: palette.text,
+    fontSize: 13,
     fontWeight: "700",
   },
   dotTextActive: {
-    color: palette.text,
+    color: palette.rose,
   },
   ellipsis: {
     color: palette.muted,
-    fontSize: 16,
-    lineHeight: 20,
+    fontSize: 18,
+    lineHeight: 22,
   },
 });
