@@ -105,14 +105,14 @@ export const QUESTIONS = {
     step: 2,
     items: [
       { id: 1, emoji: "🐍", image: "/cotomia/images/quiz/quiz_staff.png", scene: "蛇が巻き付いた杖", answer: "b", answerText: "P.1 医神アスクレピオス" },
-      { id: 2, emoji: "⚡", image: "/cotomia/images/quiz/quiz_lightning.png", scene: "雷が落ちる場面", answer: "d", answerText: "P.6 ゼウスの裁き" },
-      { id: 3, emoji: "🏹", image: "/cotomia/images/quiz/quiz_teaching.png", scene: "ケンタウロスが弟子に教える", answer: "a", answerText: "P.2 賢者ケイロン" },
+      { id: 2, emoji: "⚡", image: "/cotomia/images/quiz/quiz_lightning.png", scene: "雷が落ちる場面", answer: "d", answerText: "P.11 アスクレピオスの死" },
+      { id: 3, emoji: "🏹", image: "/cotomia/images/quiz/quiz_teaching.png", scene: "ケンタウロスが弟子に教える", answer: "a", answerText: "P.6 師ケイロン" },
     ],
     options: [
-      { id: "a", label: "P.2 賢者ケイロン" },
+      { id: "a", label: "P.6 師ケイロン" },
       { id: "b", label: "P.1 医神アスクレピオス" },
-      { id: "c", label: "P.5 月桂樹のダプネ" },
-      { id: "d", label: "P.6 ゼウスの裁き" },
+      { id: "c", label: "P.5 母コロニス" },
+      { id: "d", label: "P.11 アスクレピオスの死" },
     ],
   },
   q7: {
@@ -210,8 +210,8 @@ export const QUESTIONS = {
       { id: "a", label: "P.3 王様の耳はロバの耳" },
       { id: "b", label: "P.0 ヒポクラテスの誓い" },
       { id: "c", label: "P.4 愛の神キューピッド" },
-      { id: "d", label: "P.6 ゼウスの裁き" },
-      { id: "e", label: "P.7 星座になった医神" },
+      { id: "d", label: "P.11 アスクレピオスの死" },
+      { id: "e", label: "P.11 蛇遣い座（星座）" },
     ],
   },
   q14: {
