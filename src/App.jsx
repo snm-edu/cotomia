@@ -223,7 +223,7 @@ export default function App() {
   // ===== MAIN GAME =====
   return (
     <div style={{
-      minHeight: "100vh",
+      height: "100%", width: "100%", display: "flex", flexDirection: "column",
       background: "linear-gradient(180deg, #FFF8F3 0%, #F5EDE4 100%)",
       fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif",
     }}>
@@ -277,7 +277,7 @@ export default function App() {
       </div>
 
       {/* Main Content */}
-      <div style={{ padding: "8px 16px 24px" }}>
+      <div style={{ padding: "8px 16px 24px", flex: 1, overflowY: "auto", display: "flex", flexDirection: "column", minHeight: 0 }}>
         {screen === "map" && (
           <>
             {/* Step Banner */}

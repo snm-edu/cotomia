@@ -212,8 +212,7 @@ export default function ChatStory({ onClose }) {
 
     return (
       <div style={{
-        display: "flex", flexDirection: "column",
-        height: "calc(100vh - 160px)", maxHeight: "calc(100dvh - 160px)",
+        display: "flex", flexDirection: "column", flex: 1, height: "100%", minHeight: 0
       }}>
         {/* Top bar */}
         <div style={{
@@ -323,7 +322,7 @@ export default function ChatStory({ onClose }) {
 
   /* ───── Chapter list view ───── */
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", flex: 1 }}>
       <button onClick={onClose} style={{
         background: "none", border: "none", fontSize: 13, color: PASTEL.textMuted, cursor: "pointer",
         marginBottom: 12,
