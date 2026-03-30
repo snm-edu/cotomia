@@ -9,7 +9,7 @@ import CardReveal from "./components/CardReveal";
 import SugorokuMap from "./components/SugorokuMap";
 import BonusScreen from "./components/BonusScreen";
 import CardGallery from "./components/CardGallery";
-import StoryMode from "./components/StoryMode";
+import ChatStory from "./components/ChatStory";
 import BossBattle from "./components/quiz/BossBattle";
 import MatchingQuiz from "./components/quiz/MatchingQuiz";
 import FillBlankQuiz from "./components/quiz/FillBlankQuiz";
@@ -390,7 +390,7 @@ export default function App() {
         )}
 
         {screen === "story" && (
-          <StoryMode onClose={() => setScreen("map")} />
+          <ChatStory onClose={() => setScreen("map")} />
         )}
 
         {screen === "gallery" && (
