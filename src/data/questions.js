@@ -1,22 +1,44 @@
 export const QUESTIONS = {
-  q1: {
-    title: "問1 イメージ理解",
-    subtitle: "物語の内容をイメージ的に把握しよう",
+  q1_1: {
+    title: "問1-① イメージ理解",
+    subtitle: "アスクレピオスのシンボルは？",
     type: "matching",
     mechanic: "スワイプマッチング",
     items: [
-      { id: 1, emoji: "💘", image: "/cotomia/images/quiz/quiz_cupid.png", scene: "天使が弓を引いている", answer: "e", answerText: "P.4 愛の神キューピッド" },
-      { id: 2, emoji: "👑", image: "/cotomia/images/quiz/quiz_midas.png", scene: "王様がロバの耳を隠す", answer: "d", answerText: "P.3 王様の耳はロバの耳" },
-      { id: 3, emoji: "❓", image: "/cotomia/images/quiz/quiz_landscape.png", scene: "関係のない風景画", answer: "f", answerText: "いずれも関係しない" },
       { id: 4, emoji: "🐍", image: "/cotomia/images/quiz/quiz_staff.png", scene: "蛇と杖のシンボル", answer: "b", answerText: "P.1 医神アスクレピオス" },
     ],
     options: [
       { id: "a", label: "P.0 ヒポクラテスの誓い" },
       { id: "b", label: "P.1 医神アスクレピオス" },
       { id: "c", label: "P.2 父アポロン" },
+    ],
+  },
+  q1_2: {
+    title: "問1-② イメージ理解",
+    subtitle: "王様の秘密のお話",
+    type: "matching",
+    mechanic: "スワイプマッチング",
+    items: [
+      { id: 2, emoji: "👑", image: "/cotomia/images/quiz/quiz_midas.png", scene: "王様がロバの耳を隠す", answer: "d", answerText: "P.3 王様の耳はロバの耳" },
+    ],
+    options: [
+      { id: "c", label: "P.2 父アポロン" },
       { id: "d", label: "P.3 王様の耳はロバの耳" },
       { id: "e", label: "P.4 愛の神キューピッド" },
-      { id: "f", label: "いずれも関係しない" },
+    ],
+  },
+  q1_3: {
+    title: "問1-③④ イメージ理解",
+    subtitle: "愛の神のいたずら",
+    type: "matching",
+    mechanic: "スワイプマッチング",
+    items: [
+      { id: 1, emoji: "💘", image: "/cotomia/images/quiz/quiz_cupid.png", scene: "天使が弓を引いている", answer: "e", answerText: "P.4 愛の神キューピッド" },
+    ],
+    options: [
+      { id: "d", label: "P.3 王様の耳はロバの耳" },
+      { id: "e", label: "P.4 愛の神キューピッド" },
+      { id: "a", label: "P.0 ヒポクラテスの誓い" },
     ],
   },
   q2: {

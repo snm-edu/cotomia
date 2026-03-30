@@ -139,7 +139,6 @@ export default function App() {
       return;
     }
     const qMap = {
-      "q1_1": "q1", "q1_2": "q1", "q1_3": "q1",
       "q2": "q2", "q3": "q3", "q4": "q4", "q5": "q5",
       "q6": "q6", "q7": "q7", "q8": "q8", "q9": "q9", "q10": "q10", "q11": "q11",
       "q12": "q12", "q13": "q13", "q14": "q14", "q15": "q15", "q16": "q16",
@@ -341,26 +340,29 @@ export default function App() {
 
             {/* Current Node Prompt */}
             {currentNode > 0 && currentNode < mapNodes.length - 1 && (
-              <div style={{
+              <div onClick={() => handleNodeClick(mapNodes[currentNode])} style={{
                 marginTop: 12, padding: "14px 16px", borderRadius: 14,
-                background: "#fff", border: `1.5px solid ${PASTEL.accent}30`,
-                display: "flex", alignItems: "center", gap: 12,
+                background: "#fff", border: `2px solid ${PASTEL.accent}60`,
+                boxShadow: `0 6px 16px ${PASTEL.accent}15`,
+                display: "flex", alignItems: "center", gap: 12, cursor: "pointer",
               }}>
                 <div style={{
-                  width: 40, height: 40, borderRadius: 12, background: PASTEL.accent + "15",
+                  width: 44, height: 44, borderRadius: 14, background: PASTEL.accent,
+                  color: "#fff",
                   display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, flexShrink: 0,
+                  boxShadow: `0 4px 12px ${PASTEL.accent}40`,
                 }}>
                   {mapNodes[currentNode]?.type === "bonus" ? "🎁" : "📝"}
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 600, color: PASTEL.text }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: PASTEL.text }}>
                     {mapNodes[currentNode]?.label}に挑戦しよう！
                   </div>
-                  <div style={{ fontSize: 11, color: PASTEL.textMuted, marginTop: 2 }}>
-                    マップのマスをタップして問題を開始
+                  <div style={{ fontSize: 11, color: PASTEL.textMuted, marginTop: 4, fontWeight: 500 }}>
+                    ここをタップして問題を開始 👇
                   </div>
                 </div>
-                <span style={{ fontSize: 18 }}>→</span>
+                <span style={{ fontSize: 20, color: PASTEL.accent, fontWeight: 900 }}>→</span>
               </div>
             )}
           </>

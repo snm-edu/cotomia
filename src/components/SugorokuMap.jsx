@@ -7,7 +7,7 @@ export default function SugorokuMap({ currentNode, completedNodes, onNodeClick, 
       <div style={{ position: "absolute", top: 12, left: 16, fontSize: 13, fontWeight: 600, color: PASTEL.primary }}>
         {stepTitle}
       </div>
-      <svg viewBox="0 0 100 80" style={{ width: "100%", height: "100%" }}>
+      <svg viewBox="0 0 100 80" style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}>
         {mapNodes.slice(0, -1).map((node, i) => {
           const next = mapNodes[i + 1];
           return (
@@ -17,44 +17,37 @@ export default function SugorokuMap({ currentNode, completedNodes, onNodeClick, 
               strokeDasharray={completedNodes.includes(next.id) ? "none" : "1.5 1"} />
           );
         })}
-        {mapNodes.map(node => {
-          const isCompleted = completedNodes.includes(node.id);
-          const isCurrent = currentNode === node.id;
-          const isLocked = !isCompleted && !isCurrent;
-          const nodeColor = node.type === "boss" ? PASTEL.accent :
-            node.type === "bonus" ? PASTEL.gold :
-            node.type === "start" ? PASTEL.lavender :
-            isCompleted ? PASTEL.teal : isCurrent ? PASTEL.accent : "#D5CBC0";
-          return (
-            <g key={node.id} onClick={() => !isLocked && onNodeClick(node)}
-              style={{ cursor: isLocked ? "default" : "pointer" }}>
-              {isCurrent && (
-                <circle cx={node.x} cy={node.y} r={4.5} fill="none"
-                  stroke={PASTEL.accent} strokeWidth={0.4} opacity={0.5}>
-                  <animate attributeName="r" values="4.5;6;4.5" dur="2s" repeatCount="indefinite" />
-                  <animate attributeName="opacity" values="0.5;0.2;0.5" dur="2s" repeatCount="indefinite" />
-                </circle>
-              )}
-              <circle cx={node.x} cy={node.y} r={3.5}
-                fill={isLocked ? "#EDE5DC" : nodeColor}
-                stroke={isLocked ? "#D5CBC0" : nodeColor}
-                strokeWidth={0.5} />
-              {isCompleted && (
-                <text x={node.x} y={node.y + 1} textAnchor="middle" fontSize={3.5} fill="white">✓</text>
-              )}
-              {!isCompleted && !isLocked && node.type !== "start" && (
-                <text x={node.x} y={node.y + 1} textAnchor="middle" fontSize={2.5} fill="white" fontWeight="bold">
-                  {node.type === "bonus" ? "!" : node.type === "boss" ? "⚡" : "?"}
-                </text>
-              )}
-              <text x={node.x} y={node.y + 7} textAnchor="middle" fontSize={2.2}
-                fill={isLocked ? "#C5BBB0" : PASTEL.text} fontWeight={isCurrent ? "bold" : "normal"}>
-                {node.label}
-              </text>
-            </g>
-          );
-        })}
       </svg>
+      {mapNodes.map(node => {
+        const isCompleted = completedNodes.includes(node.id);
+        const isCurrent = currentNode === node.id;
+        const isClickable = !(!isCompleted && !isCurrent);
+        const isBoss = node.type === "boss";
+        const isBonus = node.type === "bonus";
+        return (
+          <div key={node.id} onClick={() => isClickable && onNodeClick(node)}
+            style={{
+              position: "absolute", left: `${node.x}%`, top: `${node.y}%`,
+              width: 48, height: 48, borderRadius: 24, transform: "translate(-50%, -50%)",
+              background: isCompleted ? (isBoss ? PASTEL.gold : PASTEL.teal)
+                          : isCurrent ? (isBoss ? PASTEL.error : PASTEL.accent)
+                          : "#ffffff",
+              border: isCurrent ? "4px solid #fff" : isCompleted ? "none" : `2px solid ${PASTEL.border}60`,
+              boxShadow: isCurrent ? `0 0 0 4px ${PASTEL.accent}66, 0 8px 16px rgba(0,0,0,0.2)`
+                         : isCompleted ? "inset 0 2px 4px rgba(0,0,0,0.1), 0 2px 6px rgba(0,0,0,0.15)"
+                         : "0 4px 12px rgba(0,0,0,0.15), inset 0 -2px 0 rgba(0,0,0,0.05)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: (isCompleted || isCurrent) ? "#fff" : PASTEL.text,
+              fontSize: isBoss ? 20 : 18, fontWeight: 800,
+              cursor: isClickable ? "pointer" : "default",
+              opacity: (isCompleted || isCurrent) ? 1 : 0.9,
+              transition: "all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)",
+              zIndex: isCurrent ? 10 : 1,
+            }}>
+            {isCompleted ? "✓" : isBonus ? "!" : isBoss ? "⚡" : "?"}
+          </div>
+        );
+      })}
     </div>
   );
 }
