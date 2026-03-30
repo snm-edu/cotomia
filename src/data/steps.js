@@ -1,0 +1,42 @@
+export const STEPS = [
+  {
+    id: 1,
+    title: "アポロンの章",
+    subtitle: "太陽神の物語を読み解こう",
+    emoji: "☀️",
+    questions: ["q1", "q2", "q3", "q4", "q5"],
+    requiredXp: 0,
+  },
+  {
+    id: 2,
+    title: "アスクレピオスの章",
+    subtitle: "医神の誕生と成長",
+    emoji: "🐍",
+    questions: ["q6", "q7", "q8", "q9", "q10", "q11"],
+    requiredXp: 300,
+  },
+  {
+    id: 3,
+    title: "ヒポクラテスの章",
+    subtitle: "医学の父の教え",
+    emoji: "📜",
+    questions: ["q12", "q13", "q14", "q15", "q16"],
+    requiredXp: 700,
+  },
+  {
+    id: 4,
+    title: "運命の章",
+    subtitle: "神々の裁きと論理の試練",
+    emoji: "⭐",
+    questions: ["q17", "q18", "q19"],
+    requiredXp: 1100,
+  },
+  {
+    id: 5,
+    title: "ゼウスの試練",
+    subtitle: "最終ボス戦",
+    emoji: "⚡",
+    questions: [],
+    requiredXp: 1400,
+  },
+];
