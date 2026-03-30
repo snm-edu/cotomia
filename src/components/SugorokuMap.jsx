@@ -3,7 +3,7 @@ import { PASTEL } from "../styles/theme";
 export default function SugorokuMap({ currentNode, completedNodes, onNodeClick, mapNodes, stepTitle }) {
   return (
     <div style={{ position: "relative", width: "100%", height: 320, borderRadius: 20, overflow: "hidden",
-      background: "linear-gradient(180deg, #F5EDE4 0%, #EDE3D8 50%, #E8DDD0 100%)" }}>
+      background: "url(/images/ui/map_background.png) center/cover no-repeat" }}>
       <div style={{ position: "absolute", top: 12, left: 16, fontSize: 13, fontWeight: 600, color: PASTEL.primary }}>
         {stepTitle}
       </div>

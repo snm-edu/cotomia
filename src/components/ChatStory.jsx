@@ -18,9 +18,10 @@ function MsgBubble({ msg, isNew }) {
         width: 36, height: 36, borderRadius: 18, flexShrink: 0,
         background: (char?.color || PASTEL.primary) + "20",
         display: "flex", alignItems: "center", justifyContent: "center",
-        fontSize: 18,
+        fontSize: 18, overflow: "hidden"
       }}>
-        {char?.emoji || "💬"}
+        <img src={`/images/${['narrator', 'student'].includes(msg.char) ? 'avatars' : 'cards'}/${msg.char}.png`} alt={char?.name} onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'inline-block'; }} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        <span style={{ display: "none" }}>{char?.emoji || "💬"}</span>
       </div>
       {/* bubble */}
       <div style={{ maxWidth: "75%" }}>

@@ -168,16 +168,20 @@ export default function App() {
     return (
       <div style={{
         minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center",
-        justifyContent: "center", background: "linear-gradient(180deg, #FFF8F3 0%, #F5EDE4 50%, #EDE3D8 100%)",
+        justifyContent: "center", background: "url(/images/ui/title_screen.png) center/cover no-repeat",
         fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", padding: 24, textAlign: "center",
       }}>
-        <div style={{ fontSize: 64, marginBottom: 12 }}>🏛️</div>
-        <h1 style={{ fontSize: 24, fontWeight: 800, color: PASTEL.text, margin: 0, letterSpacing: 1 }}>
-          医神アスクレピオス
-        </h1>
-        <h2 style={{ fontSize: 15, fontWeight: 500, color: PASTEL.accent, marginTop: 6, letterSpacing: 2 }}>
-          読解力クエスト
-        </h2>
+        <div style={{
+          background: "rgba(255, 248, 243, 0.85)", backdropFilter: "blur(4px)", padding: "32px 20px",
+          borderRadius: 24, width: "100%", maxWidth: 320, boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
+          display: "flex", flexDirection: "column", alignItems: "center"
+        }}>
+          <h1 style={{ fontSize: 25, fontWeight: 800, color: PASTEL.text, margin: 0, letterSpacing: 1 }}>
+            医神アスクレピオス
+          </h1>
+          <h2 style={{ fontSize: 13, fontWeight: 700, color: PASTEL.accent, marginTop: 4, letterSpacing: 2 }}>
+            読解力クエスト
+          </h2>
         <div style={{
           marginTop: 24, padding: "16px 20px", borderRadius: 16,
           background: "#ffffff88", backdropFilter: "blur(8px)",
@@ -197,19 +201,20 @@ export default function App() {
         }}>
           {earnedCards.length > 0 ? "続きから" : "冒険を始める"}
         </button>
-        <div style={{ marginTop: 40, display: "flex", gap: 20 }}>
-          {["スワイプ", "パズル", "バトル", "収集"].map((m, i) => (
-            <div key={i} style={{ textAlign: "center" }}>
-              <div style={{
-                width: 44, height: 44, borderRadius: 12, display: "flex", alignItems: "center",
-                justifyContent: "center", fontSize: 20,
-                background: [PASTEL.teal, PASTEL.lavender, PASTEL.accent, PASTEL.gold][i] + "20",
-              }}>
-                {["👆", "🧩", "⚔️", "🃏"][i]}
+          <div style={{ marginTop: 24, display: "flex", gap: 16 }}>
+            {["スワイプ", "パズル", "バトル", "収集"].map((m, i) => (
+              <div key={i} style={{ textAlign: "center" }}>
+                <div style={{
+                  width: 40, height: 40, borderRadius: 12, display: "flex", alignItems: "center",
+                  justifyContent: "center", fontSize: 18,
+                  background: [PASTEL.teal, PASTEL.lavender, PASTEL.accent, PASTEL.gold][i] + "20",
+                }}>
+                  {["👆", "🧩", "⚔️", "🃏"][i]}
+                </div>
+                <div style={{ fontSize: 9, color: PASTEL.textMuted, marginTop: 4, fontWeight: 600 }}>{m}</div>
               </div>
-              <div style={{ fontSize: 10, color: PASTEL.textMuted, marginTop: 4 }}>{m}</div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     );
@@ -222,6 +227,14 @@ export default function App() {
       background: "linear-gradient(180deg, #FFF8F3 0%, #F5EDE4 100%)",
       fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif",
     }}>
+      <style>{`
+        @keyframes popInOut {
+          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+          20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+          80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(1.2); }
+        }
+      `}</style>
       {showCard && <CardReveal card={showCard} onClose={() => setShowCard(null)} />}
 
       {/* Header */}
@@ -267,8 +280,20 @@ export default function App() {
       <div style={{ padding: "8px 16px 24px" }}>
         {screen === "map" && (
           <>
+            {/* Step Banner */}
+            <div style={{
+              width: "100%", height: 130, borderRadius: 20, marginBottom: 16,
+              background: `url(/images/steps/step${currentStep}.png) center/cover no-repeat`,
+              boxShadow: "0 6px 16px rgba(0,0,0,0.15)", display: "flex", alignItems: "flex-end", padding: "12px 16px"
+            }}>
+              <div style={{ background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)", padding: "8px 14px", borderRadius: 14 }}>
+                <div style={{ fontSize: 13, fontWeight: 800, color: PASTEL.text }}>Step {currentStep}: {stepInfo?.title}</div>
+                <div style={{ fontSize: 11, color: PASTEL.textMuted, marginTop: 2, fontWeight: 500 }}>{stepInfo?.subtitle}</div>
+              </div>
+            </div>
+
             <SugorokuMap currentNode={currentNode} completedNodes={stepCompleted} onNodeClick={handleNodeClick}
-              mapNodes={mapNodes} stepTitle={`${stepInfo?.emoji} Step ${currentStep} — ${stepInfo?.title}`} />
+              mapNodes={mapNodes} stepTitle="" />
 
             {/* Step Tabs */}
             <div style={{ display: "flex", gap: 6, marginTop: 12, overflowX: "auto", paddingBottom: 4 }}>

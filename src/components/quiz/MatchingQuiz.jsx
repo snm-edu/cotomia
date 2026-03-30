@@ -26,7 +26,13 @@ export default function MatchingQuiz({ question, onComplete }) {
   };
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      {result === true && (
+        <img src="/images/ui/effect_correct.png" alt="Correct" style={{ position: "absolute", top: "50%", left: "50%", width: 180, height: 180, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
+      )}
+      {result === false && (
+        <img src="/images/ui/effect_incorrect.png" alt="Incorrect" style={{ position: "absolute", top: "50%", left: "50%", width: 180, height: 180, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
+      )}
       <div style={{ textAlign: "center", marginBottom: 16 }}>
         <div style={{ fontSize: 11, color: PASTEL.accent, fontWeight: 600, letterSpacing: 1 }}>
           {step + 1} / {question.items.length}
@@ -42,7 +48,13 @@ export default function MatchingQuiz({ question, onComplete }) {
         background: "linear-gradient(135deg, #F5EDE4, #EDE3D8)", borderRadius: 16,
         padding: "24px 20px", textAlign: "center", marginBottom: 16
       }}>
-        <div style={{ fontSize: 48, marginBottom: 8 }}>{item.emoji}</div>
+        <div style={{ fontSize: 48, marginBottom: 8, display: "flex", justifyContent: "center" }}>
+          {item.image ? (
+            <img src={item.image} alt={item.scene} style={{ width: 150, height: 150, objectFit: "cover", borderRadius: 16, boxShadow: "0 4px 16px rgba(0,0,0,0.12)" }} />
+          ) : (
+            item.emoji
+          )}
+        </div>
         <div style={{ fontSize: 14, color: PASTEL.text, fontWeight: 500 }}>{item.scene}</div>
         <div style={{ fontSize: 11, color: PASTEL.textMuted, marginTop: 6 }}>
           この絵はどの節の物語にふさわしいですか？
