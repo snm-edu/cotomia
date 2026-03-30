@@ -168,7 +168,7 @@ export default function App() {
     return (
       <div style={{
         minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center",
-        justifyContent: "center", background: "url(/images/ui/title_screen.png) center/cover no-repeat",
+        justifyContent: "center", background: "url(/cotomia/images/ui/title_screen.png) center/cover no-repeat",
         fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", padding: 24, textAlign: "center",
       }}>
         <div style={{
@@ -283,7 +283,7 @@ export default function App() {
             {/* Step Banner */}
             <div style={{
               width: "100%", height: 130, borderRadius: 20, marginBottom: 16,
-              background: `url(/images/steps/step${currentStep}.png) center/cover no-repeat`,
+              background: `url(/cotomia/images/steps/step${currentStep}.png) center/cover no-repeat`,
               boxShadow: "0 6px 16px rgba(0,0,0,0.15)", display: "flex", alignItems: "flex-end", padding: "12px 16px"
             }}>
               <div style={{ background: "rgba(255,255,255,0.85)", backdropFilter: "blur(4px)", padding: "8px 14px", borderRadius: 14 }}>

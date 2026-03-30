@@ -45,13 +45,13 @@ export default function BossBattle({ onComplete }) {
     return (
       <div style={{
         textAlign: "center", padding: "40px 20px",
-        background: "url(/images/ui/boss_zeus.png) center/cover no-repeat", borderRadius: 20,
+        background: "url(/cotomia/images/ui/boss_zeus.png) center/cover no-repeat", borderRadius: 20,
         minHeight: 300, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
         position: "relative", overflow: "hidden"
       }}>
         <div style={{ position: "absolute", inset: 0, background: "rgba(26, 26, 46, 0.7)" }}></div>
         <div style={{ fontSize: 64, animation: "pulse 1.5s infinite", zIndex: 1 }}>
-          <img src="/images/ui/boss_zeus.png" alt="ゼウス" style={{ width: 100, height: 100, objectFit: "cover", borderRadius: "50%", border: "4px solid #E8C872", boxShadow: "0 0 20px #E8C87288" }} />
+          <img src="/cotomia/images/ui/boss_zeus.png" alt="ゼウス" style={{ width: 100, height: 100, objectFit: "cover", borderRadius: "50%", border: "4px solid #E8C872", boxShadow: "0 0 20px #E8C87288" }} />
         </div>
         <div style={{ fontSize: 22, fontWeight: 800, color: "#E8E0D6", marginTop: 16, letterSpacing: 2, zIndex: 1 }}>
           ゼウスの試練
@@ -106,10 +106,10 @@ export default function BossBattle({ onComplete }) {
   return (
     <div style={{ position: "relative" }}>
       {result === true && (
-        <img src="/images/ui/effect_correct.png" alt="Correct" style={{ position: "absolute", top: "50%", left: "50%", width: 200, height: 200, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
+        <img src="/cotomia/images/ui/effect_correct.png" alt="Correct" style={{ position: "absolute", top: "50%", left: "50%", width: 200, height: 200, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
       )}
       {result === false && (
-        <img src="/images/ui/effect_incorrect.png" alt="Incorrect" style={{ position: "absolute", top: "50%", left: "50%", width: 200, height: 200, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
+        <img src="/cotomia/images/ui/effect_incorrect.png" alt="Incorrect" style={{ position: "absolute", top: "50%", left: "50%", width: 200, height: 200, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
       )}
       {/* Boss HP Bar */}
       <div style={{

@@ -5,10 +5,10 @@ export const QUESTIONS = {
     type: "matching",
     mechanic: "スワイプマッチング",
     items: [
-      { id: 1, emoji: "💘", image: "/images/quiz/quiz_cupid.png", scene: "天使が弓を引いている", answer: "e", answerText: "P.4 愛の神キューピッド" },
-      { id: 2, emoji: "👑", image: "/images/quiz/quiz_midas.png", scene: "王様がロバの耳を隠す", answer: "d", answerText: "P.3 王様の耳はロバの耳" },
-      { id: 3, emoji: "❓", image: "/images/quiz/quiz_landscape.png", scene: "関係のない風景画", answer: "f", answerText: "いずれも関係しない" },
-      { id: 4, emoji: "🐍", image: "/images/quiz/quiz_staff.png", scene: "蛇と杖のシンボル", answer: "b", answerText: "P.1 医神アスクレピオス" },
+      { id: 1, emoji: "💘", image: "/cotomia/images/quiz/quiz_cupid.png", scene: "天使が弓を引いている", answer: "e", answerText: "P.4 愛の神キューピッド" },
+      { id: 2, emoji: "👑", image: "/cotomia/images/quiz/quiz_midas.png", scene: "王様がロバの耳を隠す", answer: "d", answerText: "P.3 王様の耳はロバの耳" },
+      { id: 3, emoji: "❓", image: "/cotomia/images/quiz/quiz_landscape.png", scene: "関係のない風景画", answer: "f", answerText: "いずれも関係しない" },
+      { id: 4, emoji: "🐍", image: "/cotomia/images/quiz/quiz_staff.png", scene: "蛇と杖のシンボル", answer: "b", answerText: "P.1 医神アスクレピオス" },
     ],
     options: [
       { id: "a", label: "P.0 ヒポクラテスの誓い" },
@@ -82,9 +82,9 @@ export const QUESTIONS = {
     mechanic: "スワイプマッチング",
     step: 2,
     items: [
-      { id: 1, emoji: "🐍", image: "/images/quiz/quiz_staff.png", scene: "蛇が巻き付いた杖", answer: "b", answerText: "P.1 医神アスクレピオス" },
-      { id: 2, emoji: "⚡", image: "/images/quiz/quiz_lightning.png", scene: "雷が落ちる場面", answer: "d", answerText: "P.6 ゼウスの裁き" },
-      { id: 3, emoji: "🏹", image: "/images/quiz/quiz_teaching.png", scene: "ケンタウロスが弟子に教える", answer: "a", answerText: "P.2 賢者ケイロン" },
+      { id: 1, emoji: "🐍", image: "/cotomia/images/quiz/quiz_staff.png", scene: "蛇が巻き付いた杖", answer: "b", answerText: "P.1 医神アスクレピオス" },
+      { id: 2, emoji: "⚡", image: "/cotomia/images/quiz/quiz_lightning.png", scene: "雷が落ちる場面", answer: "d", answerText: "P.6 ゼウスの裁き" },
+      { id: 3, emoji: "🏹", image: "/cotomia/images/quiz/quiz_teaching.png", scene: "ケンタウロスが弟子に教える", answer: "a", answerText: "P.2 賢者ケイロン" },
     ],
     options: [
       { id: "a", label: "P.2 賢者ケイロン" },
@@ -181,8 +181,8 @@ export const QUESTIONS = {
     mechanic: "スワイプマッチング",
     step: 3,
     items: [
-      { id: 1, emoji: "⭐", image: "/images/quiz/quiz_constellation.png", scene: "夜空に浮かぶ蛇遣いの星座", answer: "e", answerText: "P.7 星座になった医神" },
-      { id: 2, emoji: "📜", image: "/images/quiz/quiz_oath.png", scene: "誓いの言葉を読み上げる医師たち", answer: "b", answerText: "P.0 ヒポクラテスの誓い" },
+      { id: 1, emoji: "⭐", image: "/cotomia/images/quiz/quiz_constellation.png", scene: "夜空に浮かぶ蛇遣いの星座", answer: "e", answerText: "P.7 星座になった医神" },
+      { id: 2, emoji: "📜", image: "/cotomia/images/quiz/quiz_oath.png", scene: "誓いの言葉を読み上げる医師たち", answer: "b", answerText: "P.0 ヒポクラテスの誓い" },
     ],
     options: [
       { id: "a", label: "P.3 王様の耳はロバの耳" },

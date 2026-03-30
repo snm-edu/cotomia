@@ -28,10 +28,10 @@ export default function MatchingQuiz({ question, onComplete }) {
   return (
     <div style={{ position: "relative" }}>
       {result === true && (
-        <img src="/images/ui/effect_correct.png" alt="Correct" style={{ position: "absolute", top: "50%", left: "50%", width: 180, height: 180, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
+        <img src="/cotomia/images/ui/effect_correct.png" alt="Correct" style={{ position: "absolute", top: "50%", left: "50%", width: 180, height: 180, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
       )}
       {result === false && (
-        <img src="/images/ui/effect_incorrect.png" alt="Incorrect" style={{ position: "absolute", top: "50%", left: "50%", width: 180, height: 180, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
+        <img src="/cotomia/images/ui/effect_incorrect.png" alt="Incorrect" style={{ position: "absolute", top: "50%", left: "50%", width: 180, height: 180, transform: "translate(-50%, -50%)", zIndex: 100, pointerEvents: "none", animation: "popInOut 1.2s ease forwards" }} />
       )}
       <div style={{ textAlign: "center", marginBottom: 16 }}>
         <div style={{ fontSize: 11, color: PASTEL.accent, fontWeight: 600, letterSpacing: 1 }}>

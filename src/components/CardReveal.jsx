@@ -23,7 +23,7 @@ export default function CardReveal({ card, onClose }) {
         boxShadow: `0 0 40px ${card.color}66`,
       }}>
         <div style={{ display: "flex", justifyContent: "center" }}>
-          <img src={`/images/cards/${card.id}.png`} alt={card.name} style={{ width: 140, height: 140, objectFit: "cover", borderRadius: 12, boxShadow: "0 4px 16px rgba(0,0,0,0.2)" }} />
+          <img src={`/cotomia/images/cards/${card.id}.png`} alt={card.name} style={{ width: 140, height: 140, objectFit: "cover", borderRadius: 12, boxShadow: "0 4px 16px rgba(0,0,0,0.2)" }} />
         </div>
         <div style={{ fontSize: 11, color: card.color, marginTop: 8, letterSpacing: 2 }}>{card.rarity}</div>
         <div style={{ fontSize: 17, fontWeight: 700, color: PASTEL.text, marginTop: 6 }}>{card.name}</div>
