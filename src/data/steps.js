@@ -4,7 +4,7 @@ export const STEPS = [
     title: "アポロンの章",
     subtitle: "太陽神の物語を読み解こう",
     emoji: "☀️",
-    questions: ["q1", "q2", "q3", "q4", "q5"],
+    questions: ["q1_1", "q1_2", "q1_3", "q2", "q3", "q4", "q5"],
     requiredXp: 0,
   },
   {

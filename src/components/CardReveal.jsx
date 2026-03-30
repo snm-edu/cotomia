@@ -44,7 +44,7 @@ export default function CardReveal({ card, onClose }) {
             {card.name}
           </div>
           <div style={{ fontSize: 13, color: "rgba(255,255,255,0.85)", marginTop: 8, fontWeight: 500 }}>
-            {card.description}
+            {card.desc}
           </div>
         </div>
         

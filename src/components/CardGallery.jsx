@@ -34,7 +34,7 @@ export default function CardGallery({ earnedCards, onClose }) {
                 ) : <div style={{ fontSize: 32 }}>❓</div>}
               </div>
               <div style={{ fontSize: 10, color: owned ? card.color : PASTEL.textMuted, marginTop: 8, letterSpacing: 1 }}>
-                {card.rarity}
+                {"★".repeat(card.rarity)}
               </div>
               <div style={{
                 fontSize: 11, fontWeight: 600, marginTop: 4,
