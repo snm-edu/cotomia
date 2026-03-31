@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { PASTEL } from "./styles/theme";
 import { CARDS } from "./data/cards";
 import { QUESTIONS } from "./data/questions";
@@ -18,6 +18,44 @@ import SummaryQuiz from "./components/quiz/SummaryQuiz";
 import IdiomQuiz from "./components/quiz/IdiomQuiz";
 import QuizSelect from "./components/quiz/QuizSelect";
 import OrderQuiz from "./components/quiz/OrderQuiz";
+
+const BGM_TRACKS = {
+  story: ["/cotomia/audio/Story-bgm.mp3", "/cotomia/audio/Dialog-bgm.mp3"],
+  quiz: ["/cotomia/audio/Quiz-bgm.mp3", "/cotomia/audio/Puzzle-bgm.mp3"],
+  boss: ["/cotomia/audio/Boss Battle-bgm.mp3", "/cotomia/audio/Zeus Trial-bgm.mp3"],
+  success: ["/cotomia/audio/Success-bgm.mp3", "/cotomia/audio/Card Reveal-bgm.mp3"],
+};
+
+const globalAudio = typeof Audio !== "undefined" ? new Audio() : null;
+let currentBgmScene = null;
+
+const playBGM = (scene) => {
+  if (!globalAudio) return;
+  // title, mapなどは落ち着いた雰囲気を作るためstory用のBGM(Dialog/Story)と共通にする
+  const mappedScene = (scene === "title" || scene === "map") ? "story" : scene;
+
+  const isSameScene = mappedScene === currentBgmScene;
+  if (isSameScene && !globalAudio.paused) return;
+  currentBgmScene = mappedScene;
+
+  if (!mappedScene) {
+    globalAudio.pause();
+    return;
+  }
+
+  const tracks = BGM_TRACKS[mappedScene];
+  if (tracks && tracks.length > 0) {
+    // Only pick a new random track if the scene actually changed, or if it has no src yet
+    if (!isSameScene || !globalAudio.src) {
+      const randomTrack = tracks[Math.floor(Math.random() * tracks.length)];
+      globalAudio.src = randomTrack;
+    }
+    globalAudio.loop = (mappedScene !== "success");
+    globalAudio.play().catch(e => console.warn("BGM autoplay prevented until interaction", e));
+  } else {
+    globalAudio.pause();
+  }
+};
 
 function QuizRouter({ qKey, onComplete, quizKey }) {
   const q = QUESTIONS[qKey];
@@ -51,6 +89,17 @@ export default function App() {
   const stepInfo = STEPS[currentStep - 1];
   const mapNodes = STEP_MAPS[currentStep] || STEP_MAPS[1];
   const stepCompleted = completedNodes[currentStep] || [0];
+
+  useEffect(() => {
+    let targetScene = screen;
+    if (showCard) {
+      targetScene = "success";
+    } else if (screen === "quiz") {
+      const isBoss = mapNodes.find(n => n.id === activeQuiz?.nodeId)?.type === "boss" || currentStep === 5;
+      targetScene = isBoss ? "boss" : "quiz";
+    }
+    playBGM(targetScene);
+  }, [screen, showCard, activeQuiz, mapNodes, currentStep]);
 
   // Check last play date for streak
   const [lastPlayDate, setLastPlayDate] = useLocalStorage("aq_lastPlay", null);
