@@ -86,6 +86,7 @@ export default function App() {
   const [activeQuiz, setActiveQuiz] = useState(null);
   const [quizKey, setQuizKey] = useState(0);
   const [activeStoryQueue, setActiveStoryQueue] = useState([]);
+  const [bgmStarted, setBgmStarted] = useState(false);
 
   const totalXpNeeded = 500 * currentStep;
   const stepInfo = STEPS[currentStep - 1];
@@ -247,12 +248,28 @@ export default function App() {
 
   // ===== TITLE SCREEN =====
   if (screen === "title") {
+    const handleTitleClick = () => {
+      if (!bgmStarted && globalAudio) {
+        globalAudio.play().then(() => setBgmStarted(true)).catch(e => console.warn(e));
+      }
+    };
+    
     return (
-      <div style={{
+      <div onClick={handleTitleClick} style={{
         minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center",
         justifyContent: "center", background: "url(/cotomia/images/ui/title_screen.png) center/cover no-repeat",
         fontFamily: "'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif", padding: 24, textAlign: "center",
+        position: "relative"
       }}>
+        {!bgmStarted && (
+          <div style={{
+            position: "absolute", top: 16, right: 16, background: "rgba(255,255,255,0.8)", 
+            color: PASTEL.text, backdropFilter: "blur(4px)", border: `1px solid ${PASTEL.border}`,
+            padding: "8px 12px", borderRadius: 20, fontSize: 11, fontWeight: 700, animation: "popInOut 3s infinite"
+          }}>
+            🔈 画面タップでサウンドON
+          </div>
+        )}
         <div style={{
           background: "rgba(255, 248, 243, 0.85)", backdropFilter: "blur(4px)", padding: "32px 20px",
           borderRadius: 24, width: "100%", maxWidth: 320, boxShadow: "0 8px 32px rgba(0,0,0,0.1)",
@@ -306,10 +323,10 @@ export default function App() {
   if (screen === "pre_quiz_story") {
     return (
       <div style={{
-        minHeight: "100vh", display: "flex", flexDirection: "column",
+        height: "100vh", display: "flex", flexDirection: "column", overflow: "hidden", boxSizing: "border-box",
         background: "#FDFBF7", fontFamily: "'Noto Sans JP', sans-serif", padding: "16px",
       }}>
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", maxWidth: 640, margin: "0 auto", width: "100%", background: "#fff", borderRadius: 24, padding: "20px 16px", boxShadow: "0 8px 24px rgba(0,0,0,0.03)" }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", maxWidth: 640, margin: "0 auto", width: "100%", background: "#fff", borderRadius: 24, padding: "20px 16px", boxShadow: "0 8px 24px rgba(0,0,0,0.03)", overflow: "hidden" }}>
           <ChatStory 
             onClose={() => setScreen("map")} 
             forceChapter={activeStoryQueue[0]} 
