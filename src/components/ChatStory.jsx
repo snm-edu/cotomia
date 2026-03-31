@@ -154,11 +154,19 @@ function ChoiceBubble({ msg, onAnswer, isNew }) {
 
 /* ───── メインコンポーネント ───── */
 
-export default function ChatStory({ onClose }) {
-  const [activeChapter, setActiveChapter] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(0);
+export default function ChatStory({ onClose, forceChapter, onChapterComplete }) {
+  const [activeChapter, setActiveChapter] = useState(forceChapter !== undefined ? forceChapter : null);
+  const [visibleCount, setVisibleCount] = useState(forceChapter !== undefined ? 1 : 0);
   const [waitingForChoice, setWaitingForChoice] = useState(false);
   const scrollRef = useRef(null);
+
+  useEffect(() => {
+    if (forceChapter !== undefined) {
+      setActiveChapter(forceChapter);
+      setVisibleCount(1);
+      setWaitingForChoice(false);
+    }
+  }, [forceChapter]);
 
   // auto-scroll when new message appears
   useEffect(() => {
@@ -220,11 +228,19 @@ export default function ChatStory({ onClose }) {
           padding: "8px 0 12px", borderBottom: `1px solid ${PASTEL.border}`,
           marginBottom: 8, flexShrink: 0,
         }}>
-          <button onClick={() => setActiveChapter(null)} style={{
-            background: "none", border: "none", fontSize: 13, color: PASTEL.textMuted, cursor: "pointer",
-          }}>
-            ← 章一覧
-          </button>
+          {forceChapter !== undefined ? (
+            <button onClick={onClose} style={{
+              background: "none", border: "none", fontSize: 13, color: PASTEL.textMuted, cursor: "pointer",
+            }}>
+              ← やめる
+            </button>
+          ) : (
+            <button onClick={() => setActiveChapter(null)} style={{
+              background: "none", border: "none", fontSize: 13, color: PASTEL.textMuted, cursor: "pointer",
+            }}>
+              ← 章一覧
+            </button>
+          )}
           <div style={{ fontSize: 13, fontWeight: 600, color: PASTEL.text }}>
             {chapter.emoji} {chapter.title}
           </div>
@@ -263,24 +279,37 @@ export default function ChatStory({ onClose }) {
                 {chapter.title} 完了！
               </div>
               <div style={{ display: "flex", gap: 8, justifyContent: "center", marginTop: 12 }}>
-                {activeChapter < CHAT_STORIES.length - 1 && (
-                  <button onClick={(e) => { e.stopPropagation(); startChapter(activeChapter + 1); }}
+                {forceChapter !== undefined ? (
+                  <button onClick={(e) => { e.stopPropagation(); onChapterComplete && onChapterComplete(); }}
                     style={{
                       padding: "10px 20px", borderRadius: 20, border: "none",
                       background: PASTEL.accent, color: "#fff",
                       fontSize: 13, fontWeight: 600, cursor: "pointer",
                     }}>
-                    次の章へ →
+                    次へ進む →
                   </button>
+                ) : (
+                  <>
+                    {activeChapter < CHAT_STORIES.length - 1 && (
+                      <button onClick={(e) => { e.stopPropagation(); startChapter(activeChapter + 1); }}
+                        style={{
+                          padding: "10px 20px", borderRadius: 20, border: "none",
+                          background: PASTEL.accent, color: "#fff",
+                          fontSize: 13, fontWeight: 600, cursor: "pointer",
+                        }}>
+                        次の章へ →
+                      </button>
+                    )}
+                    <button onClick={(e) => { e.stopPropagation(); setActiveChapter(null); }}
+                      style={{
+                        padding: "10px 20px", borderRadius: 20,
+                        border: `1.5px solid ${PASTEL.border}`, background: "#fff",
+                        fontSize: 13, fontWeight: 600, color: PASTEL.text, cursor: "pointer",
+                      }}>
+                      章一覧
+                    </button>
+                  </>
                 )}
-                <button onClick={(e) => { e.stopPropagation(); setActiveChapter(null); }}
-                  style={{
-                    padding: "10px 20px", borderRadius: 20,
-                    border: `1.5px solid ${PASTEL.border}`, background: "#fff",
-                    fontSize: 13, fontWeight: 600, color: PASTEL.text, cursor: "pointer",
-                  }}>
-                  章一覧
-                </button>
               </div>
             </div>
           )}

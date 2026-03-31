@@ -20,7 +20,9 @@ import QuizSelect from "./components/quiz/QuizSelect";
 import OrderQuiz from "./components/quiz/OrderQuiz";
 
 const BGM_TRACKS = {
-  story: ["/cotomia/audio/Story-bgm.mp3", "/cotomia/audio/Dialog-bgm.mp3"],
+  title: ["/cotomia/audio/title-bgm.mp3"],
+  map: ["/cotomia/audio/map-bgm.mp3"],
+  story: ["/cotomia/audio/map-bgm.mp3"],
   quiz: ["/cotomia/audio/Quiz-bgm.mp3", "/cotomia/audio/Puzzle-bgm.mp3"],
   boss: ["/cotomia/audio/Boss Battle-bgm.mp3", "/cotomia/audio/Zeus Trial-bgm.mp3"],
   success: ["/cotomia/audio/Success-bgm.mp3", "/cotomia/audio/Card Reveal-bgm.mp3"],
@@ -31,8 +33,7 @@ let currentBgmScene = null;
 
 const playBGM = (scene) => {
   if (!globalAudio) return;
-  // title, mapなどは落ち着いた雰囲気を作るためstory用のBGM(Dialog/Story)と共通にする
-  const mappedScene = (scene === "title" || scene === "map") ? "story" : scene;
+  const mappedScene = scene;
 
   const isSameScene = mappedScene === currentBgmScene;
   if (isSameScene && !globalAudio.paused) return;
@@ -84,6 +85,7 @@ export default function App() {
   const [showCard, setShowCard] = useState(null);
   const [activeQuiz, setActiveQuiz] = useState(null);
   const [quizKey, setQuizKey] = useState(0);
+  const [activeStoryQueue, setActiveStoryQueue] = useState([]);
 
   const totalXpNeeded = 500 * currentStep;
   const stepInfo = STEPS[currentStep - 1];
@@ -97,6 +99,8 @@ export default function App() {
     } else if (screen === "quiz") {
       const isBoss = mapNodes.find(n => n.id === activeQuiz?.nodeId)?.type === "boss" || currentStep === 5;
       targetScene = isBoss ? "boss" : "quiz";
+    } else if (screen === "pre_quiz_story") {
+      targetScene = "story";
     }
     playBGM(targetScene);
   }, [screen, showCard, activeQuiz, mapNodes, currentStep]);
@@ -188,13 +192,35 @@ export default function App() {
       return;
     }
     const qMap = {
+      "q1_1": "q1_1", "q1_2": "q1_2", "q1_3": "q1_3",
       "q2": "q2", "q3": "q3", "q4": "q4", "q5": "q5",
       "q6": "q6", "q7": "q7", "q8": "q8", "q9": "q9", "q10": "q10", "q11": "q11",
       "q12": "q12", "q13": "q13", "q14": "q14", "q15": "q15", "q16": "q16",
       "q17": "q17", "q18": "q18", "q19": "q19",
     };
-    setActiveQuiz({ qKey: qMap[node.q] || node.q, nodeId: node.id });
+    const mappedKey = qMap[node.q] || node.q;
+    const qData = QUESTIONS[mappedKey];
+
+    setActiveQuiz({ qKey: mappedKey, nodeId: node.id });
     setQuizKey(k => k + 1);
+
+    if (qData && qData.type === "matching") {
+      // Show story before matching questions
+      const storyMapping = {
+        "q1_1": [1], // P.2
+        "q1_2": [2], // P.3
+        "q1_3": [3], // P.4
+        "q6": [4, 5, 6], // P.5, P.6, P.7
+        "q13": [7, 9], // P.8, P.11
+      };
+      const stories = storyMapping[mappedKey];
+      if (stories) {
+        setActiveStoryQueue(stories);
+        setScreen("pre_quiz_story");
+        return;
+      }
+    }
+
     setScreen("quiz");
   };
 
@@ -209,6 +235,14 @@ export default function App() {
     const { qKey, nodeId } = activeQuiz;
     const onDone = (c, t) => handleQuizComplete(c, t, nodeId);
     return <QuizRouter qKey={qKey} onComplete={onDone} quizKey={quizKey} />;
+  };
+
+  const handleNextStoryInQueue = () => {
+    if (activeStoryQueue.length > 1) {
+      setActiveStoryQueue(q => q.slice(1));
+    } else {
+      setScreen("quiz");
+    }
   };
 
   // ===== TITLE SCREEN =====
@@ -263,6 +297,24 @@ export default function App() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ===== PRE-QUIZ STORY SCREEN =====
+  if (screen === "pre_quiz_story") {
+    return (
+      <div style={{
+        minHeight: "100vh", display: "flex", flexDirection: "column",
+        background: "#FDFBF7", fontFamily: "'Noto Sans JP', sans-serif", padding: "16px",
+      }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", maxWidth: 640, margin: "0 auto", width: "100%", background: "#fff", borderRadius: 24, padding: "20px 16px", boxShadow: "0 8px 24px rgba(0,0,0,0.03)" }}>
+          <ChatStory 
+            onClose={() => setScreen("map")} 
+            forceChapter={activeStoryQueue[0]} 
+            onChapterComplete={handleNextStoryInQueue} 
+          />
         </div>
       </div>
     );
